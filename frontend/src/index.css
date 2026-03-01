@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+@import "tailwindcss";
+
+*{
+    box-sizing: border-box;
+    font-family: "Google Sans", sans-serif;
+}
+
+/* colors.css */
+:root {
+  /* Primary Colors */
+  --indigo-600: #4f46e5;
+  --indigo-500: #6366f1;
+  --indigo-700: #4338ca;
+  --indigo-50: #eef2ff;
+  
+  /* Violet Colors */
+  --violet-600: #7c3aed;
+  --violet-700: #6d28d9;
+  --violet-50: #f5f3ff;
+  
+  /* Gray Colors */
+  --gray-900: #111827;
+  --gray-700: #374151;
+  --gray-600: #4b5563;
+  --gray-500: #6b7280;
+  --gray-400: #9ca3af;
+  --gray-300: #d1d5db;
+  --gray-200: #e5e7eb;
+  --gray-100: #f3f4f6;
+  --gray-50: #f9fafb;
+  
+  /* White & Black */
+  --white: #ffffff;
+  --black: #000000;
+  --black-opacity-50: rgba(0, 0, 0, 0.5);
+  
+  /* Status Colors */
+  --green-400: #4ade80;
+  --red-500: #ef4444;
+  
+  /* Background Colors */
+  --bg-white-95: rgba(255, 255, 255, 0.95);
+}
+
+body, html{
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
