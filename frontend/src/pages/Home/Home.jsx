@@ -1,24 +1,29 @@
-import CTASection from "./elements/CTASection";
-import DownloadApp from "./elements/DownloadApp";
-import HeroSection from "./elements/HeroSection";
+import About from "./elements/About";
+import AppShowcase from "./elements/AppShowcase";
+import Community from "./elements/Community";
+import CTA from "./elements/CTA";
+import Features from "./elements/Features";
+import Footprint from "./elements/Footprint";
+import Hero from "./elements/Hero";
 import HowItWorks from "./elements/HowItWorks";
-import PricingSection from "./elements/PricingSection";
-import ServicesSection from "./elements/ServiceFeatures";
-import WhyChooseUs from "./elements/WhyChooseUs";
+import Partners from "./elements/Partners";
+import Safety from "./elements/Safety";
+import Services from "./elements/Services";
 
-
-const Home = () => {
+export default function Home() {
   return (
-    <main className="overflow-hidden">
-      <HeroSection />
-      <ServicesSection />
+    <main className="min-h-screen bg-white">
+      <Hero />
+      <Services />
       <HowItWorks />
-      <WhyChooseUs />
-      <PricingSection />
-      <DownloadApp />
-      <CTASection />
+      <AppShowcase />
+      <Features />
+      <Safety />
+      <Footprint />
+      <About />
+      <Partners />
+      <Community />
+      <CTA />
     </main>
   );
-};
-
-export default Home;
+}
