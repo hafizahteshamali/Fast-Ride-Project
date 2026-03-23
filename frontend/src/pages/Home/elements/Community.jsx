@@ -9,7 +9,7 @@ export default function Community() {
       title: 'A Community of Stories',
       author: 'Sarah K.',
       quote:
-        'TezzRide has made my daily commute so much easier. The drivers are professional and the app is super intuitive.',
+        'TezRide has made my daily commute so much easier. The drivers are professional and the app is super intuitive.',
       rating: 5,
       category: 'User Experience',
     },
@@ -18,7 +18,7 @@ export default function Community() {
       title: 'Safety First Always',
       author: 'Ahmed M.',
       quote:
-        'I feel safe every time I book a TezzRide. The safety features and professional drivers make all the difference.',
+        'I feel safe every time I book a TezRide. The safety features and professional drivers make all the difference.',
       rating: 5,
       category: 'Safety',
     },
@@ -42,7 +42,7 @@ export default function Community() {
             A Community Full of Stories
           </h2>
           <p className="text-gray-600 text-lg">
-            Hear from our happy users about their TezzRide experience
+            Hear from our happy users about their TezRide experience
           </p>
         </div>
 

@@ -15,7 +15,7 @@ const testimonials = [
   {
     name: 'Emily Davis',
     role: 'Regular User',
-    content: 'TezzRide has completely changed how I commute. Fast, reliable, and the drivers are always professional. Highly recommended!',
+    content: 'TezRide has completely changed how I commute. Fast, reliable, and the drivers are always professional. Highly recommended!',
     rating: 5,
     image: 'https://ui-avatars.com/api/?name=Emily+Davis&size=200&background=FF991C&color=fff&bold=true',
     location: 'New York',
@@ -35,7 +35,7 @@ const testimonials = [
   {
     name: 'Lisa Chen',
     role: 'Frequent Traveler',
-    content: 'As someone who travels often, TezzRide is my go-to app in every city. Consistent quality and affordable prices.',
+    content: 'As someone who travels often, TezRide is my go-to app in every city. Consistent quality and affordable prices.',
     rating: 5,
     image: 'https://ui-avatars.com/api/?name=Lisa+Chen&size=200&background=FF991C&color=fff&bold=true',
     location: 'San Francisco',
@@ -55,7 +55,7 @@ const testimonials = [
   {
     name: 'Sarah Miller',
     role: 'Daily Commuter',
-    content: 'I use TezzRide every day for my office commute. The prices are reasonable and the service is always top-notch.',
+    content: 'I use TezRide every day for my office commute. The prices are reasonable and the service is always top-notch.',
     rating: 4,
     image: 'https://ui-avatars.com/api/?name=Sarah+Miller&size=200&background=FF991C&color=fff&bold=true',
     location: 'Houston',
@@ -157,7 +157,7 @@ export default function TestimonialsSection() {
           </h2>
           
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-            Real stories from real people who use TezzRide every day
+            Real stories from real people who use TezRide every day
           </p>
 
           {/* Rating Summary */}

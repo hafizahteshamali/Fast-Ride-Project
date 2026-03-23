@@ -56,7 +56,7 @@ export default function WhyChooseUs() {
         <div className="flex flex-col items-center text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Why Choose{' '}
-            <span style={{ color: 'var(--primary-orange)' }}>TezzRide</span>
+            <span style={{ color: 'var(--primary-orange)' }}>TezRide</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">
             Experience the difference with our premium features and benefits

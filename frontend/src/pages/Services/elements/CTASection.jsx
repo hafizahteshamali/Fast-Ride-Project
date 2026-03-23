@@ -35,7 +35,7 @@ export default function CTASection() {
           <h2 className="text-3xl md:text-5xl font-bold text-white">
             Ready to experience the{' '}
             <span className="text-white underline decoration-4 decoration-white/30">
-              TezzRide difference?
+              TezRide difference?
             </span>
           </h2>
 

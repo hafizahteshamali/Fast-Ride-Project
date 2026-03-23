@@ -3,7 +3,7 @@
 import { FaCalendar, FaRocket, FaUsers, FaTruck, FaMobile, FaGlobe } from 'react-icons/fa';
 
 const timeline = [
-  { year: '2020', icon: FaRocket, title: 'The Beginning', desc: 'TezzRide founded with a vision to transform urban mobility' },
+  { year: '2020', icon: FaRocket, title: 'The Beginning', desc: 'TezRide founded with a vision to transform urban mobility' },
   { year: '2021', icon: FaUsers, title: 'First Milestone', desc: 'Reached 100,000 users in first year of operation' },
   { year: '2022', icon: FaTruck, title: 'Delivery Launch', desc: 'Expanded services to include food and package delivery' },
   { year: '2023', icon: FaMobile, title: 'App Redesign', desc: 'Launched completely redesigned app with new features' },

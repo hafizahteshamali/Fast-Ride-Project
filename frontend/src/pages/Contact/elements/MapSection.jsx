@@ -81,7 +81,7 @@ export default function MapSection() {
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800">TezzRide Headquarters</h3>
+                  <h3 className="text-xl font-bold text-gray-800">TezRide Headquarters</h3>
                   <div className="flex items-center gap-2 text-sm text-gray-500">
                     <FaStar className="text-yellow-400 w-4 h-4" />
                     <span>4.9 (2.5k+ reviews)</span>
@@ -155,7 +155,7 @@ export default function MapSection() {
                 {showInfo && (
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 w-64 bg-white rounded-xl shadow-2xl p-4 z-20">
                     <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45"></div>
-                    <h4 className="font-bold text-gray-800 mb-2">TezzRide Head Office</h4>
+                    <h4 className="font-bold text-gray-800 mb-2">TezRide Head Office</h4>
                     <p className="text-sm text-gray-600 mb-2">123 Business Avenue, Clifton, Karachi</p>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <FaStar className="text-yellow-400 w-4 h-4" />

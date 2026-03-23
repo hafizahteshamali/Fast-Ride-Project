@@ -14,7 +14,7 @@ export default function Partners() {
     {
       title: 'Merchant Partner',
       icon: <FaUsers size={40} />,
-      description: 'Expand your business reach with TezzRide\'s reliable delivery network.',
+      description: 'Expand your business reach with TezRide\'s reliable delivery network.',
       benefits: ['Wide customer base', 'Real-time tracking', 'Marketing support', 'Competitive rates'],
       cta: 'Partner With Us',
     },
@@ -36,7 +36,7 @@ export default function Partners() {
             Partnership Opportunities
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Join our ecosystem and grow with TezzRide. Whether you're a driver, merchant, or corporation, we have opportunities for you.
+            Join our ecosystem and grow with TezRide. Whether you're a driver, merchant, or corporation, we have opportunities for you.
           </p>
         </div>
 
@@ -88,7 +88,7 @@ export default function Partners() {
           className="mt-16 rounded-2xl p-12 text-center text-white"
           style={{ backgroundColor: 'var(--primary-orange)' }}
         >
-          <h3 className="text-2xl font-bold mb-4">Why Partners Trust TezzRide?</h3>
+          <h3 className="text-2xl font-bold mb-4">Why Partners Trust TezRide?</h3>
           <p className="mb-8 text-lg opacity-90 max-w-2xl mx-auto">
             With transparent operations, reliable support, and fair compensation, thousands of partners have already joined our growing community.
           </p>

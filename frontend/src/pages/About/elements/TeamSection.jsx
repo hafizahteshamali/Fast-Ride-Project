@@ -6,7 +6,7 @@ const team = [
   {
     name: 'John Smith',
     role: 'CEO & Co-founder',
-    bio: 'Former Uber executive with 10+ years in mobility tech',
+    bio: '10+ years in mobility tech, leading TezRide\'s vision for Pakistan',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC1XNkm9ZIsKAObeWJz_Gr4pkfhiK7NTlLIQ&s',
     color: 'var(--primary-orange)'
   },
@@ -37,7 +37,7 @@ export default function TeamSection() {
             <span style={{ color: 'var(--primary-orange)' }}>Team</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-            The passionate people behind TezzRide working to make your journey better
+            The passionate people behind TezRide working to make your journey better
           </p>
         </div>
 

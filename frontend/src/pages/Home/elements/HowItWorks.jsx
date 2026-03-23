@@ -8,7 +8,7 @@ export default function HowItWorks() {
       number: '1',
       icon: <FaMap size={32} />,
       title: 'Set Your Location',
-      description: 'Open TezzRide and set your pickup and drop-off locations with a few taps.',
+      description: 'Open TezRide and set your pickup and drop-off locations with a few taps.',
     },
     {
       number: '2',
@@ -39,7 +39,7 @@ export default function HowItWorks() {
             How It Works
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Getting a ride with TezzRide is simple, fast, and secure
+            Getting a ride with TezRide is simple, fast, and secure
           </p>
         </div>
 

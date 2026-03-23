@@ -56,7 +56,7 @@ export default function About() {
   ];
 
   const milestones = [
-    { year: '2020', event: 'TezzRide Founded', icon: FaRocket },
+    { year: '2020', event: 'TezRide Founded', icon: FaRocket },
     { year: '2021', event: '1M Rides Completed', icon: FaChartLine },
     { year: '2022', event: 'Expanded to 50+ Cities', icon: FaMapMarkedAlt },
     { year: '2023', event: '10M+ Downloads', icon: FaHeart },
@@ -144,7 +144,7 @@ export default function About() {
             <span className="text-gray-900">About </span>
             <span className="relative">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF991C] to-[#FF5C00]">
-                TezzRide
+                TezRide
               </span>
               <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 200 8">
                 <path d="M0,4 Q50,8 100,4 T200,4" stroke="#FF991C" fill="none" strokeWidth="2"/>
@@ -286,10 +286,10 @@ export default function About() {
               
               <div className="space-y-4 text-gray-600">
                 <p className="leading-relaxed text-lg">
-                  Founded with a mission to transform mobility in Pakistan, TezzRide combines cutting-edge technology with local expertise to deliver unparalleled service. We started small but dreamed big—to make every journey safe, affordable, and convenient.
+                  Founded with a mission to transform mobility in Pakistan, TezRide combines cutting-edge technology with local expertise to deliver unparalleled service. We started small but dreamed big—to make every journey safe, affordable, and convenient.
                 </p>
                 <p className="leading-relaxed text-lg">
-                  Today, millions of Pakistanis trust TezzRide for their daily rides, deliveries, and financial needs. We continue to innovate and expand, bringing economic opportunities to drivers and convenience to users across the country.
+                  Today, millions of Pakistanis trust TezRide for their daily rides, deliveries, and financial needs. We continue to innovate and expand, bringing economic opportunities to drivers and convenience to users across the country.
                 </p>
               </div>
 

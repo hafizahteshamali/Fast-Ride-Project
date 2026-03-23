@@ -22,7 +22,7 @@ export default function ValuesSection() {
             <span style={{ color: 'var(--primary-orange)' }}>Values</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-            The principles that guide everything we do at TezzRide
+            The principles that guide everything we do at TezRide
           </p>
         </div>
 

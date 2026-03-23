@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="text-2xl font-bold mb-4">
-              <span style={{ color: 'var(--secondary-orange)' }}>Tezz</span>
+              <span style={{ color: 'var(--secondary-orange)' }}>Tez</span>
               <span style={{ color: 'var(--primary-orange)' }}>Ride</span>
             </div>
             <p className="text-sm text-gray-400 mb-6">
@@ -140,7 +140,7 @@ export default function Footer() {
 
         {/* Bottom Footer */}
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
-          <p>&copy; 2024 TezzRide. All rights reserved.</p>
+          <p>&copy; 2024 TezRide. All rights reserved.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-primary-orange transition">
               Privacy Policy

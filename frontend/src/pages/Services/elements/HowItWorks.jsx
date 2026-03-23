@@ -6,7 +6,7 @@ const steps = [
   {
     icon: FaMobile,
     title: 'Download App',
-    description: 'Get the TezzRide app from App Store or Google Play',
+    description: 'Get the TezRide app from App Store or Google Play',
     color: 'var(--primary-orange)'
   },
   {
@@ -40,7 +40,7 @@ export default function HowItWorks() {
             <span style={{ color: 'var(--primary-orange)' }}>Works</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-            Get started with TezzRide in four simple steps
+            Get started with TezRide in four simple steps
           </p>
         </div>
 

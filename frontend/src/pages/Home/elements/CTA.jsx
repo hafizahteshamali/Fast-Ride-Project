@@ -23,10 +23,10 @@ export default function CTA() {
           {/* Content */}
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Experience TezzRide?
+              Ready to Experience TezRide?
             </h2>
             <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-              Join millions of Pakistanis who trust TezzRide for their daily rides, deliveries, and payments. Download the app today!
+              Join millions of Pakistanis who trust TezRide for their daily rides, deliveries, and payments. Download the app today!
             </p>
 
             {/* Download Buttons */}

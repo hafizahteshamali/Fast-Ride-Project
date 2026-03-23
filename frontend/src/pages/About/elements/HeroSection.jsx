@@ -29,7 +29,7 @@ export default function HeroSection({ isVisible }) {
               style={{ backgroundColor: 'var(--primary-orange)', color: 'var(--white)' }}
             >
               <FaUsers className="mr-2" />
-              About TezzRide
+              About TezRide
             </span>
           </div>
 
@@ -46,7 +46,7 @@ export default function HeroSection({ isVisible }) {
           <p className={`text-lg md:text-xl text-gray-600 max-w-3xl leading-relaxed transform transition-all duration-1000 delay-400 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}>
-            Founded in 2020, TezzRide has grown from a small startup to a leading mobility platform, 
+            Founded in 2020, TezRide has grown from a small startup to a leading mobility platform, 
             serving millions of customers across the country with innovative transportation solutions.
           </p>
 

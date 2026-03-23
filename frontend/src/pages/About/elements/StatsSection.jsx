@@ -119,7 +119,7 @@ export default function StatsSection() {
             <div className="w-12 h-0.5 rounded-full" style={{ background: 'var(--primary-orange)' }} />
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            TezzRide by the{' '}
+            TezRide by the{' '}
             <span style={{ color: 'var(--primary-orange)' }}>Numbers</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">

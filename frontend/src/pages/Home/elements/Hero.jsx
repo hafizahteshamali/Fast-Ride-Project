@@ -43,7 +43,7 @@ export default function Hero() {
             {/* Main Heading */}
             <div className="space-y-4">
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                <span className="block" style={{ color: 'var(--gray-900)' }}>TezzRide is your</span>
+                <span className="block" style={{ color: 'var(--gray-900)' }}>TezRide is your</span>
                 <span className="block" style={{ color: 'var(--gray-900)' }}>everyday,</span>
                 <span className="relative inline-block">
                   <span style={{ color: 'var(--primary-orange)' }}>everything platform</span>
@@ -127,7 +127,7 @@ export default function Hero() {
               {/* Main image */}
               <img 
                 src="/assets/images/home/banner-img.png" 
-                alt="TezzRide App Interface" 
+                alt="TezRide App Interface" 
                 className="relative z-10 w-full h-auto object-contain transform hover:scale-105 transition-transform duration-500"
               />
               

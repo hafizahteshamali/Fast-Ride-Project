@@ -244,7 +244,7 @@ export default function AppShowcase() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 md:mb-4 text-white px-2">
             Experience{' '}
             <span className="relative inline-block">
-              TezzRide
+              TezRide
               <svg className="absolute -bottom-2 left-0 w-full hidden sm:block" height="8" viewBox="0 0 200 8">
                 <path d="M0,4 Q50,8 100,4 T200,4" stroke="white" fill="none" strokeWidth="2"/>
               </svg>
