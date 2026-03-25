@@ -4,7 +4,7 @@ import { FaUsers, FaRocket, FaShieldAlt, FaStar, FaMotorcycle, FaCity } from 're
 
 export default function HeroSection({ isVisible }) {
   return (
-    <section className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden">
+    <section className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden mt-20">
       {/* Background with gradient */}
       <div 
         className="absolute inset-0 z-0"

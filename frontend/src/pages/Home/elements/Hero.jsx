@@ -12,7 +12,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative py-16 md:py-24 px-4 md:px-8 overflow-hidden"
+      className="relative py-16 md:py-24 px-4 md:px-8 overflow-hidden mt-20"
       style={{
         background: `linear-gradient(135deg, var(--gray-50) 0%, #fff5f0 100%)`,
       }}
@@ -31,7 +31,7 @@ export default function Hero() {
           <div className={`flex-1 w-full lg:w-1/2 space-y-8 transform transition-all duration-1000 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
             
             {/* Rating Badge */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-start flex-col space-x-4">
               <div className="flex items-center space-x-1">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <FaStar key={star} className="text-yellow-400 w-5 h-5" />
@@ -99,7 +99,7 @@ export default function Hero() {
             </div>
 
             {/* Stats */}
-            <div className="flex items-center space-x-8 pt-4">
+            <div className="flex flex-wrap sm:flex-row items-start sm:items-center space-x-4 lg:space-x-8 pt-4">
               <div className="flex flex-col">
                 <span className="text-2xl font-bold" style={{ color: 'var(--primary-orange)' }}>Coming</span>
                 <span className="text-sm text-gray-600">Soon</span>

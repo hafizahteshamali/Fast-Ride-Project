@@ -7,6 +7,7 @@ import AboutUs from '../pages/About/AboutUs';
 import Services from '../pages/Services/Services';
 import Contact from '../pages/Contact/Contact';
 import Login from '../pages/Authentication/Login';
+import ScrollToTop from '../components/ScrollToTop'; // Import the ScrollToTop component
 
 // Import Driver Management dropdown pages
 import DriverApproval from '../pages/Admin/DriverManagement/DriverApproval';
@@ -54,67 +55,70 @@ import VerificationFileManagement from '../pages/Admin/MediaVerification/Verific
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path='/' element={<ServicePageLayout />}>
-        <Route index element={<Home />} />
-        <Route path='/about-us' element={<AboutUs />} />
-        <Route path='/services' element={<Services />} />
-        <Route path='/contact-us' element={<Contact />} />
-      </Route>
+    <>
+      <ScrollToTop /> {/* Add ScrollToTop component here */}
+      <Routes>
+        {/* Public Routes */}
+        <Route path='/' element={<ServicePageLayout />}>
+          <Route index element={<Home />} />
+          <Route path='/about-us' element={<AboutUs />} />
+          <Route path='/services' element={<Services />} />
+          <Route path='/contact-us' element={<Contact />} />
+        </Route>
 
-      {/* Auth Routes */}
-      <Route path='/auth'>
-        <Route path='login' element={<Login />} />
-      </Route>
+        {/* Auth Routes */}
+        <Route path='/auth'>
+          <Route path='login' element={<Login />} />
+        </Route>
 
-      {/* Admin Routes */}
-      <Route path='/admin' element={<AdminLayout />}>
-        {/* Driver Management Dropdown Routes - No main route */}
-        <Route path='drivers/approval' element={<DriverApproval />} />
-        <Route path='drivers/document-verification' element={<DocumentVerification />} />
-        <Route path='drivers/vehicle-approval' element={<VehicleApproval />} />
-        <Route path='drivers/suspension' element={<DriverSuspension />} />
-        <Route path='drivers/profile' element={<DriverProfile />} />
-        <Route path='drivers/rating' element={<DriverRating />} />
-        <Route path='drivers/earnings' element={<DriverEarnings />} />
-        <Route path='drivers/customer-account' element={<CustomerAccount />} />
-        <Route path='drivers/ban-customer' element={<BanCustomer />} />
+        {/* Admin Routes */}
+        <Route path='/admin' element={<AdminLayout />}>
+          {/* Driver Management Dropdown Routes - No main route */}
+          <Route path='drivers/approval' element={<DriverApproval />} />
+          <Route path='drivers/document-verification' element={<DocumentVerification />} />
+          <Route path='drivers/vehicle-approval' element={<VehicleApproval />} />
+          <Route path='drivers/suspension' element={<DriverSuspension />} />
+          <Route path='drivers/profile' element={<DriverProfile />} />
+          <Route path='drivers/rating' element={<DriverRating />} />
+          <Route path='drivers/earnings' element={<DriverEarnings />} />
+          <Route path='drivers/customer-account' element={<CustomerAccount />} />
+          <Route path='drivers/ban-customer' element={<BanCustomer />} />
 
-        {/* User Management Dropdown Routes - No main route */}
-        <Route path='users/role-management' element={<UserRoleManagement />} />
-        <Route path='users/system-config' element={<SystemConfiguration />} />
-        <Route path='users/live-map' element={<LiveMap />} />
+          {/* User Management Dropdown Routes - No main route */}
+          <Route path='users/role-management' element={<UserRoleManagement />} />
+          <Route path='users/system-config' element={<SystemConfiguration />} />
+          <Route path='users/live-map' element={<LiveMap />} />
 
-        {/* Ride Monitoring Dropdown Routes - No main route */}
-        <Route path='rides/detail-view' element={<RideDetailView />} />
-        <Route path='rides/event-log' element={<RideEventLog />} />
-        <Route path='rides/manual-assignment' element={<ManualRideAssignment />} />
-        <Route path='rides/cancellation' element={<RideCancellation />} />
-        <Route path='rides/history' element={<RideHistory />} />
-        <Route path='rides/assignment-log' element={<DriverAssignmentLog />} />
+          {/* Ride Monitoring Dropdown Routes - No main route */}
+          <Route path='rides/detail-view' element={<RideDetailView />} />
+          <Route path='rides/event-log' element={<RideEventLog />} />
+          <Route path='rides/manual-assignment' element={<ManualRideAssignment />} />
+          <Route path='rides/cancellation' element={<RideCancellation />} />
+          <Route path='rides/history' element={<RideHistory />} />
+          <Route path='rides/assignment-log' element={<DriverAssignmentLog />} />
 
-        {/* Pricing Management Dropdown Routes - No main route */}
-        <Route path='pricing/rules' element={<PricingRules />} />
-        <Route path='pricing/surge' element={<SurgePricing />} />
-        <Route path='pricing/vehicle-classification' element={<VehicleClassification />} />
+          {/* Pricing Management Dropdown Routes - No main route */}
+          <Route path='pricing/rules' element={<PricingRules />} />
+          <Route path='pricing/surge' element={<SurgePricing />} />
+          <Route path='pricing/vehicle-classification' element={<VehicleClassification />} />
 
-        {/* Payments & Finance Dropdown Routes - No main route */}
-        <Route path='payments/logs' element={<PaymentLogs />} />
-        <Route path='payments/wallet' element={<WalletManagement />} />
-        <Route path='payments/ledger' element={<LedgerView />} />
-        <Route path='payments/commission' element={<PlatformCommission />} />
-        <Route path='payments/refund' element={<RefundProcessing />} />
-        <Route path='payments/profit-loss' element={<ProfitLossReports />} />
+          {/* Payments & Finance Dropdown Routes - No main route */}
+          <Route path='payments/logs' element={<PaymentLogs />} />
+          <Route path='payments/wallet' element={<WalletManagement />} />
+          <Route path='payments/ledger' element={<LedgerView />} />
+          <Route path='payments/commission' element={<PlatformCommission />} />
+          <Route path='payments/refund' element={<RefundProcessing />} />
+          <Route path='payments/profit-loss' element={<ProfitLossReports />} />
 
-        {/* Audit & Security Dropdown Routes */}
-        <Route path='audit/driver-documents' element={<DriverDocumentView />} />
+          {/* Audit & Security Dropdown Routes */}
+          <Route path='audit/driver-documents' element={<DriverDocumentView />} />
 
-        {/* Media & Verification Dropdown Routes */}
-        <Route path='media/vehicle-images' element={<VehicleImageView />} />
-        <Route path='media/verification-files' element={<VerificationFileManagement />} />
-      </Route>
-    </Routes>
+          {/* Media & Verification Dropdown Routes */}
+          <Route path='media/vehicle-images' element={<VehicleImageView />} />
+          <Route path='media/verification-files' element={<VerificationFileManagement />} />
+        </Route>
+      </Routes>
+    </>
   );
 };
 

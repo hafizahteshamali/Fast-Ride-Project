@@ -7,6 +7,21 @@ import { NavigationsData } from '../assets/ConstantData';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Handle scroll effect
+  useState(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Function to get active link styles
   const getActiveStyles = ({ isActive }) => {
@@ -18,13 +33,17 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[var(--primary-orange)] border-b border-gray-200 p-3 shadow-lg">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled 
+        ? 'bg-[var(--primary-orange)] shadow-xl py-2' 
+        : 'bg-[var(--primary-orange)] py-3'
+    } border-b border-gray-200/20`}>
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <img src="/assets/images/home/dark-logo.png" className='h-[60px] w-[150px] object-contain' alt="Logo" />
+              <img src="/assets/images/home/white_logo_img.png" className='h-[70px] w-[200px] object-contain' alt="Logo" />
             </Link>
           </div>
 
@@ -55,9 +74,9 @@ const Header = () => {
         {/* Mobile Navigation - Right Side Modal */}
         <div className={isOpen ? "fixed right-0 top-0 bottom-0 h-[100vh] w-full bg-white shadow-xl md:hidden z-50 transform translate-x-[0%] transition-all duration-300 ease-in-out" : "fixed right-0 top-0 bottom-0 h-[100vh] w-full bg-white shadow-xl md:hidden z-50 transform translate-x-[100%] transition-all duration-300 ease-in-out"}>
           {/* Modal Header */}
-          <div className="flex justify-between items-center p-5 border-b">
+          <div className="flex justify-between items-center py-5 border-b border-[var(--primary-orange)]">
             <Link to="/" className="flex items-center justify-start" onClick={() => setIsOpen(false)}>
-              <img src="/assets/images/home/dark-logo.png" className='h-[60px] w-[150px] object-contain' alt="Logo" />
+              <img src="/assets/images/home/dark_logo_img.png" className='h-[70px] w-[200px] object-contain' alt="Logo" />
             </Link>
             <button onClick={()=>setIsOpen(false)} className="p-1 bg-[var(--primary-orange)] rounded-full h-[40px] w-[40px] flex justify-center items-center hover:scale-110 transition-all duration-300">
               <IoClose size={24} className="text-white" />
