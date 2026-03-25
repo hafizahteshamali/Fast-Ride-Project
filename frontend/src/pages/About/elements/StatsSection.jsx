@@ -1,44 +1,48 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { FaCity, FaUsers, FaTruck, FaStar, FaArrowUp, FaAward, FaChartLine } from 'react-icons/fa';
+import { FaCity, FaUsers, FaTruck, FaStar, FaArrowUp, FaAward, FaChartLine, FaMotorcycle, FaClock } from 'react-icons/fa';
 
 const stats = [
   { 
     icon: FaCity, 
-    value: '100+', 
-    label: 'Cities Covered', 
+    value: '1', 
+    label: 'Launch City', 
     color: 'var(--primary-orange)',
     bgColor: 'rgba(255, 153, 28, 0.1)',
-    suffix: '+',
-    trend: '+25%'
+    suffix: '',
+    trend: 'Karachi',
+    description: 'Starting from the city of lights'
   },
   { 
     icon: FaUsers, 
-    value: '1M+', 
-    label: 'Happy Users', 
+    value: '2.5K', 
+    label: 'Waitlist Members', 
     color: 'var(--secondary-orange)',
     bgColor: 'rgba(255, 92, 0, 0.1)',
     suffix: '+',
-    trend: '+50%'
+    trend: '+150%',
+    description: 'Growing community'
   },
   { 
-    icon: FaTruck, 
-    value: '500K+', 
-    label: 'Deliveries', 
+    icon: FaMotorcycle, 
+    value: '100', 
+    label: 'Partner Drivers', 
     color: 'var(--primary-orange)',
     bgColor: 'rgba(255, 153, 28, 0.1)',
     suffix: '+',
-    trend: '+35%'
+    trend: '+50%',
+    description: 'Onboarded in Karachi'
   },
   { 
     icon: FaStar, 
-    value: '4.8', 
-    label: 'App Rating', 
+    value: '4.9', 
+    label: 'Beta Rating', 
     color: 'var(--secondary-orange)',
     bgColor: 'rgba(255, 92, 0, 0.1)',
     suffix: '',
-    trend: 'Top Rated'
+    trend: 'Excellent',
+    description: 'From 500+ reviews'
   }
 ];
 
@@ -68,8 +72,16 @@ export default function StatsSection() {
   useEffect(() => {
     if (isVisible) {
       const intervals = stats.map((stat, index) => {
-        const target = parseFloat(stat.value) || 4.8;
-        const step = target > 100 ? Math.ceil(target / 50) : 0.1;
+        let target = 0;
+        if (stat.value.includes('.')) {
+          target = parseFloat(stat.value);
+        } else if (stat.value.includes('K')) {
+          target = parseFloat(stat.value) * 1000;
+        } else {
+          target = parseFloat(stat.value);
+        }
+        
+        const step = target > 1000 ? Math.ceil(target / 60) : target > 100 ? Math.ceil(target / 50) : target > 10 ? 0.5 : 0.1;
         
         return setInterval(() => {
           setCounts(prev => {
@@ -88,6 +100,19 @@ export default function StatsSection() {
       return () => intervals.forEach(interval => clearInterval(interval));
     }
   }, [isVisible]);
+
+  const formatValue = (value, stat) => {
+    if (stat.label === 'Beta Rating') {
+      return value.toFixed(1);
+    }
+    if (stat.label === 'Launch City') {
+      return 'Karachi';
+    }
+    if (value >= 1000) {
+      return (value / 1000).toFixed(1) + 'K';
+    }
+    return Math.floor(value);
+  };
 
   return (
     <section 
@@ -114,7 +139,7 @@ export default function StatsSection() {
           <div className="inline-flex items-center justify-center space-x-2 mb-4">
             <div className="w-12 h-0.5 rounded-full" style={{ background: 'var(--primary-orange)' }} />
             <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--primary-orange)' }}>
-              Our Impact
+              Launching 2026
             </span>
             <div className="w-12 h-0.5 rounded-full" style={{ background: 'var(--primary-orange)' }} />
           </div>
@@ -123,16 +148,16 @@ export default function StatsSection() {
             <span style={{ color: 'var(--primary-orange)' }}>Numbers</span>
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Thousands of happy customers, millions of successful rides and deliveries
+            Join thousands of Pakistanis waiting for Pakistan's newest mobility platform
           </p>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        {/* Stats - Flex Layout */}
+        <div className="flex flex-col sm:flex-row lg:flex-row gap-6 md:gap-8 justify-center">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="relative group"
+              className="flex-1 group relative"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
@@ -189,9 +214,12 @@ export default function StatsSection() {
                 <div className="text-center">
                   <div className="flex items-center justify-center space-x-1">
                     <span className="text-5xl font-bold" style={{ color: stat.color }}>
-                      {stat.value.includes('.') ? counts[index].toFixed(1) : Math.floor(counts[index])}
+                      {stat.label === 'Launch City' ? 'Karachi' : 
+                       stat.label === 'Beta Rating' ? counts[index].toFixed(1) :
+                       counts[index] >= 1000 ? (counts[index] / 1000).toFixed(1) + 'K' :
+                       Math.floor(counts[index])}
                     </span>
-                    {stat.suffix && (
+                    {stat.suffix && stat.label !== 'Launch City' && stat.label !== 'Beta Rating' && (
                       <span className="text-3xl font-bold" style={{ color: stat.color }}>
                         {stat.suffix}
                       </span>
@@ -209,17 +237,22 @@ export default function StatsSection() {
                     />
                   </div>
 
+                  {/* Description */}
+                  <p className="text-xs text-gray-400 mt-2">{stat.description}</p>
+
                   {/* Mini Progress Bar */}
-                  <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full rounded-full transition-all duration-1000"
-                      style={{ 
-                        width: `${(counts[index] / parseFloat(stat.value)) * 100}%`,
-                        backgroundColor: stat.color,
-                        opacity: 0.5
-                      }}
-                    />
-                  </div>
+                  {stat.label !== 'Launch City' && stat.label !== 'Beta Rating' && (
+                    <div className="mt-4 w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full rounded-full transition-all duration-1000"
+                        style={{ 
+                          width: `${(counts[index] / (stat.label === 'Waitlist Members' ? 2500 : 100)) * 100}%`,
+                          backgroundColor: stat.color,
+                          opacity: 0.5
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Decorative Elements */}
@@ -232,7 +265,7 @@ export default function StatsSection() {
         </div>
 
         {/* Bottom Decoration */}
-        <div className="mt-16 flex justify-center items-center space-x-4">
+        <div className="mt-16 flex flex-wrap justify-center items-center gap-4">
           <div className="flex -space-x-2">
             {[1, 2, 3, 4].map((item) => (
               <div 
@@ -243,9 +276,13 @@ export default function StatsSection() {
               </div>
             ))}
           </div>
-          <p className="text-gray-500 text-sm">
-            <span className="font-semibold" style={{ color: 'var(--primary-orange)' }}>10,000+</span> businesses trust us
+          <p className="text-gray-500 text-sm text-center">
+            <span className="font-semibold" style={{ color: 'var(--primary-orange)' }}>100+</span> businesses waiting to partner with us
           </p>
+          <div className="flex items-center gap-2">
+            <FaClock className="text-gray-400" size={12} />
+            <span className="text-xs text-gray-400">Launching Q2 2026</span>
+          </div>
         </div>
       </div>
 

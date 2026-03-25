@@ -19,7 +19,8 @@ import {
   FaClock,
   FaParking,
   FaWifi,
-  FaAccessibleIcon
+  FaAccessibleIcon,
+  FaRocket
 } from 'react-icons/fa';
 
 export default function MapSection() {
@@ -40,26 +41,26 @@ export default function MapSection() {
           <div>
             <div className="inline-flex items-center gap-2 bg-orange-100 px-4 py-2 rounded-full mb-4">
               <FaMapMarkerAlt className="text-orange-500 w-4 h-4" />
-              <span className="text-sm font-semibold text-orange-600">Find Us</span>
+              <span className="text-sm font-semibold text-orange-600">Coming Soon</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
               Our <span className="text-orange-500">Location</span>
             </h2>
-            <p className="text-gray-600">Visit our head office in the heart of Karachi</p>
+            <p className="text-gray-600">Our headquarters is preparing to welcome you in Karachi</p>
           </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-3 mt-4 md:mt-0">
-            <div className="bg-white rounded-xl p-3 shadow-md text-center">
-              <p className="text-2xl font-bold text-orange-500">24/7</p>
-              <p className="text-xs text-gray-500">Access</p>
+          {/* Quick Stats - Updated for 2026 */}
+          <div className="flex flex-wrap gap-3 mt-4 md:mt-0">
+            <div className="bg-white rounded-xl p-3 shadow-md text-center min-w-[90px]">
+              <p className="text-2xl font-bold text-orange-500">Q2</p>
+              <p className="text-xs text-gray-500">Launch 2026</p>
             </div>
-            <div className="bg-white rounded-xl p-3 shadow-md text-center">
-              <p className="text-2xl font-bold text-orange-500">50+</p>
-              <p className="text-xs text-gray-500">Parking</p>
+            <div className="bg-white rounded-xl p-3 shadow-md text-center min-w-[90px]">
+              <p className="text-2xl font-bold text-orange-500">100+</p>
+              <p className="text-xs text-gray-500">Parking Spots</p>
             </div>
-            <div className="bg-white rounded-xl p-3 shadow-md text-center">
-              <p className="text-2xl font-bold text-orange-500">100m</p>
+            <div className="bg-white rounded-xl p-3 shadow-md text-center min-w-[90px]">
+              <p className="text-2xl font-bold text-orange-500">500m</p>
               <p className="text-xs text-gray-500">To Station</p>
             </div>
           </div>
@@ -78,13 +79,13 @@ export default function MapSection() {
                   <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-white shadow-lg">
                     <FaBuilding className="w-6 h-6" />
                   </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full border-2 border-white animate-pulse"></div>
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-800">TezRide Headquarters</h3>
                   <div className="flex items-center gap-2 text-sm text-gray-500">
                     <FaStar className="text-yellow-400 w-4 h-4" />
-                    <span>4.9 (2.5k+ reviews)</span>
+                    <span>4.9 (Beta Rating)</span>
                     <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
                     <span>Clifton, Karachi</span>
                   </div>
@@ -148,29 +149,29 @@ export default function MapSection() {
               >
                 <div className="absolute -inset-3 bg-orange-500 rounded-full animate-ping opacity-30"></div>
                 <div className="relative w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center text-white shadow-xl transform -rotate-12 group-hover:rotate-0 transition-all duration-300">
-                  <FaMapMarkerAlt className="w-6 h-6" />
+                  <FaRocket className="w-6 h-6" />
                 </div>
 
                 {/* Info Popup */}
                 {showInfo && (
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 w-64 bg-white rounded-xl shadow-2xl p-4 z-20">
                     <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45"></div>
-                    <h4 className="font-bold text-gray-800 mb-2">TezRide Head Office</h4>
+                    <h4 className="font-bold text-gray-800 mb-2">TezRide HQ - Coming Soon</h4>
                     <p className="text-sm text-gray-600 mb-2">123 Business Avenue, Clifton, Karachi</p>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <FaStar className="text-yellow-400 w-4 h-4" />
-                      <span>4.9 (2.5k reviews)</span>
+                      <span>Launching Q2 2026</span>
                     </div>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Nearby Places Labels */}
+            {/* Nearby Places Labels - Updated */}
             <div className="absolute top-1/4 left-1/4">
               <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg flex items-center gap-2">
                 <FaTrain className="text-blue-500" />
-                <span>Railway Station (500m)</span>
+                <span>Karachi Cantt Station (500m)</span>
               </div>
             </div>
             <div className="absolute bottom-1/3 right-1/4">
@@ -205,11 +206,11 @@ export default function MapSection() {
             <div className="flex flex-wrap gap-4 mb-6">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <FaParking className="text-green-500 w-4 h-4" />
-                <span>Free Parking</span>
+                <span>Parking Available</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <FaWifi className="text-blue-500 w-4 h-4" />
-                <span>Free WiFi</span>
+                <span>Free WiFi (Coming)</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <FaAccessibleIcon className="text-purple-500 w-4 h-4" />
@@ -217,7 +218,7 @@ export default function MapSection() {
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <FaClock className="text-orange-500 w-4 h-4" />
-                <span>Open 24/7</span>
+                <span>Launch Hours: 24/7</span>
               </div>
             </div>
 
@@ -226,7 +227,7 @@ export default function MapSection() {
               {/* Transport Mode */}
               <div className="flex items-center gap-3">
                 <span className="text-sm font-medium text-gray-600">Get Directions:</span>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   {[
                     { icon: FaCar, mode: 'car', label: 'Driving' },
                     { icon: FaBus, mode: 'bus', label: 'Bus' },
@@ -250,40 +251,40 @@ export default function MapSection() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 <button className="px-6 py-3 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105 flex items-center gap-2">
                   <FaDirections className="w-4 h-4" />
-                  <span>Get Directions</span>
+                  <span>Plan Route</span>
                 </button>
                 <button className="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300 hover:scale-105 flex items-center gap-2">
                   <FaShare className="w-4 h-4" />
-                  <span>Share</span>
+                  <span>Save Location</span>
                 </button>
               </div>
             </div>
 
-            {/* Contact Info */}
+            {/* Contact Info - Updated */}
             <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-wrap gap-6">
+                <div className="flex items-center gap-3 min-w-[200px]">
                   <FaPhone className="text-orange-500 w-5 h-5" />
                   <div>
-                    <p className="text-xs text-gray-500">Phone</p>
+                    <p className="text-xs text-gray-500">Phone (Launch Support)</p>
                     <p className="font-semibold text-gray-800">+92 21 1234567</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 min-w-[200px]">
                   <FaEnvelope className="text-orange-500 w-5 h-5" />
                   <div>
                     <p className="text-xs text-gray-500">Email</p>
-                    <p className="font-semibold text-gray-800">karachi@tezzride.com</p>
+                    <p className="font-semibold text-gray-800">hello@tezride.pk</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 min-w-[200px]">
                   <FaClock className="text-orange-500 w-5 h-5" />
                   <div>
-                    <p className="text-xs text-gray-500">Hours</p>
-                    <p className="font-semibold text-gray-800">Mon-Sun: 24/7</p>
+                    <p className="text-xs text-gray-500">Launch Date</p>
+                    <p className="font-semibold text-gray-800">Q2 2026</p>
                   </div>
                 </div>
               </div>

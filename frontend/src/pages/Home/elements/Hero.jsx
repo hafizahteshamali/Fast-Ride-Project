@@ -37,7 +37,7 @@ export default function Hero() {
                   <FaStar key={star} className="text-yellow-400 w-5 h-5" />
                 ))}
               </div>
-              <span className="text-gray-600 font-medium">Trusted by 50k+ users</span>
+              <span className="text-gray-600 font-medium">Join our early access community</span>
             </div>
 
             {/* Main Heading */}
@@ -83,7 +83,7 @@ export default function Hero() {
               >
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
                 <FaApple size={24} />
-                <span className="text-lg">App Store</span>
+                <span className="text-lg">Coming Soon</span>
                 <FaArrowRight className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300" />
               </button>
               
@@ -93,7 +93,7 @@ export default function Hero() {
               >
                 <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity duration-300"></span>
                 <FaGoogle size={24} />
-                <span className="text-lg">Play Store</span>
+                <span className="text-lg">Coming Soon</span>
                 <FaPlay size={16} className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300" />
               </button>
             </div>
@@ -101,18 +101,18 @@ export default function Hero() {
             {/* Stats */}
             <div className="flex items-center space-x-8 pt-4">
               <div className="flex flex-col">
-                <span className="text-2xl font-bold" style={{ color: 'var(--primary-orange)' }}>1M+</span>
-                <span className="text-sm text-gray-600">Downloads</span>
+                <span className="text-2xl font-bold" style={{ color: 'var(--primary-orange)' }}>Coming</span>
+                <span className="text-sm text-gray-600">Soon</span>
               </div>
               <div className="w-px h-10 bg-gray-300"></div>
               <div className="flex flex-col">
-                <span className="text-2xl font-bold" style={{ color: 'var(--primary-orange)' }}>50k+</span>
-                <span className="text-sm text-gray-600">5 Star Reviews</span>
+                <span className="text-2xl font-bold" style={{ color: 'var(--primary-orange)' }}>Be</span>
+                <span className="text-sm text-gray-600">First</span>
               </div>
               <div className="w-px h-10 bg-gray-300"></div>
               <div className="flex flex-col">
-                <span className="text-2xl font-bold" style={{ color: 'var(--primary-orange)' }}>100+</span>
-                <span className="text-sm text-gray-600">Cities</span>
+                <span className="text-2xl font-bold" style={{ color: 'var(--primary-orange)' }}>Launching</span>
+                <span className="text-sm text-gray-600">Soon</span>
               </div>
             </div>
           </div>
@@ -138,8 +138,8 @@ export default function Hero() {
                     <FaBolt className="text-green-500" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold">Fast Delivery</p>
-                    <p className="text-xs text-gray-500">Under 30 mins</p>
+                    <p className="text-sm font-semibold">Launching Soon</p>
+                    <p className="text-xs text-gray-500">Get early access</p>
                   </div>
                 </div>
               </div>

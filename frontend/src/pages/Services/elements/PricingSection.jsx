@@ -99,7 +99,6 @@ export default function PricingSection() {
         {/* Section Header with PKR Badge */}
         <div className="flex flex-col items-center text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-md mb-4">
-            <FaRupeeSign className="text-green-600 w-4 h-4" />
             <span className="text-sm font-semibold text-gray-700">Prices in Pakistani Rupees (PKR)</span>
           </div>
           

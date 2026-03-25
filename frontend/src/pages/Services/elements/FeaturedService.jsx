@@ -11,7 +11,8 @@ import {
   FaCheckCircle,
   FaCar,
   FaUserCheck,
-  FaCreditCard
+  FaCreditCard,
+  FaRocket
 } from 'react-icons/fa';
 import { useState } from 'react';
 
@@ -54,12 +55,12 @@ export default function FeaturedService() {
                     ))}
                   </div>
                   <span className="font-bold text-gray-800">4.9</span>
-                  <span className="text-gray-500 text-sm">(2.5k+ reviews)</span>
+                  <span className="text-gray-500 text-sm">(Beta Rating)</span>
                 </div>
 
                 <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-xl z-20 flex items-center gap-2 border-2 border-white">
-                  <FaShieldAlt className="text-green-500 w-4 h-4" />
-                  <span className="font-semibold text-gray-800">Safety First</span>
+                  <FaRocket className="text-orange-500 w-4 h-4" />
+                  <span className="font-semibold text-gray-800">Launching Soon</span>
                 </div>
 
                 <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm px-4 py-3 rounded-xl shadow-xl z-20 border-2 border-white">
@@ -68,8 +69,8 @@ export default function FeaturedService() {
                       <FaCar className="text-white w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Available Now</p>
-                      <p className="font-bold text-gray-800">234 Nearby Cars</p>
+                      <p className="text-xs text-gray-500">Coming to Karachi</p>
+                      <p className="font-bold text-gray-800">Q2 2026</p>
                     </div>
                   </div>
                 </div>
@@ -80,8 +81,8 @@ export default function FeaturedService() {
                       <FaUserCheck className="text-white w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Verified Drivers</p>
-                      <p className="font-bold text-gray-800">500+ Active</p>
+                      <p className="text-xs text-gray-500">Driver Partners</p>
+                      <p className="font-bold text-gray-800">100+ Onboarded</p>
                     </div>
                   </div>
                 </div>
@@ -94,11 +95,11 @@ export default function FeaturedService() {
                     <FaUsers className="text-white w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-3xl font-bold text-gray-800">50k+</p>
-                    <p className="text-sm text-gray-500">Happy Customers</p>
+                    <p className="text-3xl font-bold text-gray-800">2.5K+</p>
+                    <p className="text-sm text-gray-500">Waitlist Members</p>
                     <div className="flex items-center gap-1 mt-1">
                       <FaCheckCircle className="text-green-500 w-3 h-3" />
-                      <span className="text-xs text-green-600">Verified Reviews</span>
+                      <span className="text-xs text-green-600">Growing Daily</span>
                     </div>
                   </div>
                 </div>
@@ -114,14 +115,14 @@ export default function FeaturedService() {
                 <FaStar className="text-white w-4 h-4" />
               </div>
               <span className="font-bold" style={{ color: 'var(--primary-orange)' }}>
-                ⚡ FEATURED SERVICE
+                ⚡ COMING SOON 2026
               </span>
             </div>
 
             {/* Heading with Decoration */}
             <div className="space-y-4">
               <h2 className="text-5xl md:text-6xl font-bold leading-tight">
-                <span className="block text-gray-900">Premium</span>
+                <span className="block text-gray-900">Pakistan's Newest</span>
                 <span className="relative inline-block">
                   <span style={{ color: 'var(--primary-orange)' }}>Ride Sharing</span>
                   <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full"></span>
@@ -133,14 +134,12 @@ export default function FeaturedService() {
             {/* Description with Icon */}
             <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
               <p className="text-gray-700 text-lg leading-relaxed">
-                Our flagship ride-sharing service combines comfort, safety, and affordability. 
-                With thousands of verified drivers and real-time tracking, we ensure you reach 
-                your destination safely and on time.
+                Pakistan's newest ride-sharing platform coming to Karachi. Join our waitlist and be among the first to experience premium mobility services with safety, comfort, and affordability.
               </p>
             </div>
 
-            {/* Features Grid - Enhanced */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Features - Flex Layout */}
+            <div className="flex flex-wrap gap-4">
               {[
                 { 
                   icon: FaMapMarkedAlt, 
@@ -173,11 +172,11 @@ export default function FeaturedService() {
               ].map((feature, index) => (
                 <div 
                   key={index}
-                  className="group relative"
+                  className="flex-1 min-w-[180px] group relative"
                   onMouseEnter={() => setHoverFeature(index)}
                   onMouseLeave={() => setHoverFeature(null)}
                 >
-                  <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-orange-200">
+                  <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-orange-200 h-full">
                     <div className={`w-12 h-12 rounded-lg bg-${feature.color}-100 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
                       <feature.icon className={`text-${feature.color}-500 w-6 h-6`} />
                     </div>
@@ -185,7 +184,7 @@ export default function FeaturedService() {
                     <p className="text-sm text-gray-500 mb-2">{feature.desc}</p>
                     
                     {/* Hover Features */}
-                    <div className={`space-y-1 transition-all duration-300 ${hoverFeature === index ? 'opacity-100' : 'opacity-0 h-0'}`}>
+                    <div className={`space-y-1 transition-all duration-300 ${hoverFeature === index ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
                       {feature.features.map((item, idx) => (
                         <div key={idx} className="flex items-center gap-1 text-xs text-gray-500">
                           <FaCheckCircle className="text-green-500 w-3 h-3" />
@@ -206,8 +205,8 @@ export default function FeaturedService() {
                 }}
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  <FaCar className="w-5 h-5" />
-                  <span>Book a Ride Now</span>
+                  <FaRocket className="w-5 h-5" />
+                  <span>Join Waitlist</span>
                   <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
@@ -220,23 +219,23 @@ export default function FeaturedService() {
                 }}
               >
                 <FaClock className="w-5 h-5 text-gray-500" />
-                <span>Schedule Later</span>
+                <span>Learn More</span>
               </button>
             </div>
 
             {/* Quick Stats */}
-            <div className="flex items-center gap-6 pt-4 border-t border-gray-200">
+            <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-gray-200">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">2 min pickup</span>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm text-gray-600">Launching Q2 2026</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">24/7 support</span>
+                <span className="text-sm text-gray-600">Karachi First</span>
               </div>
               <div className="flex items-center gap-2">
                 <FaShieldAlt className="text-green-500 w-4 h-4" />
-                <span className="text-sm text-gray-600">Safety assured</span>
+                <span className="text-sm text-gray-600">Safety Assured</span>
               </div>
             </div>
           </div>

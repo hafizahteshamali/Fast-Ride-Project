@@ -13,69 +13,70 @@ import {
   FaShare,
   FaHeart,
   FaComment,
-  FaEye
+  FaEye,
+  FaRocket
 } from 'react-icons/fa';
 
 const socialLinks = [
   { 
     icon: FaFacebookF, 
     name: 'Facebook', 
-    url: 'https://facebook.com/tezzride', 
+    url: 'https://facebook.com/tezride', 
     color: '#1877F2',
     bgColor: 'rgba(24, 119, 242, 0.1)',
-    followers: '50k+',
-    engagement: '2.5k',
-    posts: '1.2k'
+    followers: '1.2K+',
+    engagement: '120',
+    posts: '45'
   },
   { 
     icon: FaTwitter, 
     name: 'Twitter', 
-    url: 'https://twitter.com/tezzride', 
+    url: 'https://twitter.com/tezride', 
     color: '#1DA1F2',
     bgColor: 'rgba(29, 161, 242, 0.1)',
-    followers: '25k+',
-    engagement: '1.8k',
-    posts: '890'
+    followers: '850+',
+    engagement: '95',
+    posts: '32'
   },
   { 
     icon: FaInstagram, 
     name: 'Instagram', 
-    url: 'https://instagram.com/tezzride', 
+    url: 'https://instagram.com/tezride', 
     color: '#E4405F',
     bgColor: 'rgba(228, 64, 95, 0.1)',
-    followers: '100k+',
-    engagement: '5.2k',
-    posts: '2.1k'
+    followers: '2.8K+',
+    engagement: '320',
+    posts: '78'
   },
   { 
     icon: FaLinkedinIn, 
     name: 'LinkedIn', 
-    url: 'https://linkedin.com/company/tezzride', 
+    url: 'https://linkedin.com/company/tezride', 
     color: '#0A66C2',
     bgColor: 'rgba(10, 102, 194, 0.1)',
-    followers: '30k+',
-    engagement: '1.2k',
-    posts: '450'
+    followers: '950+',
+    engagement: '85',
+    posts: '28'
   },
   { 
     icon: FaYoutube, 
     name: 'YouTube', 
-    url: 'https://youtube.com/tezzride', 
+    url: 'https://youtube.com/tezride', 
     color: '#FF0000',
     bgColor: 'rgba(255, 0, 0, 0.1)',
-    followers: '40k+',
-    engagement: '3.8k',
-    videos: '120'
+    followers: '620+',
+    engagement: '145',
+    videos: '15'
   },
   { 
     icon: FaTiktok, 
     name: 'TikTok', 
-    url: 'https://tiktok.com/@tezzride', 
+    url: 'https://tiktok.com/@tezride', 
     color: '#000000',
     bgColor: 'rgba(0, 0, 0, 0.1)',
-    followers: '60k+',
-    engagement: '4.5k',
-    videos: '350'
+    followers: '1.5K+',
+    engagement: '280',
+    videos: '42'
   }
 ];
 
@@ -92,6 +93,12 @@ export default function SocialConnect() {
       setTimeout(() => setSubscribed(false), 3000);
     }
   };
+
+  // Calculate total followers
+  const totalFollowers = socialLinks.reduce((total, social) => {
+    const num = parseFloat(social.followers) || 0;
+    return total + num;
+  }, 0);
 
   return (
     <section className="relative py-24 px-4 md:px-8 overflow-hidden">
@@ -112,10 +119,10 @@ export default function SocialConnect() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-lg mb-6">
             <div className="relative">
-              <FaShare className="text-orange-500 w-5 h-5" />
+              <FaRocket className="text-orange-500 w-5 h-5" />
               <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
             </div>
-            <span className="text-sm font-bold text-gray-700">Join Our Community</span>
+            <span className="text-sm font-bold text-gray-700">Join Our Growing Community</span>
           </div>
 
           <h2 className="text-5xl md:text-6xl font-bold mb-4">
@@ -135,35 +142,35 @@ export default function SocialConnect() {
           </h2>
           
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Follow us on social media for real-time updates, exclusive content, and special offers
+            Follow us on social media for launch updates, exclusive content, and special offers
           </p>
 
-          {/* Live Stats Counter */}
-          <div className="flex justify-center items-center gap-8 mt-8">
+          {/* Live Stats Counter - Updated for 2026 */}
+          <div className="flex flex-wrap justify-center items-center gap-6 mt-8">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm text-gray-500">305k+ Total Followers</span>
+              <span className="text-sm text-gray-500">8K+ Total Followers</span>
             </div>
             <div className="flex items-center gap-2">
               <FaHeart className="text-red-500 w-4 h-4" />
-              <span className="text-sm text-gray-500">15k+ Engagements</span>
+              <span className="text-sm text-gray-500">1K+ Engagements</span>
             </div>
             <div className="flex items-center gap-2">
               <FaEye className="text-blue-500 w-4 h-4" />
-              <span className="text-sm text-gray-500">2M+ Monthly Views</span>
+              <span className="text-sm text-gray-500">50K+ Monthly Views</span>
             </div>
           </div>
         </div>
 
-        {/* Social Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        {/* Social Links - Flex Layout */}
+        <div className="flex flex-wrap justify-center gap-4">
           {socialLinks.map((social, index) => (
             <a
               key={index}
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative"
+              className="group relative w-full sm:w-auto flex-1 min-w-[160px] max-w-[200px]"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
@@ -269,31 +276,31 @@ export default function SocialConnect() {
                 <div className="flex-1 text-center lg:text-left">
                   <div className="inline-flex items-center gap-2 bg-orange-100 px-4 py-2 rounded-full mb-4">
                     <FaBell className="text-orange-500 w-4 h-4 animate-swing" />
-                    <span className="text-sm font-semibold text-orange-600">Never Miss an Update</span>
+                    <span className="text-sm font-semibold text-orange-600">Get Launch Updates</span>
                   </div>
                   
                   <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-                    Stay in the <span className="text-orange-500">Loop</span>
+                    Be the <span className="text-orange-500">First</span> to Know
                   </h3>
                   
                   <p className="text-gray-600 mb-4 max-w-lg">
-                    Subscribe to our newsletter and be the first to know about new features, 
-                    promotions, and exclusive offers.
+                    Subscribe to our newsletter and be the first to know when we launch in Karachi, 
+                    plus get exclusive early bird offers.
                   </p>
 
                   {/* Benefits */}
                   <div className="flex flex-wrap justify-center lg:justify-start gap-4">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-sm text-gray-600">Weekly updates</span>
+                      <span className="text-sm text-gray-600">Launch updates</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                      <span className="text-sm text-gray-600">Exclusive offers</span>
+                      <span className="text-sm text-gray-600">Early access</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                      <span className="text-sm text-gray-600">No spam</span>
+                      <span className="text-sm text-gray-600">Exclusive offers</span>
                     </div>
                   </div>
                 </div>
@@ -317,7 +324,7 @@ export default function SocialConnect() {
                       type="submit"
                       className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-4 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 group"
                     >
-                      <span>Subscribe Now</span>
+                      <span>Join Waitlist</span>
                       <FaEnvelope className="group-hover:rotate-12 transition-transform" />
                     </button>
 
@@ -328,13 +335,13 @@ export default function SocialConnect() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                           </svg>
                         </div>
-                        <span>Thanks for subscribing! Check your inbox for confirmation.</span>
+                        <span>Thanks for joining! We'll notify you at launch.</span>
                       </div>
                     )}
                   </form>
 
                   <p className="text-xs text-gray-400 text-center mt-3">
-                    By subscribing, you agree to our Privacy Policy and Terms of Service.
+                    Be among the first 1,000 subscribers to get exclusive launch benefits!
                   </p>
                 </div>
               </div>
@@ -342,14 +349,14 @@ export default function SocialConnect() {
           </div>
         </div>
 
-        {/* Social Proof */}
+        {/* Social Proof - Updated */}
         <div className="mt-12 text-center">
           <p className="text-sm text-gray-500">
-            Join <span className="font-bold text-orange-500">300,000+</span> followers across all platforms
+            Join <span className="font-bold text-orange-500">8,000+</span> followers across all platforms
           </p>
-          <div className="flex justify-center items-center gap-4 mt-4">
+          <div className="flex flex-wrap justify-center items-center gap-3 mt-4">
             {socialLinks.slice(0, 6).map((social, index) => (
-              <div key={index} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: social.bgColor }}>
+              <div key={index} className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ backgroundColor: social.bgColor }}>
                 <social.icon style={{ color: social.color }} size={14} />
               </div>
             ))}

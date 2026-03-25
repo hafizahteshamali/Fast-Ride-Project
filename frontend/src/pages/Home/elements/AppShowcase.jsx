@@ -64,7 +64,7 @@ export default function AppShowcase() {
       description: 'Professional drivers',
       badge: '⭐',
       icon: FaStar,
-      features: ['4.8 avg rating', 'Verified drivers', 'Reviews'],
+      features: ['Verified drivers', 'Professional service', 'Ratings system'],
       color: '#FF5C00'
     },
     {
@@ -237,7 +237,7 @@ export default function AppShowcase() {
           <div className="inline-flex items-center gap-2 bg-white bg-opacity-20 backdrop-blur-lg px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4 border border-white border-opacity-30">
             <FaMobile className="text-white text-sm sm:text-base animate-bounce" />
             <span className="text-white font-semibold text-xs sm:text-sm uppercase tracking-wider">
-              Mobile Experience
+              Coming Soon to Pakistan
             </span>
           </div>
           
@@ -258,16 +258,16 @@ export default function AppShowcase() {
           {/* Stats Counter - Responsive grid */}
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mt-6 sm:mt-8">
             <div className="text-center min-w-[80px] sm:min-w-[100px]">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">100K+</div>
-              <div className="text-white text-xs sm:text-sm opacity-80">Downloads</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">Coming</div>
+              <div className="text-white text-xs sm:text-sm opacity-80">Soon</div>
             </div>
             <div className="text-center min-w-[80px] sm:min-w-[100px]">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">4.8</div>
-              <div className="text-white text-xs sm:text-sm opacity-80">App Rating</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">New</div>
+              <div className="text-white text-xs sm:text-sm opacity-80">App</div>
             </div>
             <div className="text-center min-w-[80px] sm:min-w-[100px]">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">50+</div>
-              <div className="text-white text-xs sm:text-sm opacity-80">Cities</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">Karachi</div>
+              <div className="text-white text-xs sm:text-sm opacity-80">Launch City</div>
             </div>
           </div>
         </div>
@@ -390,7 +390,7 @@ export default function AppShowcase() {
                                 ${windowWidth < 768 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} 
                                 translate-y-2 group-hover:translate-y-0
                               `}>
-                                Try Now
+                                Coming Soon
                               </button>
                             </div>
 
@@ -408,7 +408,7 @@ export default function AppShowcase() {
                           border border-white border-opacity-30
                         `}>
                           <FaStar className="text-yellow-400" size={windowWidth < 640 ? 8 : 10} />
-                          <span className="text-white text-[8px] sm:text-xs font-semibold">New</span>
+                          <span className="text-white text-[8px] sm:text-xs font-semibold">Launching</span>
                         </div>
 
                         {/* Quick Action Button - Adjusted for mobile */}
@@ -519,11 +519,11 @@ export default function AppShowcase() {
             transition-all duration-300 overflow-hidden">
             <span className="absolute inset-0 bg-gradient-to-r from-[#FF991C] to-[#FF5C00] opacity-0 group-hover:opacity-10 transition-opacity"></span>
             <FaMobile className="animate-bounce text-sm sm:text-base" />
-            <span>Download the App</span>
+            <span>Join Waitlist</span>
             <FaChevronRight className="group-hover:translate-x-2 transition-transform text-sm sm:text-base" />
           </button>
           <p className="text-white text-xs sm:text-sm opacity-80 mt-3 sm:mt-4">
-            Available on iOS and Android • Free to download
+            Coming soon to Pakistan • Be the first to know
           </p>
         </div>
       </div>

@@ -12,7 +12,8 @@ import {
   FaMobile,
   FaCheckCircle,
   FaAward,
-  FaHeadset
+  FaHeadset,
+  FaMotorcycle
 } from 'react-icons/fa';
 import { useState } from 'react';
 
@@ -45,41 +46,40 @@ export default function HeroSection() {
                 <FaRocket className="text-white w-3 h-3" />
               </div>
               <span className="text-sm font-bold" style={{ color: 'var(--primary-orange)' }}>
-                PREMIUM SERVICES
+                LAUNCHING 2026
               </span>
             </div>
 
             {/* Main Heading */}
             <div className="space-y-3">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                <span className="block" style={{ color: 'var(--gray-900)' }}>Premium</span>
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+                <span className="block" style={{ color: 'var(--gray-900)' }}>Pakistan's Newest</span>
                 <span className="block relative">
-                  <span style={{ color: 'var(--primary-orange)' }}>Services</span>
+                  <span style={{ color: 'var(--primary-orange)' }}>Mobility Platform</span>
                   <span className="absolute -bottom-2 left-0 w-24 h-1 bg-orange-500 rounded-full"></span>
                 </span>
-                <span className="block" style={{ color: 'var(--gray-900)' }}>for Modern Living</span>
+                <span className="block" style={{ color: 'var(--gray-900)' }}>Coming to Karachi</span>
               </h1>
             </div>
 
             {/* Description */}
             <p className="text-gray-600 text-lg leading-relaxed max-w-lg">
-              From quick rides to instant deliveries, we offer a comprehensive range of services 
-              designed to make your life easier, faster, and more convenient.
+              Pakistan's newest ride-sharing and delivery platform. Join our waitlist and be among the first to experience premium mobility services in Karachi.
             </p>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-3 gap-4 py-4">
-              <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100">
-                <p className="text-2xl font-bold text-orange-500">50k+</p>
-                <p className="text-xs text-gray-500">Active Users</p>
+            {/* Stats Cards - Flex Layout */}
+            <div className="flex flex-wrap gap-4 py-4">
+              <div className="flex-1 min-w-[100px] bg-white rounded-xl p-4 shadow-md border border-gray-100 text-center">
+                <p className="text-2xl font-bold text-orange-500">2.5K+</p>
+                <p className="text-xs text-gray-500">Waitlist Users</p>
               </div>
-              <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100">
+              <div className="flex-1 min-w-[100px] bg-white rounded-xl p-4 shadow-md border border-gray-100 text-center">
                 <p className="text-2xl font-bold text-orange-500">4.9</p>
-                <p className="text-xs text-gray-500">App Rating</p>
+                <p className="text-xs text-gray-500">Beta Rating</p>
               </div>
-              <div className="bg-white rounded-xl p-4 shadow-md border border-gray-100">
-                <p className="text-2xl font-bold text-orange-500">100+</p>
-                <p className="text-xs text-gray-500">Cities</p>
+              <div className="flex-1 min-w-[100px] bg-white rounded-xl p-4 shadow-md border border-gray-100 text-center">
+                <p className="text-2xl font-bold text-orange-500">Karachi</p>
+                <p className="text-xs text-gray-500">Launch City</p>
               </div>
             </div>
 
@@ -87,15 +87,15 @@ export default function HeroSection() {
             <div className="flex flex-wrap gap-3">
               <div className="flex items-center space-x-2 bg-white border border-gray-200 px-4 py-2.5 rounded-lg shadow-sm">
                 <FaClock className="text-green-500 w-4 h-4" />
-                <span className="text-sm font-medium text-gray-700">24/7 Availability</span>
+                <span className="text-sm font-medium text-gray-700">24/7 Coming Soon</span>
               </div>
               <div className="flex items-center space-x-2 bg-white border border-gray-200 px-4 py-2.5 rounded-lg shadow-sm">
                 <FaShieldAlt className="text-blue-500 w-4 h-4" />
-                <span className="text-sm font-medium text-gray-700">Fully Insured</span>
+                <span className="text-sm font-medium text-gray-700">Safety First</span>
               </div>
               <div className="flex items-center space-x-2 bg-white border border-gray-200 px-4 py-2.5 rounded-lg shadow-sm">
                 <FaUsers className="text-purple-500 w-4 h-4" />
-                <span className="text-sm font-medium text-gray-700">1M+ Users</span>
+                <span className="text-sm font-medium text-gray-700">Community Driven</span>
               </div>
             </div>
 
@@ -110,7 +110,7 @@ export default function HeroSection() {
                 onMouseEnter={() => setHoverButton('explore')}
                 onMouseLeave={() => setHoverButton(null)}
               >
-                <span>Explore Services</span>
+                <span>Join Waitlist</span>
                 <FaArrowRight className={hoverButton === 'explore' ? 'translate-x-1' : ''} style={{ transition: 'transform 0.2s' }} />
               </button>
               
@@ -126,23 +126,23 @@ export default function HeroSection() {
                 onMouseLeave={() => setHoverButton(null)}
               >
                 <FaPlay className="w-4 h-4" />
-                <span>Watch Demo</span>
+                <span>Watch Preview</span>
               </button>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex items-center gap-6 pt-2 text-sm text-gray-500 border-t border-gray-200 pt-6">
+            <div className="flex flex-wrap items-center gap-6 pt-2 text-sm text-gray-500 border-t border-gray-200 pt-6">
               <div className="flex items-center gap-2">
                 <FaCheckCircle className="text-green-500 w-5 h-5" />
-                <span>Secure payments</span>
+                <span>Coming Soon</span>
               </div>
               <div className="flex items-center gap-2">
                 <FaHeadset className="text-blue-500 w-5 h-5" />
-                <span>24/7 support</span>
+                <span>Launch Support</span>
               </div>
               <div className="flex items-center gap-2">
                 <FaAward className="text-yellow-500 w-5 h-5" />
-                <span>ISO certified</span>
+                <span>Premium Service</span>
               </div>
             </div>
           </div>
@@ -171,17 +171,17 @@ export default function HeroSection() {
                         <FaStar key={star} className="text-yellow-400 w-4 h-4" />
                       ))}
                     </div>
-                    <span className="text-sm font-bold text-gray-800">4.9</span>
+                    <span className="text-sm font-bold text-gray-800">4.9 Beta</span>
                   </div>
                 </div>
 
                 <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-4 py-3 rounded-lg shadow-lg">
                   <div className="flex items-center gap-3">
                     <FaMobile className="text-orange-500 w-5 h-5" />
-                    <span className="text-sm font-semibold text-gray-800">Download App</span>
+                    <span className="text-sm font-semibold text-gray-800">Coming Soon</span>
                     <div className="flex gap-1">
-                      <span className="text-xs bg-black text-white px-2 py-1 rounded">iOS</span>
-                      <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">Android</span>
+                      <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded">iOS</span>
+                      <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded">Android</span>
                     </div>
                   </div>
                 </div>
@@ -191,11 +191,11 @@ export default function HeroSection() {
               <div className="absolute -left-8 top-1/4 bg-white rounded-xl shadow-xl p-4 hidden lg:block">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <FaRocket className="text-green-600 w-5 h-5" />
+                    <FaUsers className="text-green-600 w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Live Status</p>
-                    <p className="text-sm font-bold text-gray-800">234 Active Rides</p>
+                    <p className="text-xs text-gray-500">Waitlist Status</p>
+                    <p className="text-sm font-bold text-gray-800">2,500+ Members</p>
                   </div>
                 </div>
               </div>
@@ -203,11 +203,11 @@ export default function HeroSection() {
               <div className="absolute -right-8 bottom-1/3 bg-white rounded-xl shadow-xl p-4 hidden lg:block">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <FaShieldAlt className="text-blue-600 w-5 h-5" />
+                    <FaMotorcycle className="text-blue-600 w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Safety Rating</p>
-                    <p className="text-sm font-bold text-gray-800">100% Secure</p>
+                    <p className="text-xs text-gray-500">Driver Partners</p>
+                    <p className="text-sm font-bold text-gray-800">100+ Onboarded</p>
                   </div>
                 </div>
               </div>

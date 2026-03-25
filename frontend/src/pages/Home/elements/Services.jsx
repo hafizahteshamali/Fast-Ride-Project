@@ -37,41 +37,41 @@ export default function Services() {
         'Affordable rates'
       ],
       stats: [
-        { label: 'Active Riders', value: '1000+' },
-        { label: 'Cities', value: '50+' },
-        { label: 'Avg. Rating', value: '4.8' }
+        { label: 'Active Riders', value: 'Coming Soon' },
+        { label: 'Cities', value: 'Karachi' },
+        { label: 'Avg. Rating', value: 'New' }
       ],
       imageUrl: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       bgColor: 'from-[#FF991C] to-[#FF5C00]',
       benefits: [
-        { icon: FaClock, text: 'Quick pickup within 5 mins' },
+        { icon: FaClock, text: 'Quick pickup in minutes' },
         { icon: FaShieldAlt, text: 'Safe rides guaranteed' },
-        { icon: FaStar, text: 'Top-rated drivers' }
+        { icon: FaStar, text: 'Professional drivers' }
       ]
     },
     delivery: {
       id: 'delivery',
       title: 'Delivery',
       description: 'Get your packages delivered quickly and safely to your doorstep.',
-      longDescription: 'Same-day delivery available. Track your orders in real-time and connect with delivery partners.',
+      longDescription: 'Same-day delivery available across major cities. Track your orders in real-time and connect with delivery partners.',
       icon: FaTruck,
       color: '#FF5C00',
       features: [
         'Same-day delivery',
         'Real-time tracking',
-        'Package insurance',
+        'Package safety',
         'Flexible scheduling',
         'SMS notifications'
       ],
       stats: [
-        { label: 'Deliveries/Day', value: '10K+' },
-        { label: 'Delivery Partners', value: '500+' },
-        { label: 'Success Rate', value: '99%' }
+        { label: 'Delivery Partners', value: 'Registering' },
+        { label: 'Coverage', value: '3 Cities' },
+        { label: 'Success Rate', value: 'Launching' }
       ],
       imageUrl: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       bgColor: 'from-[#FF5C00] to-[#FF991C]',
       benefits: [
-        { icon: FaClock, text: 'Delivery in 30 mins' },
+        { icon: FaClock, text: 'Fast delivery' },
         { icon: FaMapMarkerAlt, text: 'Live tracking' },
         { icon: FaMotorcycle, text: 'Dedicated riders' }
       ]
@@ -80,7 +80,7 @@ export default function Services() {
       id: 'wallet',
       title: 'Money',
       description: 'Send and receive money instantly with our secure digital wallet.',
-      longDescription: 'Easy peer-to-peer transfers, bill payments, and financial services in one app.',
+      longDescription: 'Easy peer-to-peer transfers, bill payments, and financial services in one app. Coming to Pakistan soon!',
       icon: FaWallet,
       color: '#FF991C',
       features: [
@@ -91,9 +91,9 @@ export default function Services() {
         'Rewards program'
       ],
       stats: [
-        { label: 'Transactions', value: '5M+' },
-        { label: 'Users', value: '500K+' },
-        { label: 'Processing', value: '24/7' }
+        { label: 'Coming', value: 'Soon' },
+        { label: 'Security', value: 'Bank-grade' },
+        { label: 'Support', value: '24/7' }
       ],
       imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       bgColor: 'from-[#FF991C] to-[#FF5C00]',
@@ -130,7 +130,7 @@ export default function Services() {
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FFF1E0] to-[#FFE4D4] px-4 py-2 rounded-full mb-4 border border-[#FF991C] border-opacity-30">
             <FaStar className="text-[#FF991C] animate-pulse" />
             <span className="text-[#FF991C] font-semibold text-sm uppercase tracking-wider">
-              What We Offer
+              Coming Soon to Pakistan
             </span>
           </div>
           
@@ -245,7 +245,7 @@ export default function Services() {
               <div className="grid grid-cols-3 gap-4 p-6 bg-gradient-to-r from-[#FFF1E0] to-[#FFE4D4] rounded-2xl">
                 {currentService.stats.map((stat, idx) => (
                   <div key={idx} className="text-center">
-                    <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+                    <div className="text-xl font-bold text-gray-900">{stat.value}</div>
                     <div className="text-sm text-gray-600">{stat.label}</div>
                   </div>
                 ))}
@@ -259,7 +259,7 @@ export default function Services() {
                   transition-all duration-300 overflow-hidden"
               >
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></span>
-                <span>Get Started with {currentService.title}</span>
+                <span>Get Early Access</span>
                 <FaArrowRight className="group-hover:translate-x-2 transition-transform" />
               </button>
             </div>
@@ -287,27 +287,25 @@ export default function Services() {
                       </div>
                       <div>
                         <p className="font-bold text-gray-900">{currentService.title} Service</p>
-                        <p className="text-xs text-gray-500">Available 24/7</p>
+                        <p className="text-xs text-gray-500">Launching in Pakistan</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-1">
                       <FaStar className="text-yellow-400" />
-                      <span className="font-bold text-gray-900">4.8</span>
+                      <span className="font-bold text-gray-900">Coming Soon</span>
                     </div>
                   </div>
 
                   {/* Progress Bar */}
                   <div className="mt-3">
                     <div className="flex justify-between text-xs mb-1">
-                      <span className="text-gray-600">Response Time</span>
-                      <span className="font-bold text-gray-900">
-                        {activeTab === 'ride' ? '< 3 mins' : activeTab === 'delivery' ? '< 30 mins' : 'Instant'}
-                      </span>
+                      <span className="text-gray-600">Ready for Launch</span>
+                      <span className="font-bold text-gray-900">2026</span>
                     </div>
                     <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
                       <div 
                         className="h-full bg-gradient-to-r from-[#FF991C] to-[#FF5C00] rounded-full"
-                        style={{ width: activeTab === 'ride' ? '95%' : activeTab === 'delivery' ? '85%' : '100%' }}
+                        style={{ width: '75%' }}
                       ></div>
                     </div>
                   </div>
@@ -317,7 +315,7 @@ export default function Services() {
                 <div className="absolute top-6 right-6 bg-white bg-opacity-95 backdrop-blur-lg rounded-full px-4 py-2 shadow-lg">
                   <span className="font-bold text-gray-900">Starting at </span>
                   <span className="text-xl font-bold text-[#FF991C]">
-                    ₹{activeTab === 'ride' ? '49' : activeTab === 'delivery' ? '39' : '0'}
+                    ₨{activeTab === 'ride' ? '99' : activeTab === 'delivery' ? '79' : '0'}
                   </span>
                 </div>
               </div>
@@ -334,7 +332,7 @@ export default function Services() {
           <p className="text-gray-600">
             Want to know more about our services?{' '}
             <button className="text-[#FF991C] font-semibold hover:text-[#FF5C00] transition-colors underline">
-              View all services →
+              Join waitlist →
             </button>
           </p>
         </div>
