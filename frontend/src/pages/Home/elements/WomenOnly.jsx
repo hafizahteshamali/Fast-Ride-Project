@@ -74,12 +74,12 @@ const WomenOnly = () => {
   ];
 
   const benefits = [
-    { icon: FaClock, title: "Quick Response", text: "Avg 5-min pickup", description: "Fastest response time" },
-    { icon: FaLock, title: "Safe & Secure", text: "End-to-end encrypted", description: "Privacy protected" },
-    { icon: FaHandsHelping, title: "Supportive Community", text: "Women helping women", description: "Join 100+ riders" },
-    { icon: FaMobileAlt, title: "Easy Booking", text: "One-tap booking", description: "Under 10 seconds" },
+    { icon: FaClock, title: "Quick Response", text: "Avg 5-min pickup", description: "Fastest response time in Karachi" },
+    { icon: FaLock, title: "Safe & Secure", text: "End-to-end encrypted", description: "Your privacy protected" },
+    { icon: FaHandsHelping, title: "Supportive Community", text: "Women helping women", description: "Join 100+ Karachi riders" },
+    { icon: FaMobileAlt, title: "Easy Booking", text: "One-tap booking", description: "Book in under 10 seconds" },
     { icon: FaMoneyBillWave, title: "Fair Pricing", text: "Competitive rates", description: "No surge pricing" },
-    { icon: FaChartLine, title: "Track Record", text: "99% satisfaction", description: "5-star rated" }
+    { icon: FaChartLine, title: "Track Record", text: "99% satisfaction", description: "5-star rated by Karachi women" }
   ];
 
   const stats = [
@@ -88,18 +88,35 @@ const WomenOnly = () => {
     { value: "24/7", label: "Support", suffix: "", icon: FaClock, target: 24 }
   ];
 
+  // Updated testimonials with Karachi-based Pakistani girls
   const testimonials = [
     {
-      name: "Priya Sharma",
-      role: "Regular User",
-      text: "As a woman who travels late at night for work, this service has been a game-changer.",
-      rating: 5
+      name: "Ayesha Khan",
+      role: "University Student, DHA Karachi",
+      text: "As a student who travels late from university in DHA, this service has been a lifesaver. The female riders are professional and make me feel completely safe.",
+      rating: 5,
+      location: "Karachi"
     },
     {
-      name: "Neha Patel",
-      role: "Female Rider",
-      text: "Being a rider with Women Only has been empowering. I'm helping other women feel safe.",
-      rating: 5
+      name: "Fatima Ahmed",
+      role: "Software Engineer, Gulshan-e-Iqbal",
+      text: "I use Women Only for my daily commute to corporate office in Gulshan. The drivers are punctual, friendly, and I feel secure knowing it's a female rider.",
+      rating: 5,
+      location: "Karachi"
+    },
+    {
+      name: "Zara Malik",
+      role: "Business Owner, Clifton",
+      text: "Being a female entrepreneur, I often have late meetings in Clifton. This service gives me peace of mind. The drivers are well-trained and very professional.",
+      rating: 5,
+      location: "Karachi"
+    },
+    {
+      name: "Hira Tariq",
+      role: "Medical Student, Saddar",
+      text: "My night shifts at the hospital are no longer stressful. Women Only provides safe rides with amazing female drivers who understand our needs.",
+      rating: 5,
+      location: "Karachi"
     }
   ];
 
@@ -188,7 +205,7 @@ const WomenOnly = () => {
         <div className="text-center mb-8 sm:mb-10 md:mb-12">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FF991C]/10 to-[#FF5C00]/10 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 mb-3 sm:mb-4 backdrop-blur-sm border border-[#FF991C]/20">
             <FaFemale className="text-[#FF5C00] text-sm sm:text-lg animate-pulse" />
-            <span className="text-[#FF5C00] font-semibold text-xs sm:text-sm">Women's Exclusive Service</span>
+            <span className="text-[#FF5C00] font-semibold text-xs sm:text-sm">Women's Exclusive Service - Karachi</span>
             <MdVerified className="text-[#FF991C] text-sm sm:text-lg" />
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">
@@ -198,7 +215,7 @@ const WomenOnly = () => {
             </span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Empowering female passengers with the choice to ride with verified female drivers
+            Empowering female passengers across Karachi with the choice to ride with verified female drivers
           </p>
         </div>
 
@@ -221,7 +238,7 @@ const WomenOnly = () => {
                   <div className="p-6 sm:p-8 md:p-10 lg:p-12 w-full">
                     <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 mb-4 sm:mb-6">
                       <FaFemale className="text-white text-sm sm:text-lg animate-pulse" />
-                      <span className="text-white text-xs sm:text-sm font-semibold tracking-wide">Women Only • Beta</span>
+                      <span className="text-white text-xs sm:text-sm font-semibold tracking-wide">Women Only • Karachi</span>
                     </div>
                     
                     <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
@@ -231,7 +248,7 @@ const WomenOnly = () => {
                     </h3>
                     
                     <p className="text-white/90 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 leading-relaxed">
-                      Female passengers can now exclusively request female riders. Experience the comfort of traveling with women who prioritize your safety.
+                      Female passengers in Karachi can now exclusively request female riders. Experience the comfort of traveling with women who prioritize your safety.
                     </p>
 
                     {/* Stats - Responsive grid */}
@@ -287,7 +304,7 @@ const WomenOnly = () => {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                     <div className="flex items-center gap-2">
                       <FaStar className="text-[#FF991C] text-xl sm:text-2xl animate-spin-slow" />
-                      <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Why Women Choose Us</h3>
+                      <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Why Karachi Women Choose Us</h3>
                     </div>
                     {/* Carousel Controls - Responsive */}
                     <div className="flex gap-2">
@@ -314,7 +331,7 @@ const WomenOnly = () => {
                     </div>
                   </div>
                   <p className="text-sm sm:text-base text-gray-600">
-                    Join our growing community of women who trust us for safe and comfortable rides
+                    Join our growing community of Karachi women who trust us for safe and comfortable rides
                   </p>
                 </div>
 
@@ -399,10 +416,10 @@ const WomenOnly = () => {
                   })}
                 </div>
 
-                {/* Testimonials & Trust Badge - Responsive */}
+                {/* Testimonials with Karachi Women - Updated */}
                 <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-200">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900">What Women Say</h4>
+                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900">Passengers Reviews</h4>
                     <div className="flex items-center gap-1">
                       <div className="flex">
                         {[...Array(5)].map((_, i) => (
@@ -410,19 +427,21 @@ const WomenOnly = () => {
                         ))}
                       </div>
                       <span className="text-[10px] sm:text-xs font-semibold">5.0</span>
-                      <span className="text-[10px] sm:text-xs text-gray-500">(24 reviews)</span>
+                      <span className="text-[10px] sm:text-xs text-gray-500">(100+ reviews)</span>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4">
-                    {testimonials.map((testimonial, idx) => (
+                    {testimonials.slice(0, 4).map((testimonial, idx) => (
                       <div key={idx} className="bg-gray-50 rounded-lg p-2 sm:p-3 hover:bg-orange-50 transition-all duration-300">
-                        <p className="text-[10px] sm:text-xs text-gray-600 italic line-clamp-2">"{testimonial.text}"</p>
+                        <p className="text-[10px] sm:text-xs text-gray-600 italic line-clamp-3">"{testimonial.text}"</p>
                         <div className="flex items-center gap-2 mt-1.5 sm:mt-2">
                           <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-br from-[#FF991C] to-[#FF5C00] flex items-center justify-center text-white">
                             <FaFemale size={10} className="sm:text-xs" />
                           </div>
-                          <span className="text-[10px] sm:text-xs font-semibold text-gray-900">{testimonial.name}</span>
-                          <span className="text-[8px] sm:text-xs text-gray-500 hidden xs:inline">{testimonial.role}</span>
+                          <div className="flex-1 min-w-0">
+                            <span className="text-[10px] sm:text-xs font-semibold text-gray-900 block truncate">{testimonial.name}</span>
+                            <span className="text-[8px] sm:text-xs text-gray-500 block truncate">{testimonial.role}</span>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -443,7 +462,7 @@ const WomenOnly = () => {
                         ))}
                       </div>
                       <div>
-                        <p className="text-xs sm:text-sm font-semibold text-gray-900">100+ Active Riders</p>
+                        <p className="text-xs sm:text-sm font-semibold text-gray-900">100+ Active Riders in Karachi</p>
                         <p className="text-[10px] sm:text-xs text-gray-500">Growing community daily</p>
                       </div>
                     </div>
