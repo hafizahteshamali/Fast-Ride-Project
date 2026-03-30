@@ -7,8 +7,10 @@ import Footprint from "./elements/Footprint";
 import Hero from "./elements/Hero";
 import HowItWorks from "./elements/HowItWorks";
 import Partners from "./elements/Partners";
+import RentADriver from "./elements/RentADriver";
 import Safety from "./elements/Safety";
 import Services from "./elements/Services";
+import WomenOnly from "./elements/WomenOnly";
 
 export default function Home() {
   return (
@@ -16,6 +18,8 @@ export default function Home() {
       <Hero />
       <Services />
       <HowItWorks />
+      <WomenOnly />
+      <RentADriver />
       <AppShowcase />
       <Features />
       <Safety />
