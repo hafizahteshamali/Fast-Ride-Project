@@ -333,7 +333,6 @@ const LiveMap = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <FaCompass className="w-6 h-6 sm:w-8 sm:h-8" style={{ color: 'var(--primary-orange)' }} />
               <h1 className="text-lg sm:text-xl md:text-2xl font-bold" style={{ color: 'var(--gray-900)' }}>
                 Live Fleet Tracking
               </h1>

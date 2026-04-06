@@ -213,7 +213,6 @@ const SystemConfiguration = () => {
       {/* Header Section */}
       <div className="mb-8">
         <div className="flex items-center space-x-3 mb-2">
-          <FaCog className="w-8 h-8" style={{ color: 'var(--primary-orange)' }} />
           <h1 className="text-3xl font-bold" style={{ color: 'var(--gray-900)' }}>
             System Configuration
           </h1>
