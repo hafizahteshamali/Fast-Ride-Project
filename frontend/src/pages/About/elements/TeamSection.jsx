@@ -4,25 +4,18 @@ import { FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
 
 const team = [
   {
-    name: 'John Smith',
-    role: 'CEO & Co-founder',
-    bio: '10+ years in mobility tech, leading TezRide\'s vision for Pakistan',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC1XNkm9ZIsKAObeWJz_Gr4pkfhiK7NTlLIQ&s',
+    name: 'Syed Shahrukh Hassan',
+    role: 'CEO (Chief Executive Officer)',
+    bio: 'Leading TezRide vision and strategy in Pakistan',
+    image: '/assets/images/home/syed-shahrukh-hassan.png',
     color: 'var(--primary-orange)'
   },
   {
-    name: 'Sarah Johnson',
-    role: 'CTO & Co-founder',
-    bio: 'Tech visionary with expertise in scalable platforms',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnvTbL5WSUuKYddpZI-SXU6JbudFjCtFCGuw&s',
+    name: 'Syed Mair Hassan',
+    role: 'COO (Chief Operations Officer)',
+    bio: 'Managing operations and ensuring smooth execution',
+    image: '/assets/images/home/syed-mair-hassan.png',
     color: 'var(--secondary-orange)'
-  },
-  {
-    name: 'Michael Chen',
-    role: 'Head of Operations',
-    bio: 'Logistics expert ensuring smooth rides and deliveries',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1k4s9nlyItll_j3yUsfgxYoycieFgHkyKmA&s',
-    color: 'var(--primary-orange)'
   }
 ];
 
@@ -44,30 +37,27 @@ export default function TeamSection() {
         {/* Team Grid */}
         <div className="flex flex-wrap justify-center gap-8">
           {team.map((member, index) => (
-            <div key={index} className="w-full md:w-80 group">
+            <div key={index} className="w-full md:w-[45%] group">
               <div className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-4">
                 {/* Image Container */}
-                <div className="relative h-80 overflow-hidden">
+                <div className="relative md:h-[400px] overflow-hidden pt-5 bg-white">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
                   />
                   {/* Social Links */}
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
-                    <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
-                      style={{ color: 'var(--white)' }}
+                    <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300"
                     >
                       <FaLinkedin size={18} />
                     </button>
-                    <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
-                      style={{ color: 'var(--white)' }}
+                    <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300"
                     >
                       <FaTwitter size={18} />
                     </button>
-                    <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
-                      style={{ color: 'var(--white)' }}
+                    <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300"
                     >
                       <FaEnvelope size={18} />
                     </button>

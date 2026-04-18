@@ -26,7 +26,7 @@ export default function CTA() {
             {/* Coming Soon Badge */}
             <div className="inline-flex items-center gap-2 bg-white bg-opacity-20 backdrop-blur-lg px-4 py-2 rounded-full mb-6">
               <FaClock className="animate-pulse" size={14} />
-              <span className="text-sm font-semibold">Launching 2026 in Karachi</span>
+              <span className="text-sm font-semibold text-[var(--primary-orange)]">Launching 2026 in Karachi</span>
             </div>
 
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -39,14 +39,14 @@ export default function CTA() {
             {/* CTA Buttons - Changed to Waitlist */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <button
-                className="group relative px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-2xl hover:scale-105 flex items-center justify-center space-x-2 text-white bg-white bg-opacity-20 backdrop-blur-lg border-2 border-white hover:bg-white hover:text-[#FF5C00] overflow-hidden"
+                className="group relative px-8 py-4 rounded-xl bg-white text-[#FF5C00] font-semibold transition-all duration-300 hover:shadow-2xl hover:scale-105 flex items-center justify-center space-x-2 bg-opacity-20 backdrop-blur-lg border-2 border-white hover:bg-white hover:text-[#FF5C00] overflow-hidden"
               >
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 <FaApple size={24} className="relative z-10" />
                 <span className="relative z-10">Coming Soon on App Store</span>
               </button>
               <button
-                className="group relative px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-2xl hover:scale-105 flex items-center justify-center space-x-2 text-white bg-white bg-opacity-20 backdrop-blur-lg border-2 border-white hover:bg-white hover:text-[#FF5C00] overflow-hidden"
+                className="group relative px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-2xl hover:scale-105 flex items-center justify-center space-x-2 bg-white text-[#FF5C00] bg-opacity-20 backdrop-blur-lg border-2 border-white hover:bg-white hover:text-[#FF5C00] overflow-hidden"
               >
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
                 <FaGoogle size={24} className="relative z-10" />
