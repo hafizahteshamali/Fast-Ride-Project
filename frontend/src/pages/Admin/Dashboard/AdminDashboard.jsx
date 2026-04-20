@@ -43,15 +43,15 @@ const AdminDashboard = () => {
 
   // Sample data - In real scenario, fetch from API
   const yearlyIncomeData = {
-    2025: [35000, 42000, 48000, 51000, 58000, 62000, 71000, 78000, 82000, 89000, 95000, 102000],
-    2026: [45000, 52000, 48000, 61000, 75000, 82000, 91000, 88000, 95000, 102000, 115000, 125000]
+    2025: [12250, 14700, 16800, 17850, 20300, 21700, 24850, 27300, 28700, 31150, 33250, 35700],
+    2026: [15750, 18200, 16800, 21350, 26250, 28700, 31925, 30800, 33250, 35700, 40250, 43750]
   };
 
   const monthlyIncome = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
       {
-        label: 'Total Income (₹)',
+        label: 'Total Income (₨)',
         data: yearlyIncomeData[selectedYear],
         borderColor: '#FF991C',
         backgroundColor: 'rgba(255, 153, 28, 0.1)',
@@ -70,16 +70,16 @@ const AdminDashboard = () => {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
       {
-        label: 'Platform Commission (₹)',
-        data: [11250, 13000, 12000, 15250, 18750, 20500, 22750, 22000, 23750, 25500, 28750, 31250],
+        label: 'Platform Commission (₨)',
+        data: [3938, 4550, 4200, 5338, 6563, 7175, 7963, 7700, 8313, 8925, 10063, 10938],
         backgroundColor: 'rgba(54, 162, 235, 0.7)',
         borderColor: '#36A2EB',
         borderWidth: 1,
         borderRadius: 8,
       },
       {
-        label: 'Driver Earnings (₹)',
-        data: [24750, 28600, 26400, 33550, 41250, 45100, 50050, 48400, 52250, 56100, 63250, 68750],
+        label: 'Driver Earnings (₨)',
+        data: [8663, 10010, 9240, 11743, 14438, 15785, 17518, 16940, 18288, 19635, 22138, 24063],
         backgroundColor: 'rgba(75, 192, 192, 0.7)',
         borderColor: '#4BC0C0',
         borderWidth: 1,
@@ -152,7 +152,7 @@ const AdminDashboard = () => {
         },
         ticks: {
           callback: function(value) {
-            return '₹' + value.toLocaleString();
+            return '₨' + value.toLocaleString();
           }
         }
       },
@@ -182,7 +182,7 @@ const AdminDashboard = () => {
             const value = context.raw || 0;
             const total = context.dataset.data.reduce((a, b) => a + b, 0);
             const percentage = ((value / total) * 100).toFixed(1);
-            return `${label}: ${value}% (₹${((total * value) / 100).toLocaleString()})`;
+            return `${label}: ${value}% (₨${((total * value) / 100).toLocaleString()})`;
           }
         }
       }
@@ -198,7 +198,7 @@ const AdminDashboard = () => {
   const statsCards = [
     {
       title: 'Total Yearly Income',
-      value: `₹${totalYearlyIncome.toLocaleString()}`,
+      value: `₨${totalYearlyIncome.toLocaleString()}`,
       change: '+12.5%',
       changeType: 'up',
       icon: <FaMoneyBillWave className="text-3xl" />,
@@ -207,7 +207,7 @@ const AdminDashboard = () => {
     },
     {
       title: 'Platform Commission',
-      value: `₹${totalPlatformCommission.toLocaleString()}`,
+      value: `₨${totalPlatformCommission.toLocaleString()}`,
       change: '+8.2%',
       changeType: 'up',
       icon: <FaChartLine className="text-3xl" />,
@@ -225,7 +225,7 @@ const AdminDashboard = () => {
     },
     {
       title: 'Avg Income/Ride',
-      value: `₹${Math.round(avgIncomePerRide).toLocaleString()}`,
+      value: `₨${Math.round(avgIncomePerRide).toLocaleString()}`,
       change: '+2.3%',
       changeType: 'up',
       icon: <FaUsers className="text-3xl" />,
@@ -371,17 +371,17 @@ const AdminDashboard = () => {
             </thead>
             <tbody className="divide-y divide-gray-50">
               {[
-                { id: '#TRX001', driver: 'Rahul Sharma', amount: 450, commission: 112, status: 'Completed', date: '2026-04-20' },
-                { id: '#TRX002', driver: 'Priya Patel', amount: 380, commission: 95, status: 'Completed', date: '2026-04-20' },
-                { id: '#TRX003', driver: 'Amit Kumar', amount: 520, commission: 130, status: 'Pending', date: '2026-04-19' },
-                { id: '#TRX004', driver: 'Neha Singh', amount: 310, commission: 77, status: 'Completed', date: '2026-04-19' },
-                { id: '#TRX005', driver: 'Vikram Verma', amount: 670, commission: 167, status: 'Processing', date: '2026-04-18' },
+                { id: '#TRX001', driver: 'Rajesh Sharma', amount: 133, commission: 33, status: 'Completed', date: '2026-04-20' },
+                { id: '#TRX002', driver: 'Priya Patel', amount: 133, commission: 33, status: 'Completed', date: '2026-04-20' },
+                { id: '#TRX003', driver: 'Amit Kumar', amount: 182, commission: 46, status: 'Pending', date: '2026-04-19' },
+                { id: '#TRX004', driver: 'Neha Singh', amount: 109, commission: 27, status: 'Completed', date: '2026-04-19' },
+                { id: '#TRX005', driver: 'Vikram Verma', amount: 235, commission: 59, status: 'Processing', date: '2026-04-18' },
               ].map((transaction, idx) => (
                 <tr key={idx} className="hover:bg-gray-50 transition-colors">
                   <td className="py-3 text-sm font-medium text-gray-800">{transaction.id}</td>
                   <td className="py-3 text-sm text-gray-600">{transaction.driver}</td>
-                  <td className="py-3 text-sm font-semibold text-green-600">₹{transaction.amount}</td>
-                  <td className="py-3 text-sm text-gray-600">₹{transaction.commission}</td>
+                  <td className="py-3 text-sm font-semibold text-green-600">₨{transaction.amount}</td>
+                  <td className="py-3 text-sm text-gray-600">₨{transaction.commission}</td>
                   <td className="py-3">
                     <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
                       transaction.status === 'Completed' ? 'bg-green-100 text-green-700' :

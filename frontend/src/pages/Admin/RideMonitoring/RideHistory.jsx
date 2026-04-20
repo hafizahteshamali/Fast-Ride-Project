@@ -292,10 +292,13 @@ const RideHistory = () => {
 
   // Format currency
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
+    const pkrAmount = amount * 28;
+    return new Intl.NumberFormat('en-PK', {
       style: 'currency',
-      currency: 'USD'
-    }).format(amount);
+      currency: 'PKR',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(pkrAmount);
   };
 
   // Get status badge

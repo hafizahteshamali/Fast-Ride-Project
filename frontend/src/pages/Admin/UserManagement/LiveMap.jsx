@@ -136,7 +136,7 @@ const LiveMap = () => {
           lng: centerLng + (Math.random() - 0.5) * offset * 2,
           address: `${Math.floor(Math.random() * 900) + 100} Broadway, New York, NY`
         },
-        fare: `$${(Math.random() * 30 + 10).toFixed(2)}`,
+        fare: `₨${((Math.random() * 30 + 10) * 28).toFixed(2)}`,
         distance: `${(Math.random() * 10 + 2).toFixed(1)} miles`,
         duration: `${Math.floor(Math.random() * 30) + 10} mins`,
         progress: Math.random() * 100
