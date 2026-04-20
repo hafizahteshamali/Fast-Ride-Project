@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { 
   FaBars, 
   FaBell,
   FaSearch,
   FaUserCircle,
-  FaChevronDown
+  FaChevronDown,
+  FaSignOutAlt
 } from 'react-icons/fa';
 import Sidebar from '../components/Sidebar';
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -19,6 +21,19 @@ const AdminLayout = () => {
 
   const closeSidebar = () => {
     setSidebarOpen(false);
+  };
+
+  const handleLogout = () => {
+    // Clear any auth tokens/storage
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminUser');
+    sessionStorage.clear();
+    
+    // Redirect to login page
+    navigate('/auth/login');
+    
+    // Close profile menu
+    setShowProfileMenu(false);
   };
 
   const currentDate = new Date().toLocaleDateString('en-US', { 
@@ -110,10 +125,7 @@ const AdminLayout = () => {
                         <p className="text-xs text-gray-500">admin@example.com</p>
                       </div>
                       <button 
-                        onClick={() => {
-                          setShowProfileMenu(false);
-                          // Add logout logic
-                        }}
+                        onClick={handleLogout}
                         className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-2"
                       >
                         <FaSignOutAlt size={16} />
@@ -141,7 +153,7 @@ const AdminLayout = () => {
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto bg-gradient-to-br from-gray-50 to-gray-100">
-          <div className="p-4">
+          <div className="p-4 sm:p-6">
             <Outlet />
           </div>
         </main>

@@ -7,7 +7,10 @@ import AboutUs from '../pages/About/AboutUs';
 import Services from '../pages/Services/Services';
 import Contact from '../pages/Contact/Contact';
 import Login from '../pages/Authentication/Login';
-import ScrollToTop from '../components/ScrollToTop'; // Import the ScrollToTop component
+import ScrollToTop from '../components/ScrollToTop';
+
+// Import Dashboard
+import AdminDashboard from '../pages/Admin/Dashboard/AdminDashboard';
 
 // Import Driver Management dropdown pages
 import DriverApproval from '../pages/Admin/DriverManagement/DriverApproval';
@@ -56,7 +59,7 @@ import VerificationFileManagement from '../pages/Admin/MediaVerification/Verific
 const AppRoutes = () => {
   return (
     <>
-      <ScrollToTop /> {/* Add ScrollToTop component here */}
+      <ScrollToTop />
       <Routes>
         {/* Public Routes */}
         <Route path='/' element={<ServicePageLayout />}>
@@ -73,7 +76,11 @@ const AppRoutes = () => {
 
         {/* Admin Routes */}
         <Route path='/admin' element={<AdminLayout />}>
-          {/* Driver Management Dropdown Routes - No main route */}
+          {/* Dashboard Route - NEW */}
+          <Route index element={<AdminDashboard />} />
+          <Route path='dashboard' element={<AdminDashboard />} />
+          
+          {/* Driver Management Dropdown Routes */}
           <Route path='drivers/approval' element={<DriverApproval />} />
           <Route path='drivers/document-verification' element={<DocumentVerification />} />
           <Route path='drivers/vehicle-approval' element={<VehicleApproval />} />
@@ -84,12 +91,12 @@ const AppRoutes = () => {
           <Route path='drivers/customer-account' element={<CustomerAccount />} />
           <Route path='drivers/ban-customer' element={<BanCustomer />} />
 
-          {/* User Management Dropdown Routes - No main route */}
+          {/* User Management Dropdown Routes */}
           <Route path='users/role-management' element={<UserRoleManagement />} />
           <Route path='users/system-config' element={<SystemConfiguration />} />
           <Route path='users/live-map' element={<LiveMap />} />
 
-          {/* Ride Monitoring Dropdown Routes - No main route */}
+          {/* Ride Monitoring Dropdown Routes */}
           <Route path='rides/detail-view' element={<RideDetailView />} />
           <Route path='rides/event-log' element={<RideEventLog />} />
           <Route path='rides/manual-assignment' element={<ManualRideAssignment />} />
@@ -97,12 +104,12 @@ const AppRoutes = () => {
           <Route path='rides/history' element={<RideHistory />} />
           <Route path='rides/assignment-log' element={<DriverAssignmentLog />} />
 
-          {/* Pricing Management Dropdown Routes - No main route */}
+          {/* Pricing Management Dropdown Routes */}
           <Route path='pricing/rules' element={<PricingRules />} />
           <Route path='pricing/surge' element={<SurgePricing />} />
           <Route path='pricing/vehicle-classification' element={<VehicleClassification />} />
 
-          {/* Payments & Finance Dropdown Routes - No main route */}
+          {/* Payments & Finance Dropdown Routes */}
           <Route path='payments/logs' element={<PaymentLogs />} />
           <Route path='payments/wallet' element={<WalletManagement />} />
           <Route path='payments/ledger' element={<LedgerView />} />

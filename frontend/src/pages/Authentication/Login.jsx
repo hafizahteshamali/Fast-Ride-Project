@@ -22,7 +22,7 @@ const Login = () => {
     setTimeout(() => {
       console.log('Login data:', data);
       setIsLoading(false);
-      navigate("/admin");
+      navigate("/admin/dashboard");
       reset();
     }, 1500);
   };

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { 
   FaTimes,
   FaSignOutAlt,
@@ -10,10 +10,48 @@ import { sidebarLinks } from '../assets/ConstantData';
 
 const Sidebar = ({ sidebarOpen, toggleSidebar, closeSidebar }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [openDropdowns, setOpenDropdowns] = useState({});
+
+  // Load saved dropdown states from localStorage
+  useEffect(() => {
+    const savedState = localStorage.getItem('sidebarDropdowns');
+    if (savedState) {
+      setOpenDropdowns(JSON.parse(savedState));
+    }
+  }, []);
+
+  // Save dropdown states to localStorage
+  useEffect(() => {
+    localStorage.setItem('sidebarDropdowns', JSON.stringify(openDropdowns));
+  }, [openDropdowns]);
+
+  // Auto-open dropdown if any child route is active
+  useEffect(() => {
+    const newOpenState = { ...openDropdowns };
+    let hasChanges = false;
+
+    sidebarLinks.forEach(link => {
+      if (link.hasDropdown && link.dropdownItems.length > 0) {
+        const isChildActive = link.dropdownItems.some(item => 
+          location.pathname === item.url || location.pathname.startsWith(item.url + '/')
+        );
+        
+        if (isChildActive && !openDropdowns[link.id]) {
+          newOpenState[link.id] = true;
+          hasChanges = true;
+        }
+      }
+    });
+
+    if (hasChanges) {
+      setOpenDropdowns(newOpenState);
+    }
+  }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('adminUser');
     sessionStorage.clear();
     navigate('/auth/login');
   };
@@ -29,6 +67,13 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, closeSidebar }) => {
       ...prev,
       [id]: !prev[id]
     }));
+  };
+
+  // Check if any dropdown item is active
+  const isDropdownActive = (link) => {
+    return link.dropdownItems.some(item => 
+      location.pathname === item.url || location.pathname.startsWith(item.url + '/')
+    );
   };
 
   return (
@@ -67,7 +112,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, closeSidebar }) => {
           </button>
         </div>
 
-        {/* Navigation Links - Scrollable area with hidden scrollbar */}
+        {/* Navigation Links - Scrollable area */}
         <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide">
           <nav className="py-6">
             <ul className="space-y-1.5 px-3">
@@ -75,6 +120,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, closeSidebar }) => {
                 const Icon = link.icon;
                 const isOpen = openDropdowns[link.id];
                 const hasDropdown = link.hasDropdown && link.dropdownItems.length > 0;
+                const isActiveParent = isDropdownActive(link);
                 
                 return (
                   <li key={link.id}>
@@ -84,23 +130,27 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, closeSidebar }) => {
                         <button
                           onClick={() => toggleDropdown(link.id)}
                           className={`w-full group relative flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 ${
-                            'text-gray-300 hover:bg-gray-700/50 hover:text-white'
+                            isActiveParent
+                              ? 'bg-gradient-to-r from-[#FF991C]/20 to-[#FF5C00]/20 text-[#FF991C]'
+                              : 'text-gray-300 hover:bg-gray-700/50 hover:text-white'
                           }`}
                         >
                           <div className="flex items-center space-x-3">
-                            <Icon size={20} className="text-gray-400 group-hover:text-white transition-colors" />
+                            <Icon size={20} className={`transition-all duration-300 ${
+                              isActiveParent ? 'text-[#FF991C]' : 'text-gray-400 group-hover:text-white'
+                            }`} />
                             <span className="font-medium text-sm">{link.title}</span>
                           </div>
                           {isOpen ? (
-                            <FaChevronDown size={14} className="text-gray-400" />
+                            <FaChevronDown size={14} className="transition-transform duration-200" />
                           ) : (
-                            <FaChevronRight size={14} className="text-gray-400" />
+                            <FaChevronRight size={14} className="transition-transform duration-200" />
                           )}
                         </button>
                       ) : (
                         <NavLink
                           to={link.url}
-                          end={link.url === '/admin'}
+                          end={link.url === '/admin/dashboard'}
                           onClick={handleLinkClick}
                           className={({ isActive }) =>
                             `group relative flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${
@@ -129,7 +179,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, closeSidebar }) => {
 
                     {/* Dropdown Menu */}
                     {hasDropdown && isOpen && (
-                      <ul className="mt-1 ml-8 space-y-1 border-l border-gray-700 pl-3">
+                      <ul className="mt-1 ml-3 space-y-1 pl-3 overflow-hidden transition-all duration-200">
                         {link.dropdownItems.map((item) => {
                           const ItemIcon = item.icon;
                           return (
@@ -140,15 +190,18 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, closeSidebar }) => {
                                 className={({ isActive }) =>
                                   `flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 ${
                                     isActive
-                                      ? 'bg-gradient-to-r from-[#FF991C] to-[#FF5C00] text-white'
+                                      ? 'bg-gradient-to-r from-[#FF991C] to-[#FF5C00] text-white shadow-md'
                                       : 'text-gray-400 hover:bg-gray-700/50 hover:text-white'
                                   }`
                                 }
                               >
                                 {({ isActive }) => (
                                   <>
-                                    <ItemIcon size={14} />
+                                    <ItemIcon size={14} className={isActive ? 'text-white' : ''} />
                                     <span className="text-xs">{item.title}</span>
+                                    {isActive && (
+                                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                    )}
                                   </>
                                 )}
                               </NavLink>
@@ -168,7 +221,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, closeSidebar }) => {
         <div className="flex-shrink-0 p-5 border-t border-gray-700">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-[#FF991C] to-[#FF5C00] hover:from-[#FF5C00] hover:to-[#FF991C] transition-all duration-300 group"
+            className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gradient-to-r from-[#FF991C] to-[#FF5C00] hover:from-[#FF5C00] hover:to-[#FF991C] transition-all duration-300 group shadow-lg hover:shadow-xl"
           >
             <span className="text-white font-medium">Logout</span>
             <FaSignOutAlt className="text-white group-hover:translate-x-1 transition-transform duration-200" size={18} />
