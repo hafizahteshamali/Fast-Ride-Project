@@ -847,39 +847,42 @@ const VehicleClassification = () => {
       {/* Add Vehicle Modal */}
       {showAddModal && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowAddModal(false)}></div>
-          <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">Add New Vehicle Type</h3>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-scroll border border-gray-200">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+                    <FaPlus className="w-5 h-5 text-orange-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">Add New Vehicle Type</h3>
+                </div>
                 <button
                   onClick={() => setShowAddModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
+                  className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
                 >
                   <FaTimes className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
-              <div className="p-6 space-y-4">
+              <div className="p-6 space-y-6">
                 {/* Basic Info */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Vehicle Name</label>
+                    <label className="block text-sm font-bold text-gray-800 mb-3">Vehicle Name</label>
                     <input
                       type="text"
                       value={newVehicle.name}
                       onChange={(e) => setNewVehicle({ ...newVehicle, name: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                       placeholder="e.g., Electric Scooter"
-                      style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Icon</label>
+                    <label className="block text-sm font-bold text-gray-800 mb-3">Icon</label>
                     <select
                       value={newVehicle.icon}
                       onChange={(e) => setNewVehicle({ ...newVehicle, icon: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
-                      style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                     >
                       {iconOptions.map(icon => (
                         <option key={icon.name} value={icon.name}>{icon.name}</option>
@@ -889,33 +892,31 @@ const VehicleClassification = () => {
                 </div>
 
                 {/* Capacity */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Passenger Capacity</label>
+                    <label className="block text-sm font-bold text-gray-800 mb-3">Passenger Capacity</label>
                     <input
                       type="number"
                       value={newVehicle.capacity}
                       onChange={(e) => setNewVehicle({ ...newVehicle, capacity: parseInt(e.target.value) })}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
-                      style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Luggage Capacity</label>
+                    <label className="block text-sm font-bold text-gray-800 mb-3">Luggage Capacity</label>
                     <input
                       type="number"
                       value={newVehicle.luggageCapacity}
                       onChange={(e) => setNewVehicle({ ...newVehicle, luggageCapacity: parseInt(e.target.value) })}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
-                      style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                     />
                   </div>
                 </div>
 
                 {/* Features */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Features</label>
-                  <div className="flex flex-wrap gap-2">
+                  <label className="block text-sm font-bold text-gray-800 mb-3">Features</label>
+                  <div className="flex flex-wrap gap-3">
                     {featureOptions.map(feature => {
                       const FeatureIcon = feature.icon;
                       const isSelected = newVehicle.features.includes(feature.name);
@@ -923,11 +924,11 @@ const VehicleClassification = () => {
                         <button
                           key={feature.name}
                           onClick={() => toggleFeature(feature.name)}
-                          className={`px-3 py-2 rounded-lg text-sm flex items-center space-x-2 ${
+                          className={`px-4 py-3 rounded-xl text-sm flex items-center space-x-2 font-semibold transition-all duration-200 transform hover:scale-105 ${
                             isSelected
-                              ? 'bg-orange-100 text-orange-700 border-orange-300'
-                              : 'bg-gray-100 text-gray-600 border-gray-200'
-                          } border`}
+                              ? 'bg-gradient-to-r from-orange-100 to-orange-200 text-orange-800 border-2 border-orange-300 shadow-md'
+                              : 'bg-gray-100 text-gray-600 border-2 border-gray-200 hover:border-gray-300'
+                          }`}
                         >
                           <FeatureIcon className="w-4 h-4" />
                           <span>{feature.name}</span>
@@ -939,10 +940,10 @@ const VehicleClassification = () => {
 
                 {/* Pricing Rules */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">Pricing Rules</label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <label className="block text-sm font-bold text-gray-800 mb-4">Pricing Rules</label>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <div>
-                      <label className="text-xs text-gray-500">Base Fare</label>
+                      <label className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2 block">Base Fare</label>
                       <input
                         type="number"
                         step="0.5"
@@ -951,11 +952,11 @@ const VehicleClassification = () => {
                           ...newVehicle,
                           pricingRules: { ...newVehicle.pricingRules, baseFare: parseFloat(e.target.value) }
                         })}
-                        className="w-full px-2 py-1 border rounded text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                       />
                     </div>
                     <div>
-                      <label className="text-xs text-gray-500">Per KM</label>
+                      <label className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2 block">Per KM</label>
                       <input
                         type="number"
                         step="0.1"
@@ -964,11 +965,11 @@ const VehicleClassification = () => {
                           ...newVehicle,
                           pricingRules: { ...newVehicle.pricingRules, pricePerKM: parseFloat(e.target.value) }
                         })}
-                        className="w-full px-2 py-1 border rounded text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                       />
                     </div>
                     <div>
-                      <label className="text-xs text-gray-500">Per Minute</label>
+                      <label className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2 block">Per Minute</label>
                       <input
                         type="number"
                         step="0.05"
@@ -977,11 +978,11 @@ const VehicleClassification = () => {
                           ...newVehicle,
                           pricingRules: { ...newVehicle.pricingRules, pricePerMinute: parseFloat(e.target.value) }
                         })}
-                        className="w-full px-2 py-1 border rounded text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                       />
                     </div>
                     <div>
-                      <label className="text-xs text-gray-500">Min Fare</label>
+                      <label className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2 block">Min Fare</label>
                       <input
                         type="number"
                         step="0.5"
@@ -990,11 +991,11 @@ const VehicleClassification = () => {
                           ...newVehicle,
                           pricingRules: { ...newVehicle.pricingRules, minFare: parseFloat(e.target.value) }
                         })}
-                        className="w-full px-2 py-1 border rounded text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                       />
                     </div>
                     <div>
-                      <label className="text-xs text-gray-500">Cancellation Fee</label>
+                      <label className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2 block">Cancellation Fee</label>
                       <input
                         type="number"
                         step="0.5"
@@ -1003,11 +1004,11 @@ const VehicleClassification = () => {
                           ...newVehicle,
                           pricingRules: { ...newVehicle.pricingRules, cancellationFee: parseFloat(e.target.value) }
                         })}
-                        className="w-full px-2 py-1 border rounded text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                       />
                     </div>
                     <div>
-                      <label className="text-xs text-gray-500">Surge Multiplier</label>
+                      <label className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2 block">Surge Multiplier</label>
                       <input
                         type="number"
                         step="0.1"
@@ -1016,23 +1017,22 @@ const VehicleClassification = () => {
                           ...newVehicle,
                           pricingRules: { ...newVehicle.pricingRules, surgeMultiplier: parseFloat(e.target.value) }
                         })}
-                        className="w-full px-2 py-1 border rounded text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex space-x-3 pt-4">
+                <div className="flex space-x-4 pt-6">
                   <button
                     onClick={() => setShowAddModal(false)}
-                    className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50"
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleAddVehicle}
-                    className="flex-1 px-4 py-2 rounded-lg text-white"
-                    style={{ backgroundColor: 'var(--primary-orange)' }}
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all duration-200 font-bold shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
                     Add Vehicle
                   </button>
@@ -1046,29 +1046,29 @@ const VehicleClassification = () => {
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowDeleteModal(null)}></div>
-          <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-              <div className="p-6">
-                <div className="flex items-center space-x-3 mb-4">
-                  <FaExclamationTriangle className="w-6 h-6 text-red-500" />
-                  <h3 className="text-lg font-semibold text-gray-900">Confirm Deletion</h3>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter" onClick={() => setShowDeleteModal(null)}></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-gray-200">
+              <div className="text-center p-8">
+                <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center mb-6 shadow-lg">
+                  <FaExclamationTriangle className="h-8 w-8 text-red-600" />
                 </div>
-                <p className="text-gray-600 mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Confirm Deletion</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
                   Are you sure you want to remove this vehicle type? This action cannot be undone.
                 </p>
-                <div className="flex space-x-3">
+                <div className="flex space-x-4">
                   <button
                     onClick={() => setShowDeleteModal(null)}
-                    className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50"
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleDeleteVehicle}
-                    className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
-                    Delete
+                    Yes, Delete
                   </button>
                 </div>
               </div>

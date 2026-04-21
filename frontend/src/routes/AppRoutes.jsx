@@ -49,10 +49,8 @@ import PlatformCommission from '../pages/Admin/PaymentsFinance/PlatformCommissio
 import RefundProcessing from '../pages/Admin/PaymentsFinance/RefundProcessing';
 import ProfitLossReports from '../pages/Admin/PaymentsFinance/ProfitLossReports';
 
-// Import Audit & Security dropdown pages
-import DriverDocumentView from '../pages/Admin/AuditSecurity/DriverDocumentView';
-
 // Import Media & Verification dropdown pages
+import DriverDocumentView from '../pages/Admin/MediaVerification/DriverDocumentView';
 import VehicleImageView from '../pages/Admin/MediaVerification/VehicleImageView';
 import VerificationFileManagement from '../pages/Admin/MediaVerification/VerificationFileManagement';
 
@@ -117,10 +115,8 @@ const AppRoutes = () => {
           <Route path='payments/refund' element={<RefundProcessing />} />
           <Route path='payments/profit-loss' element={<ProfitLossReports />} />
 
-          {/* Audit & Security Dropdown Routes */}
-          <Route path='audit/driver-documents' element={<DriverDocumentView />} />
-
           {/* Media & Verification Dropdown Routes */}
+          <Route path='media/driver-documents' element={<DriverDocumentView />} />
           <Route path='media/vehicle-images' element={<VehicleImageView />} />
           <Route path='media/verification-files' element={<VerificationFileManagement />} />
         </Route>

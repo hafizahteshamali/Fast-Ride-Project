@@ -33,8 +33,8 @@ import {
   FaEnvelope,
   FaIdCard,
   FaDollarSign,
-  FaLongArrowAltUp, // Changed from FaTrendUp
-  FaLongArrowAltDown, // Changed from FaTrendDown
+  FaLongArrowAltUp,
+  FaLongArrowAltDown,
   FaChevronLeft,
   FaChevronRight,
   FaAngleDoubleLeft,
@@ -74,6 +74,30 @@ const WalletManagement = () => {
     totalCredited: 0,
     totalDebited: 0
   });
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showTransactionModal || showHistoryModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showTransactionModal, showHistoryModal]);
+
+  // Handle ESC key to close modals
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        if (showTransactionModal) setShowTransactionModal(false);
+        if (showHistoryModal) setShowHistoryModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [showTransactionModal, showHistoryModal]);
 
   // Handle responsive behavior
   useEffect(() => {
@@ -367,6 +391,12 @@ const WalletManagement = () => {
         <div className="p-2 sm:py-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div className="flex items-center space-x-3 sm:space-x-4">
+              <button 
+                onClick={() => window.history.back()}
+                className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <FaArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+              </button>
               <div>
                 <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Wallet Management</h1>
                 <p className="text-xs sm:text-sm text-gray-500 mt-0.5">View balances and manage wallet transactions</p>
@@ -738,48 +768,64 @@ const WalletManagement = () => {
         )}
       </div>
 
-      {/* Transaction Modal */}
+      {/* Transaction Modal - Fixed */}
       {showTransactionModal && selectedWallet && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowTransactionModal(false)}></div>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" onClick={() => setShowTransactionModal(false)}></div>
           <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-              <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                <div className="flex items-center space-x-2">
-                  {transactionType === 'credit' ? (
-                    <FaPlus className="w-5 h-5 text-green-600" />
-                  ) : (
-                    <FaMinus className="w-5 h-5 text-red-600" />
-                  )}
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {transactionType === 'credit' ? 'Credit Wallet' : 'Debit Wallet'}
-                  </h3>
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col border border-gray-200">
+              {/* Fixed Header */}
+              <div className="sticky top-0 bg-gradient-to-r from-orange-50 to-white border-b border-gray-200 p-6 rounded-t-2xl flex-shrink-0">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    {transactionType === 'credit' ? (
+                      <FaPlus className="w-6 h-6 text-green-600" />
+                    ) : (
+                      <FaMinus className="w-6 h-6 text-red-600" />
+                    )}
+                    <h3 className="text-xl font-bold text-gray-900">
+                      {transactionType === 'credit' ? 'Credit Wallet' : 'Debit Wallet'}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={() => setShowTransactionModal(false)}
+                    className="p-3 rounded-xl hover:bg-gray-100 transition-all duration-200"
+                  >
+                    <FaTimes className="w-5 h-5 text-gray-500" />
+                  </button>
                 </div>
-                <button
-                  onClick={() => setShowTransactionModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
-                >
-                  <FaTimes className="w-5 h-5 text-gray-500" />
-                </button>
               </div>
               
-              <div className="p-6">
-                <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600">User/Driver</p>
-                  <p className="font-semibold text-gray-900">{selectedWallet.name}</p>
-                  <p className="text-xs text-gray-500">{selectedWallet.id}</p>
-                  <p className="text-sm text-gray-600 mt-2">Current Balance</p>
-                  <p className="text-xl font-bold" style={{ color: 'var(--primary-orange)' }}>
-                    {formatCurrency(selectedWallet.walletBalance)}
+              {/* Scrollable Content - Hide scrollbar */}
+              <div className="flex-1 overflow-y-auto p-8" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style jsx>{`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                
+                <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+                  <p className="text-sm font-semibold text-blue-800 mb-2 flex items-center space-x-2">
+                    <FaUser className="w-4 h-4" />
+                    <span>User/Driver</span>
                   </p>
+                  <p className="font-bold text-blue-900 text-lg">{selectedWallet.name}</p>
+                  <p className="text-sm text-blue-700">{selectedWallet.id}</p>
+                  <div className="mt-4 p-3 bg-white rounded-lg border border-blue-200">
+                    <p className="text-sm text-blue-600 font-medium">Current Balance</p>
+                    <p className="text-2xl font-bold" style={{ color: 'var(--primary-orange)' }}>
+                      {formatCurrency(selectedWallet.walletBalance)}
+                    </p>
+                  </div>
                 </div>
                 
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Amount <span className="text-red-500">*</span>
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold text-gray-800 mb-3 flex items-center space-x-2">
+                    <FaDollarSign className="w-4 h-4 text-green-600" />
+                    <span>Amount <span className="text-red-500">*</span></span>
                   </label>
                   <div className="relative">
-                    <FaDollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <FaDollarSign className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
                       type="number"
                       step="0.01"
@@ -787,53 +833,54 @@ const WalletManagement = () => {
                       value={transactionAmount}
                       onChange={(e) => setTransactionAmount(e.target.value)}
                       placeholder="0.00"
-                      className="w-full pl-9 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
+                      className="w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 text-lg font-semibold"
                       style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
                     />
                   </div>
                 </div>
                 
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Reason <span className="text-red-500">*</span>
+                <div className="mb-8">
+                  <label className="block text-sm font-semibold text-gray-800 mb-3 flex items-center space-x-2">
+                    <FaFileInvoice className="w-4 h-4 text-purple-600" />
+                    <span>Reason <span className="text-red-500">*</span></span>
                   </label>
                   <textarea
                     value={transactionReason}
                     onChange={(e) => setTransactionReason(e.target.value)}
-                    rows="3"
+                    rows="4"
                     placeholder={transactionType === 'credit' 
                       ? "e.g., Compensation for inconvenience, Bonus, Dispute resolution..." 
                       : "e.g., Adjustment, Penalty, Refund recovery..."}
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 resize-none"
+                    className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 resize-none transition-all duration-200"
                     style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
                   />
                 </div>
                 
-                <div className="flex space-x-3">
+                <div className="flex space-x-4">
                   <button
                     onClick={() => setShowTransactionModal(false)}
-                    className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-all duration-200 font-semibold"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleTransaction}
                     disabled={processingTransaction || !transactionAmount || !transactionReason}
-                    className={`flex-1 px-4 py-2 rounded-lg text-white font-medium flex items-center justify-center space-x-2 ${
+                    className={`flex-1 px-6 py-3 rounded-xl text-white font-semibold flex items-center justify-center space-x-3 shadow-lg hover:shadow-xl transition-all duration-300 ${
                       processingTransaction || !transactionAmount || !transactionReason
                         ? 'opacity-50 cursor-not-allowed'
                         : 'hover:opacity-90'
                     }`}
-                    style={{ backgroundColor: 'var(--primary-orange)' }}
+                    style={{ background: 'linear-gradient(135deg, var(--primary-orange), var(--secondary-orange))' }}
                   >
                     {processingTransaction ? (
                       <>
-                        <FaSpinner className="w-4 h-4 animate-spin" />
+                        <FaSpinner className="w-5 h-5 animate-spin" />
                         <span>Processing...</span>
                       </>
                     ) : (
                       <>
-                        {transactionType === 'credit' ? <FaPlus className="w-4 h-4" /> : <FaMinus className="w-4 h-4" />}
+                        {transactionType === 'credit' ? <FaPlus className="w-5 h-5" /> : <FaMinus className="w-5 h-5" />}
                         <span>Confirm {transactionType === 'credit' ? 'Credit' : 'Debit'}</span>
                       </>
                     )}
@@ -845,59 +892,80 @@ const WalletManagement = () => {
         </>
       )}
 
-      {/* Wallet History Modal */}
+      {/* Wallet History Modal - Fixed */}
       {showHistoryModal && selectedWallet && walletHistory.length > 0 && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowHistoryModal(false)}></div>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" onClick={() => setShowHistoryModal(false)}></div>
           <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[80vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">Wallet Transaction History</h3>
-                  <p className="text-sm text-gray-500">{selectedWallet.name} ({selectedWallet.id})</p>
+            <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col border border-gray-200">
+              {/* Fixed Header */}
+              <div className="sticky top-0 bg-gradient-to-r from-orange-50 to-white border-b border-gray-200 p-6 rounded-t-2xl flex-shrink-0">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
+                      <FaHistory className="w-6 h-6 text-orange-600" />
+                      <span>Wallet Transaction History</span>
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">{selectedWallet.name} ({selectedWallet.id})</p>
+                  </div>
+                  <button
+                    onClick={() => setShowHistoryModal(false)}
+                    className="p-3 rounded-xl hover:bg-gray-100 transition-all duration-200"
+                  >
+                    <FaTimes className="w-5 h-5 text-gray-500" />
+                  </button>
                 </div>
-                <button
-                  onClick={() => setShowHistoryModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
-                >
-                  <FaTimes className="w-5 h-5 text-gray-500" />
-                </button>
               </div>
               
-              <div className="p-6">
-                <div className="space-y-3">
+              {/* Scrollable Content - Hide scrollbar */}
+              <div className="flex-1 overflow-y-auto p-8" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style jsx>{`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                
+                <div className="space-y-4">
                   {walletHistory.map((transaction) => {
                     const transactionDate = formatDateTime(transaction.date);
                     return (
-                      <div key={transaction.id} className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                        <div className={`p-2 rounded-full ${
+                      <div key={transaction.id} className="flex items-start space-x-4 p-5 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:shadow-md transition-all duration-200">
+                        <div className={`p-3 rounded-xl shadow-sm ${
                           transaction.type === 'credit' ? 'bg-green-100' : 'bg-red-100'
                         }`}>
                           {transaction.type === 'credit' ? (
-                            <FaPlus className="w-4 h-4 text-green-600" />
+                            <FaPlus className="w-6 h-6 text-green-600" />
                           ) : (
-                            <FaMinus className="w-4 h-4 text-red-600" />
+                            <FaMinus className="w-6 h-6 text-red-600" />
                           )}
                         </div>
                         <div className="flex-1">
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
                             <div>
-                              <p className="font-medium text-gray-900">{transaction.reason}</p>
-                              <p className="text-xs text-gray-500">{transactionDate.date} at {transactionDate.time}</p>
+                              <p className="font-bold text-gray-900 text-lg">{transaction.reason}</p>
+                              <p className="text-sm text-gray-600 bg-white px-3 py-1 rounded-lg inline-block mt-1">
+                                {transactionDate.date} at {transactionDate.time}
+                              </p>
                             </div>
                             <div className="text-right">
-                              <p className={`font-semibold ${
+                              <p className={`font-bold text-xl ${
                                 transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'
                               }`}>
                                 {transaction.type === 'credit' ? '+' : '-'}{formatCurrency(transaction.amount)}
                               </p>
-                              <p className="text-xs text-gray-500">Ref: {transaction.referenceId}</p>
+                              <p className="text-sm text-gray-600">Ref: {transaction.referenceId}</p>
                             </div>
                           </div>
-                          <div className="mt-2 pt-2 border-t border-gray-200">
-                            <div className="flex justify-between text-xs">
-                              <span className="text-gray-500">Transaction ID: {transaction.id}</span>
-                              <span className="text-gray-500">Balance: {formatCurrency(transaction.balanceAfter)}</span>
+                          <div className="mt-4 pt-4 border-t border-gray-300 bg-white rounded-lg p-4">
+                            <div className="flex justify-between text-sm">
+                              <span className="text-gray-600 font-medium">Transaction ID:</span>
+                              <span className="text-gray-800 font-mono bg-gray-100 px-2 py-1 rounded">{transaction.id}</span>
+                            </div>
+                            <div className="flex justify-between text-sm mt-2">
+                              <span className="text-gray-600 font-medium">Balance After:</span>
+                              <span className="text-gray-800 font-bold text-lg" style={{ color: 'var(--primary-orange)' }}>
+                                {formatCurrency(transaction.balanceAfter)}
+                              </span>
                             </div>
                           </div>
                         </div>

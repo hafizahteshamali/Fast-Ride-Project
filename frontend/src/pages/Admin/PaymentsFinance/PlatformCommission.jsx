@@ -841,118 +841,123 @@ const PlatformCommission = () => {
       {/* Commission Details Modal */}
       {showDetailsModal && selectedRide && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowDetailsModal(false)}></div>
-          <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">Commission Details</h3>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-scroll border border-gray-200">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+                    <FaCalculator className="w-5 h-5 text-orange-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">Commission Details</h3>
+                </div>
                 <button
                   onClick={() => setShowDetailsModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
+                  className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
                 >
                   <FaTimes className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
-              
+
               <div className="p-6">
                 {/* Header */}
-                <div className="mb-6">
+                <div className="mb-8">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-500">Ride ID</p>
-                      <p className="text-xl font-bold text-gray-900">{selectedRide.id}</p>
+                      <p className="text-sm text-gray-500 font-medium">Ride ID</p>
+                      <p className="text-2xl font-bold text-gray-900">{selectedRide.id}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-gray-500">Date & Time</p>
-                      <p className="text-sm text-gray-900">{formatDateTime(selectedRide.date).full}</p>
+                      <p className="text-sm text-gray-500 font-medium">Date & Time</p>
+                      <p className="text-sm text-gray-900 font-semibold">{formatDateTime(selectedRide.date).full}</p>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Customer & Driver Info */}
-                <div className="flex flex-wrap -mx-2 mb-6">
+                <div className="flex flex-wrap -mx-2 mb-8">
                   <div className="w-full md:w-1/2 px-2 mb-4">
-                    <div className="bg-blue-50 rounded-lg p-4">
-                      <h4 className="font-semibold text-blue-900 mb-3 flex items-center space-x-2">
-                        <FaUser className="w-4 h-4" />
+                    <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-5 border border-blue-200">
+                      <h4 className="font-bold text-blue-900 mb-4 flex items-center space-x-2">
+                        <FaUser className="w-5 h-5" />
                         <span>Customer Information</span>
                       </h4>
-                      <div className="space-y-2 text-sm">
-                        <p><span className="font-medium">Name:</span> {selectedRide.customer.name}</p>
-                        <p><span className="font-medium">Email:</span> {selectedRide.customer.email}</p>
+                      <div className="space-y-3 text-sm">
+                        <p><span className="font-semibold">Name:</span> {selectedRide.customer.name}</p>
+                        <p><span className="font-semibold">Email:</span> {selectedRide.customer.email}</p>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="w-full md:w-1/2 px-2 mb-4">
-                    <div className="bg-purple-50 rounded-lg p-4">
-                      <h4 className="font-semibold text-purple-900 mb-3 flex items-center space-x-2">
-                        <FaTruck className="w-4 h-4" />
+                    <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-5 border border-purple-200">
+                      <h4 className="font-bold text-purple-900 mb-4 flex items-center space-x-2">
+                        <FaTruck className="w-5 h-5" />
                         <span>Driver Information</span>
                       </h4>
-                      <div className="space-y-2 text-sm">
-                        <p><span className="font-medium">Name:</span> {selectedRide.driver.name}</p>
-                        <p><span className="font-medium">Vehicle:</span> {selectedRide.driver.vehicle}</p>
+                      <div className="space-y-3 text-sm">
+                        <p><span className="font-semibold">Name:</span> {selectedRide.driver.name}</p>
+                        <p><span className="font-semibold">Vehicle:</span> {selectedRide.driver.vehicle}</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Financial Breakdown */}
-                <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3">Financial Breakdown</h4>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center pb-2 border-b border-gray-200">
-                      <span className="text-gray-600">Customer Fare</span>
-                      <span className="text-lg font-semibold text-green-600">{formatCurrency(selectedRide.customerFare)}</span>
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 mb-8 border border-gray-200">
+                  <h4 className="font-bold text-gray-900 mb-5 text-lg">Financial Breakdown</h4>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+                      <span className="text-gray-700 font-medium">Customer Fare</span>
+                      <span className="text-xl font-bold text-green-600">{formatCurrency(selectedRide.customerFare)}</span>
                     </div>
-                    <div className="flex justify-between items-center pb-2 border-b border-gray-200">
-                      <span className="text-gray-600">Driver Payout</span>
-                      <span className="text-lg font-semibold text-purple-600">{formatCurrency(selectedRide.driverPayout)}</span>
+                    <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+                      <span className="text-gray-700 font-medium">Driver Payout</span>
+                      <span className="text-xl font-bold text-purple-600">{formatCurrency(selectedRide.driverPayout)}</span>
                     </div>
-                    <div className="flex justify-between items-center pt-2">
-                      <span className="text-lg font-bold text-gray-900">Platform Commission</span>
+                    <div className="flex justify-between items-center pt-3">
+                      <span className="text-xl font-bold text-gray-900">Platform Commission</span>
                       <div className="text-right">
-                        <span className="text-2xl font-bold text-orange-600">{formatCurrency(selectedRide.commission)}</span>
-                        <p className="text-xs text-gray-500">({selectedRide.commissionRate}% of fare)</p>
+                        <span className="text-3xl font-bold text-orange-600">{formatCurrency(selectedRide.commission)}</span>
+                        <p className="text-sm text-gray-600 font-medium">({selectedRide.commissionRate}% of fare)</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Trip Details */}
-                <div className="flex flex-wrap -mx-2 mb-6">
+                <div className="flex flex-wrap -mx-2 mb-8">
                   <div className="w-full sm:w-1/2 px-2 mb-4">
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      <p className="text-xs text-gray-500">Distance</p>
-                      <p className="text-lg font-semibold text-gray-900">{selectedRide.distance} km</p>
+                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200">
+                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Distance</p>
+                      <p className="text-xl font-bold text-gray-900">{selectedRide.distance} km</p>
                     </div>
                   </div>
                   <div className="w-full sm:w-1/2 px-2 mb-4">
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      <p className="text-xs text-gray-500">Duration</p>
-                      <p className="text-lg font-semibold text-gray-900">{selectedRide.duration} min</p>
+                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200">
+                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Duration</p>
+                      <p className="text-xl font-bold text-gray-900">{selectedRide.duration} min</p>
                     </div>
                   </div>
                   <div className="w-full sm:w-1/2 px-2 mb-4">
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      <p className="text-xs text-gray-500">Vehicle Type</p>
-                      <p className="text-lg font-semibold text-gray-900">{selectedRide.vehicleType}</p>
+                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200">
+                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Vehicle Type</p>
+                      <p className="text-xl font-bold text-gray-900">{selectedRide.vehicleType}</p>
                     </div>
                   </div>
                   <div className="w-full sm:w-1/2 px-2 mb-4">
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      <p className="text-xs text-gray-500">Payment Method</p>
-                      <p className="text-lg font-semibold text-gray-900">{selectedRide.paymentMethod}</p>
+                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200">
+                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Payment Method</p>
+                      <p className="text-xl font-bold text-gray-900">{selectedRide.paymentMethod}</p>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Ledger Reference */}
-                <div className="bg-orange-50 rounded-lg p-3">
-                  <p className="text-xs text-gray-600">Ledger Entry Reference</p>
-                  <p className="text-sm font-mono text-gray-700">{selectedRide.ledgerEntryId}</p>
-                  <p className="text-xs text-gray-500 mt-1">This commission is recorded in the finance ledger</p>
+                <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
+                  <p className="text-xs text-gray-600 font-medium uppercase tracking-wide">Ledger Entry Reference</p>
+                  <p className="text-sm font-mono text-gray-800 font-semibold mt-1">{selectedRide.ledgerEntryId}</p>
+                  <p className="text-xs text-gray-600 mt-2">This commission is recorded in the finance ledger</p>
                 </div>
               </div>
             </div>

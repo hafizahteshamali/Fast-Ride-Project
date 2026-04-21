@@ -93,6 +93,30 @@ const LedgerView = () => {
     'Liability': ['Accounts Payable', 'Driver Payable', 'Tax Payable', 'Refund Payable']
   };
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showDetailsModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showDetailsModal]);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape' && showDetailsModal) {
+        setShowDetailsModal(false);
+        setSelectedEntry(null);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [showDetailsModal]);
+
   // Handle responsive behavior
   useEffect(() => {
     const handleResize = () => {
@@ -359,6 +383,12 @@ const LedgerView = () => {
         <div className="p-2 sm:py-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div className="flex items-center space-x-3 sm:space-x-4">
+              <button 
+                onClick={() => window.history.back()}
+                className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <FaArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+              </button>
               <div>
                 <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Finance Ledger</h1>
                 <p className="text-xs sm:text-sm text-gray-500 mt-0.5">View all ledger entries with debit/credit accounts</p>
@@ -861,23 +891,31 @@ const LedgerView = () => {
         )}
       </div>
 
-      {/* Ledger Entry Details Modal */}
+      {/* Ledger Entry Details Modal - Fixed */}
       {showDetailsModal && selectedEntry && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowDetailsModal(false)}></div>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" onClick={() => setShowDetailsModal(false)}></div>
           <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-gray-200">
+              {/* Fixed Header */}
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between rounded-t-lg flex-shrink-0">
                 <h3 className="text-lg font-semibold text-gray-900">Ledger Entry Details</h3>
                 <button
                   onClick={() => setShowDetailsModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
                 >
                   <FaTimes className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
               
-              <div className="p-6">
+              {/* Scrollable Content - Hide scrollbar */}
+              <div className="flex-1 overflow-y-auto p-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style jsx>{`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                
                 <div className="mb-6">
                   <div className="flex items-center justify-between">
                     <div>
@@ -893,30 +931,34 @@ const LedgerView = () => {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-green-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-green-900 mb-3 flex items-center space-x-2">
-                      <FaDollarSign className="w-4 h-4" />
-                      <span>Debit Account</span>
-                    </h4>
-                    <div className="space-y-2 text-sm">
-                      <p><span className="font-medium">Account:</span> {selectedEntry.debitAccount}</p>
-                      <p><span className="font-medium">Code:</span> {selectedEntry.debitAccountCode}</p>
-                      <p><span className="font-medium">Category:</span> {selectedEntry.debitCategory}</p>
-                      <p className="text-xl font-bold text-green-600 mt-2">{formatCurrency(selectedEntry.amount)}</p>
+                <div className="flex flex-wrap -mx-2 mb-6">
+                  <div className="w-full md:w-1/2 px-2 mb-4">
+                    <div className="bg-green-50 rounded-lg p-4">
+                      <h4 className="font-semibold text-green-900 mb-3 flex items-center space-x-2">
+                        <FaDollarSign className="w-4 h-4" />
+                        <span>Debit Account</span>
+                      </h4>
+                      <div className="space-y-2 text-sm">
+                        <p><span className="font-medium">Account:</span> {selectedEntry.debitAccount}</p>
+                        <p><span className="font-medium">Code:</span> {selectedEntry.debitAccountCode}</p>
+                        <p><span className="font-medium">Category:</span> {selectedEntry.debitCategory}</p>
+                        <p className="text-xl font-bold text-green-600 mt-2">{formatCurrency(selectedEntry.amount)}</p>
+                      </div>
                     </div>
                   </div>
                   
-                  <div className="bg-red-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-red-900 mb-3 flex items-center space-x-2">
-                      <FaCreditCard className="w-4 h-4" />
-                      <span>Credit Account</span>
-                    </h4>
-                    <div className="space-y-2 text-sm">
-                      <p><span className="font-medium">Account:</span> {selectedEntry.creditAccount}</p>
-                      <p><span className="font-medium">Code:</span> {selectedEntry.creditAccountCode}</p>
-                      <p><span className="font-medium">Category:</span> {selectedEntry.creditCategory}</p>
-                      <p className="text-xl font-bold text-red-600 mt-2">{formatCurrency(selectedEntry.amount)}</p>
+                  <div className="w-full md:w-1/2 px-2 mb-4">
+                    <div className="bg-red-50 rounded-lg p-4">
+                      <h4 className="font-semibold text-red-900 mb-3 flex items-center space-x-2">
+                        <FaCreditCard className="w-4 h-4" />
+                        <span>Credit Account</span>
+                      </h4>
+                      <div className="space-y-2 text-sm">
+                        <p><span className="font-medium">Account:</span> {selectedEntry.creditAccount}</p>
+                        <p><span className="font-medium">Code:</span> {selectedEntry.creditAccountCode}</p>
+                        <p><span className="font-medium">Category:</span> {selectedEntry.creditCategory}</p>
+                        <p className="text-xl font-bold text-red-600 mt-2">{formatCurrency(selectedEntry.amount)}</p>
+                      </div>
                     </div>
                   </div>
                 </div>

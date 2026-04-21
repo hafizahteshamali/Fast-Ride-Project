@@ -46,7 +46,8 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaAngleDoubleLeft,
-  FaAngleDoubleRight
+  FaAngleDoubleRight,
+  FaLocationArrow
 } from 'react-icons/fa';
 
 const RideHistory = () => {
@@ -824,33 +825,36 @@ const RideHistory = () => {
       {/* Ride Details Modal */}
       {showDetailsModal && selectedRide && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowDetailsModal(false)}></div>
-          <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">Ride Details</h3>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter" onClick={() => setShowDetailsModal(false)}></div>
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] modal-scroll overflow-y-auto border border-gray-200">
+              <div className="sticky top-0 bg-gradient-to-r from-orange-50 to-white border-b border-gray-200 p-6 flex items-center justify-between rounded-t-2xl">
+                <h3 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
+                  <FaHistory className="w-6 h-6 text-orange-600" />
+                  <span>Ride Details</span>
+                </h3>
                 <button
                   onClick={() => setShowDetailsModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
+                  className="p-3 rounded-xl hover:bg-gray-100 transition-all duration-200 transform hover:scale-105"
                 >
                   <FaTimes className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
               
-              <div className="p-6">
+              <div className="p-8">
                 {/* Ride Header */}
-                <div className="mb-6">
+                <div className="mb-8">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-500">Ride ID</p>
-                      <p className="text-xl font-bold text-gray-900">{selectedRide.rideId}</p>
+                      <p className="text-sm text-gray-600">Ride ID</p>
+                      <p className="text-2xl font-bold text-gray-900">{selectedRide.rideId}</p>
                     </div>
                     {selectedRide.status === 'completed' && selectedRide.rating && (
                       <div className="text-right">
-                        <p className="text-sm text-gray-500">Rating</p>
-                        <div className="flex items-center space-x-1">
+                        <p className="text-sm text-gray-600">Rating</p>
+                        <div className="flex items-center space-x-1 bg-yellow-50 p-3 rounded-xl">
                           {renderRating(selectedRide.rating)}
-                          <span className="text-sm font-semibold ml-1">({selectedRide.rating})</span>
+                          <span className="text-lg font-bold ml-2 text-yellow-700">({selectedRide.rating})</span>
                         </div>
                       </div>
                     )}
@@ -858,54 +862,54 @@ const RideHistory = () => {
                 </div>
                 
                 {/* Customer & Driver Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                      <FaUser className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+                    <h4 className="font-bold text-blue-900 mb-4 flex items-center space-x-2">
+                      <FaUser className="w-5 h-5 text-blue-600" />
                       <span>Customer Information</span>
                     </h4>
-                    <div className="space-y-2 text-sm">
-                      <p><span className="font-medium">Name:</span> {selectedRide.customer.name}</p>
-                      <p><span className="font-medium">Email:</span> {selectedRide.customer.email}</p>
-                      <p><span className="font-medium">Phone:</span> {selectedRide.customer.phone}</p>
+                    <div className="space-y-3 text-sm">
+                      <p className="flex justify-between"><span className="font-semibold text-blue-800">Name:</span> <span className="text-blue-900">{selectedRide.customer.name}</span></p>
+                      <p className="flex justify-between"><span className="font-semibold text-blue-800">Email:</span> <span className="text-blue-900">{selectedRide.customer.email}</span></p>
+                      <p className="flex justify-between"><span className="font-semibold text-blue-800">Phone:</span> <span className="text-blue-900">{selectedRide.customer.phone}</span></p>
                     </div>
                   </div>
                   
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                      <FaCar className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
+                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+                    <h4 className="font-bold text-green-900 mb-4 flex items-center space-x-2">
+                      <FaCar className="w-5 h-5 text-green-600" />
                       <span>Driver Information</span>
                     </h4>
-                    <div className="space-y-2 text-sm">
-                      <p><span className="font-medium">Name:</span> {selectedRide.driver.name}</p>
-                      <p><span className="font-medium">Vehicle:</span> {selectedRide.driver.vehicle}</p>
-                      <p><span className="font-medium">License Plate:</span> {selectedRide.driver.plate}</p>
+                    <div className="space-y-3 text-sm">
+                      <p className="flex justify-between"><span className="font-semibold text-green-800">Name:</span> <span className="text-green-900">{selectedRide.driver.name}</span></p>
+                      <p className="flex justify-between"><span className="font-semibold text-green-800">Vehicle:</span> <span className="text-green-900">{selectedRide.driver.vehicle}</span></p>
+                      <p className="flex justify-between"><span className="font-semibold text-green-800">License Plate:</span> <span className="text-green-900">{selectedRide.driver.plate}</span></p>
                     </div>
                   </div>
                 </div>
                 
                 {/* Trip Details */}
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                    <FaRoute className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
+                <div className="mb-8">
+                  <h4 className="font-bold text-gray-900 mb-4 flex items-center space-x-2">
+                    <FaRoute className="w-5 h-5 text-orange-600" />
                     <span>Trip Details</span>
                   </h4>
-                  <div className="space-y-3">
-                    <div className="flex items-start space-x-3">
-                      <FaMapMarkerAlt className="w-4 h-4 text-green-500 mt-0.5" />
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-4 p-4 bg-green-50 rounded-xl border border-green-200">
+                      <FaMapMarkerAlt className="w-6 h-6 text-green-600 mt-1" />
                       <div>
-                        <p className="font-medium text-sm">Pickup Location</p>
-                        <p className="text-sm text-gray-600">{selectedRide.pickup.address}</p>
-                        <p className="text-xs text-gray-400">{formatDateTime(selectedRide.createdAt).time}</p>
+                        <p className="font-bold text-green-900 text-base">Pickup Location</p>
+                        <p className="text-green-800">{selectedRide.pickup.address}</p>
+                        <p className="text-sm text-green-600 bg-white px-2 py-1 rounded-lg inline-block mt-2">{formatDateTime(selectedRide.createdAt).time}</p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <FaLocationArrow className="w-4 h-4 text-red-500 mt-0.5" />
+                    <div className="flex items-start space-x-4 p-4 bg-red-50 rounded-xl border border-red-200">
+                      <FaMapMarkerAlt className="w-6 h-6 text-red-600 mt-1" />
                       <div>
-                        <p className="font-medium text-sm">Dropoff Location</p>
-                        <p className="text-sm text-gray-600">{selectedRide.dropoff.address}</p>
+                        <p className="font-bold text-red-900 text-base">Dropoff Location</p>
+                        <p className="text-red-800">{selectedRide.dropoff.address}</p>
                         {selectedRide.completedAt && (
-                          <p className="text-xs text-gray-400">{formatDateTime(selectedRide.completedAt).time}</p>
+                          <p className="text-sm text-red-600 bg-white px-2 py-1 rounded-lg inline-block mt-2">{formatDateTime(selectedRide.completedAt).time}</p>
                         )}
                       </div>
                     </div>
@@ -913,39 +917,39 @@ const RideHistory = () => {
                 </div>
                 
                 {/* Fare Breakdown */}
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                    <FaMoneyBillWave className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
+                <div className="mb-8">
+                  <h4 className="font-bold text-gray-900 mb-4 flex items-center space-x-2">
+                    <FaMoneyBillWave className="w-5 h-5 text-green-600" />
                     <span>Fare Breakdown</span>
                   </h4>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Base Fare</span>
-                        <span>{formatCurrency(selectedRide.fare.base)}</span>
+                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-sm py-2 border-b border-green-200">
+                        <span className="text-green-800 font-medium">Base Fare</span>
+                        <span className="text-green-900 font-semibold">{formatCurrency(selectedRide.fare.base)}</span>
                       </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Distance Fare ({selectedRide.distance} km)</span>
-                        <span>{formatCurrency(selectedRide.fare.distance)}</span>
+                      <div className="flex justify-between text-sm py-2 border-b border-green-200">
+                        <span className="text-green-800 font-medium">Distance Fare ({selectedRide.distance} km)</span>
+                        <span className="text-green-900 font-semibold">{formatCurrency(selectedRide.fare.distance)}</span>
                       </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Time Fare ({selectedRide.duration} min)</span>
-                        <span>{formatCurrency(selectedRide.fare.time)}</span>
+                      <div className="flex justify-between text-sm py-2 border-b border-green-200">
+                        <span className="text-green-800 font-medium">Time Fare ({selectedRide.duration} min)</span>
+                        <span className="text-green-900 font-semibold">{formatCurrency(selectedRide.fare.time)}</span>
                       </div>
                       {selectedRide.fare.surge > 1 && (
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-600">Surge Multiplier ({selectedRide.fare.surge}x)</span>
-                          <span className="text-orange-600">+{formatCurrency(selectedRide.fare.total * (selectedRide.fare.surge - 1))}</span>
+                        <div className="flex justify-between text-sm py-2 border-b border-orange-200 bg-orange-50 rounded-lg px-3 -mx-3">
+                          <span className="text-orange-800 font-medium">Surge Multiplier ({selectedRide.fare.surge}x)</span>
+                          <span className="text-orange-900 font-bold">+{formatCurrency(selectedRide.fare.total * (selectedRide.fare.surge - 1))}</span>
                         </div>
                       )}
-                      <div className="border-t pt-2 mt-2">
-                        <div className="flex justify-between font-semibold">
-                          <span>Total</span>
+                      <div className="border-t-2 border-green-300 pt-4 mt-4 bg-white rounded-lg p-4">
+                        <div className="flex justify-between font-bold text-lg">
+                          <span className="text-green-900">Total</span>
                           <span style={{ color: 'var(--primary-orange)' }}>{formatCurrency(selectedRide.fare.total)}</span>
                         </div>
-                        <div className="flex justify-between text-sm mt-1">
+                        <div className="flex justify-between text-sm mt-2">
                           <span className="text-gray-600">Payment Method</span>
-                          <span>{selectedRide.fare.paymentMethod}</span>
+                          <span className="font-medium text-gray-800">{selectedRide.fare.paymentMethod}</span>
                         </div>
                       </div>
                     </div>
@@ -953,9 +957,12 @@ const RideHistory = () => {
                 </div>
                 
                 {selectedRide.feedback && (
-                  <div className="bg-blue-50 rounded-lg p-4">
-                    <p className="text-sm font-medium text-blue-900 mb-1">Customer Feedback</p>
-                    <p className="text-sm text-blue-800">"{selectedRide.feedback}"</p>
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
+                    <p className="text-sm font-bold text-purple-900 mb-2 flex items-center space-x-2">
+                      <FaStar className="w-4 h-4 text-purple-600" />
+                      <span>Customer Feedback</span>
+                    </p>
+                    <p className="text-purple-800 italic text-base">"{selectedRide.feedback}"</p>
                   </div>
                 )}
               </div>

@@ -322,158 +322,166 @@ const DriverEarnings = () => {
 
       {/* Earnings Details Modal */}
       {showDetailsModal && selectedDriver && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-gray-800">Earnings Details - {selectedDriver.name}</h3>
-              <button
-                onClick={() => setShowDetailsModal(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <FaTimes size={24} />
-              </button>
-            </div>
-
-            <div className="p-6">
-              {/* Earnings Summary */}
-              <div className="flex flex-wrap mb-6">
-                <div className="w-full md:w-1/3 p-2">
-                  <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4">
-                    <p className="text-sm text-gray-600 mb-1">Total Paid Out</p>
-                    <p className="text-2xl font-bold text-green-600">{formatCurrency(selectedDriver.totalPaidOut)}</p>
-                    <p className="text-xs text-gray-500 mt-1">from {selectedDriver.tripsCompleted} trips</p>
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto modal-scroll border border-gray-200">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+                    <FaDollarSign className="w-5 h-5 text-orange-600" />
                   </div>
+                  <h3 className="text-xl font-bold text-gray-900">Earnings Details - {selectedDriver.name}</h3>
                 </div>
-                <div className="w-full md:w-1/3 p-2">
-                  <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg p-4">
-                    <p className="text-sm text-gray-600 mb-1">Pending Payouts</p>
-                    <p className="text-2xl font-bold text-yellow-600">{formatCurrency(selectedDriver.totalPending)}</p>
-                    <p className="text-xs text-gray-500 mt-1">awaiting processing</p>
-                  </div>
-                </div>
-                <div className="w-full md:w-1/3 p-2">
-                  <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4">
-                    <p className="text-sm text-gray-600 mb-1">Total Earnings</p>
-                    <p className="text-2xl font-bold text-blue-600">{formatCurrency(selectedDriver.totalEarnings)}</p>
-                    <p className="text-xs text-gray-500 mt-1">overall earnings</p>
-                  </div>
-                </div>
+                <button
+                  onClick={() => setShowDetailsModal(false)}
+                  className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
+                >
+                  <FaTimes className="w-5 h-5 text-gray-500" />
+                </button>
               </div>
 
-              {/* Earnings Filters */}
-              <div className="flex flex-wrap items-center justify-between mb-4">
-                <h4 className="text-lg font-semibold text-gray-800 flex items-center space-x-2">
-                  <FaHistory className="text-[#FF991C]" />
-                  <span>Earnings History</span>
-                </h4>
-                <div className="flex space-x-2">
-                  <select
-                    value={filterPeriod}
-                    onChange={(e) => setFilterPeriod(e.target.value)}
-                    className="px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF991C] text-sm"
-                  >
-                    <option value="all">All Trips</option>
-                    <option value="week">Last 7 Days</option>
-                    <option value="month">Last 30 Days</option>
-                    <option value="paid">Paid Only</option>
-                    <option value="pending">Pending Only</option>
-                  </select>
-                  <button className="px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm">
-                    <FaDownload className="inline mr-1" size={12} />
-                    Export
-                  </button>
+              <div className="p-6">
+                {/* Earnings Summary */}
+                <div className="flex flex-wrap mb-8">
+                  <div className="w-full md:w-1/3 p-2">
+                    <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
+                      <p className="text-sm text-gray-600 font-medium mb-2">Total Paid Out</p>
+                      <p className="text-3xl font-bold text-green-600">{formatCurrency(selectedDriver.totalPaidOut)}</p>
+                      <p className="text-xs text-gray-500 mt-2">from {selectedDriver.tripsCompleted} trips</p>
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/3 p-2">
+                    <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-6 border border-yellow-200">
+                      <p className="text-sm text-gray-600 font-medium mb-2">Pending Payouts</p>
+                      <p className="text-3xl font-bold text-yellow-600">{formatCurrency(selectedDriver.totalPending)}</p>
+                      <p className="text-xs text-gray-500 mt-2">awaiting processing</p>
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/3 p-2">
+                    <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+                      <p className="text-sm text-gray-600 font-medium mb-2">Total Earnings</p>
+                      <p className="text-3xl font-bold text-blue-600">{formatCurrency(selectedDriver.totalEarnings)}</p>
+                      <p className="text-xs text-gray-500 mt-2">overall earnings</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              {/* Earnings Table */}
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trip ID</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Route</th>
-                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Fare</th>
-                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Commission</th>
-                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Driver Earning</th>
-                      <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {getFilteredEarningsHistory(selectedDriver.earningsHistory).map((trip) => (
-                      <tr key={trip.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-4 py-3 text-sm text-gray-700">{trip.date}</td>
-                        <td className="px-4 py-3 text-sm text-gray-700 font-mono">{trip.tripId}</td>
-                        <td className="px-4 py-3 text-sm text-gray-700">
-                          {trip.from} → {trip.to}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-700 text-right">{formatCurrency(trip.fare)}</td>
-                        <td className="px-4 py-3 text-sm text-red-600 text-right">{formatCurrency(trip.commission)}</td>
-                        <td className="px-4 py-3 text-sm text-green-600 font-semibold text-right">{formatCurrency(trip.driverEarning)}</td>
-                        <td className="px-4 py-3 text-center">
-                          {getStatusBadge(trip.status)}
-                          {trip.status === 'paid' && (
-                            <p className="text-xs text-gray-400 mt-1">Paid: {trip.paidDate}</p>
-                          )}
-                        </td>
+                {/* Earnings Filters */}
+                <div className="flex flex-wrap items-center justify-between mb-6">
+                  <h4 className="text-xl font-bold text-gray-900 flex items-center space-x-3">
+                    <FaHistory className="w-5 h-5 text-orange-600" />
+                    <span>Earnings History</span>
+                  </h4>
+                  <div className="flex space-x-3">
+                    <select
+                      value={filterPeriod}
+                      onChange={(e) => setFilterPeriod(e.target.value)}
+                      className="px-4 py-2 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
+                    >
+                      <option value="all">All Trips</option>
+                      <option value="week">Last 7 Days</option>
+                      <option value="month">Last 30 Days</option>
+                      <option value="paid">Paid Only</option>
+                      <option value="pending">Pending Only</option>
+                    </select>
+                    <button className="px-4 py-2 border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105">
+                      <FaDownload className="inline mr-2" size={14} />
+                      Export
+                    </button>
+                  </div>
+                </div>
+
+                {/* Earnings Table */}
+                <div className="overflow-x-auto mb-8">
+                  <table className="w-full border-collapse">
+                    <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+                      <tr>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wide">Date</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wide">Trip ID</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wide">Route</th>
+                        <th className="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wide">Fare</th>
+                        <th className="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wide">Commission</th>
+                        <th className="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wide">Driver Earning</th>
+                        <th className="px-6 py-4 text-center text-xs font-bold text-gray-700 uppercase tracking-wide">Status</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {getFilteredEarningsHistory(selectedDriver.earningsHistory).map((trip) => (
+                        <tr key={trip.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-6 py-4 text-sm text-gray-700 font-medium">{trip.date}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700 font-mono font-semibold">{trip.tripId}</td>
+                          <td className="px-6 py-4 text-sm text-gray-700">
+                            {trip.from} → {trip.to}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-700 text-right font-semibold">{formatCurrency(trip.fare)}</td>
+                          <td className="px-6 py-4 text-sm text-red-600 text-right font-semibold">{formatCurrency(trip.commission)}</td>
+                          <td className="px-6 py-4 text-sm text-green-600 font-bold text-right">{formatCurrency(trip.driverEarning)}</td>
+                          <td className="px-6 py-4 text-center">
+                            {getStatusBadge(trip.status)}
+                            {trip.status === 'paid' && (
+                              <p className="text-xs text-gray-400 mt-1 font-medium">Paid: {trip.paidDate}</p>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-              {/* Summary Statistics */}
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <h5 className="font-semibold text-gray-700 mb-3">Earnings Summary</h5>
-                <div className="flex flex-wrap">
-                  <div className="w-full md:w-1/2 mb-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Average per Trip:</span>
-                      <span className="text-sm font-semibold text-gray-800">
-                        {formatCurrency(selectedDriver.totalEarnings / selectedDriver.tripsCompleted)}
-                      </span>
+                {/* Summary Statistics */}
+                <div className="mt-8 p-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+                  <h5 className="font-bold text-gray-800 mb-5 text-lg">Earnings Summary</h5>
+                  <div className="flex flex-wrap">
+                    <div className="w-full md:w-1/2 mb-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600 font-medium">Average per Trip:</span>
+                        <span className="text-sm font-bold text-gray-900">
+                          {formatCurrency(selectedDriver.totalEarnings / selectedDriver.tripsCompleted)}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="w-full md:w-1/2 mb-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Total Commission Paid:</span>
-                      <span className="text-sm font-semibold text-red-600">
-                        {formatCurrency(selectedDriver.earningsHistory.reduce((sum, t) => sum + t.commission, 0))}
-                      </span>
+                    <div className="w-full md:w-1/2 mb-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600 font-medium">Total Commission Paid:</span>
+                        <span className="text-sm font-bold text-red-600">
+                          {formatCurrency(selectedDriver.earningsHistory.reduce((sum, t) => sum + t.commission, 0))}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="w-full md:w-1/2 mb-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Pending Trips:</span>
-                      <span className="text-sm font-semibold text-yellow-600">
-                        {selectedDriver.earningsHistory.filter(t => t.status === 'pending').length} trips
-                      </span>
+                    <div className="w-full md:w-1/2 mb-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600 font-medium">Pending Trips:</span>
+                        <span className="text-sm font-bold text-yellow-600">
+                          {selectedDriver.earningsHistory.filter(t => t.status === 'pending').length} trips
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="w-full md:w-1/2 mb-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Completed Trips:</span>
-                      <span className="text-sm font-semibold text-green-600">
-                        {selectedDriver.earningsHistory.filter(t => t.status === 'paid').length} trips
-                      </span>
+                    <div className="w-full md:w-1/2 mb-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600 font-medium">Completed Trips:</span>
+                        <span className="text-sm font-bold text-green-600">
+                          {selectedDriver.earningsHistory.filter(t => t.status === 'paid').length} trips
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Info Note */}
-              <div className="mt-4 bg-blue-50 rounded-lg p-3">
-                <div className="flex items-start space-x-2">
-                  <FaInfoCircle className="text-blue-500 mt-0.5" />
-                  <p className="text-xs text-blue-700">
-                    Earnings are calculated based on trip fare minus platform commission. 
-                    Pending payouts will be processed within 3-5 business days.
-                  </p>
+                {/* Info Note */}
+                <div className="mt-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-5 border border-blue-200">
+                  <div className="flex items-start space-x-3">
+                    <FaInfoCircle className="w-5 h-5 text-blue-600 mt-0.5" />
+                    <p className="text-sm text-blue-800 font-medium leading-relaxed">
+                      Earnings are calculated based on trip fare minus platform commission.
+                      Pending payouts will be processed within 3-5 business days.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

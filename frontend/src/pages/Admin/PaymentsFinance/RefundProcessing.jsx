@@ -39,7 +39,8 @@ import {
   FaPhone,
   FaIdCard,
   FaCalculator,
-  FaSortDown
+  FaSortDown,
+  FaSortUp
 } from 'react-icons/fa';
 
 const RefundProcessing = () => {
@@ -85,6 +86,30 @@ const RefundProcessing = () => {
     completedRefunds: 0,
     avgRefundAmount: 0
   });
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showRefundModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showRefundModal]);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape' && showRefundModal) {
+        setShowRefundModal(false);
+        setSelectedRide(null);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [showRefundModal]);
 
   // Handle responsive behavior
   useEffect(() => {
@@ -852,42 +877,54 @@ const RefundProcessing = () => {
         )}
       </div>
 
-      {/* Refund Modal */}
+      {/* Refund Modal - Fixed with scrollable content and hidden scrollbar */}
       {showRefundModal && selectedRide && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowRefundModal(false)}></div>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40" onClick={() => setShowRefundModal(false)}></div>
           <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-              <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                <div className="flex items-center space-x-2">
-                  <FaUndo className="w-5 h-5 text-orange-600" />
-                  <h3 className="text-lg font-semibold text-gray-900">Process Refund</h3>
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col border border-gray-200">
+              {/* Fixed Header */}
+              <div className="sticky top-0 bg-gradient-to-r from-orange-50 to-white border-b border-gray-200 p-6 rounded-t-2xl flex-shrink-0">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+                      <FaUndo className="w-5 h-5 text-orange-600" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900">Process Refund</h3>
+                  </div>
+                  <button
+                    onClick={() => setShowRefundModal(false)}
+                    className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
+                  >
+                    <FaTimes className="w-5 h-5 text-gray-500" />
+                  </button>
                 </div>
-                <button
-                  onClick={() => setShowRefundModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
-                >
-                  <FaTimes className="w-5 h-5 text-gray-500" />
-                </button>
               </div>
-              
-              <div className="p-6">
-                <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600">Ride Information</p>
-                  <p className="font-semibold text-gray-900">{selectedRide.id}</p>
-                  <p className="text-xs text-gray-500">{selectedRide.customer.name} - {selectedRide.driver.name}</p>
-                  <p className="text-sm text-gray-600 mt-2">Original Amount</p>
-                  <p className="text-xl font-bold" style={{ color: 'var(--primary-orange)' }}>
+
+              {/* Scrollable Content - Hide scrollbar */}
+              <div className="flex-1 overflow-y-auto p-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style jsx>{`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                
+                <div className="mb-6 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+                  <p className="text-sm text-gray-600 font-medium mb-2">Ride Information</p>
+                  <p className="font-bold text-gray-900 text-lg mb-1">{selectedRide.id}</p>
+                  <p className="text-sm text-gray-600 mb-3">{selectedRide.customer.name} - {selectedRide.driver.name}</p>
+                  <p className="text-sm text-gray-600 font-medium mb-1">Original Amount</p>
+                  <p className="text-2xl font-bold text-orange-600">
                     {formatCurrency(selectedRide.amount)}
                   </p>
                 </div>
-                
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+
+                <div className="mb-6">
+                  <label className="block text-sm font-bold text-gray-800 mb-3">
                     Refund Amount <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <FaDollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <FaDollarSign className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                     <input
                       type="number"
                       step="0.01"
@@ -895,37 +932,34 @@ const RefundProcessing = () => {
                       max={selectedRide.amount}
                       value={refundAmount}
                       onChange={(e) => setRefundAmount(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
-                      style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
+                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                     />
                   </div>
                 </div>
-                
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+
+                <div className="mb-6">
+                  <label className="block text-sm font-bold text-gray-800 mb-3">
                     Refund Method
                   </label>
                   <select
                     value={refundMethod}
                     onChange={(e) => setRefundMethod(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2"
-                    style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                   >
                     <option value="original">Original Payment Method</option>
                     <option value="wallet">Wallet Credit</option>
                     <option value="bank">Bank Transfer</option>
                   </select>
                 </div>
-                
+
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-bold text-gray-800 mb-3">
                     Refund Reason <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={refundReason}
                     onChange={(e) => setRefundReason(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 mb-2"
-                    style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200 mb-3"
                   >
                     <option value="">Select a reason...</option>
                     <option value="Customer complaint">Customer complaint</option>
@@ -938,38 +972,39 @@ const RefundProcessing = () => {
                   <textarea
                     value={refundReason}
                     onChange={(e) => setRefundReason(e.target.value)}
-                    rows="2"
-                    placeholder="Or provide custom reason..."
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 resize-none"
-                    style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
+                    rows="3"
+                    placeholder="Or provide detailed custom reason..."
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 resize-none transition-all duration-200"
                   />
                 </div>
-                
-                <div className="flex space-x-3">
+              </div>
+
+              {/* Fixed Footer with Buttons */}
+              <div className="sticky bottom-0 bg-white border-t border-gray-200 p-6 rounded-b-2xl flex-shrink-0">
+                <div className="flex space-x-4">
                   <button
                     onClick={() => setShowRefundModal(false)}
-                    className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleRefund}
                     disabled={processingRefund || !refundAmount || !refundReason}
-                    className={`flex-1 px-4 py-2 rounded-lg text-white font-medium flex items-center justify-center space-x-2 ${
+                    className={`flex-1 px-6 py-3 rounded-xl text-white font-bold shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 transition-all duration-300 ${
                       processingRefund || !refundAmount || !refundReason
-                        ? 'opacity-50 cursor-not-allowed'
-                        : 'hover:opacity-90'
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700'
                     }`}
-                    style={{ backgroundColor: 'var(--primary-orange)' }}
                   >
                     {processingRefund ? (
                       <>
-                        <FaSpinner className="w-4 h-4 animate-spin" />
+                        <FaSpinner className="w-5 h-5 animate-spin" />
                         <span>Processing...</span>
                       </>
                     ) : (
                       <>
-                        <FaUndo className="w-4 h-4" />
+                        <FaUndo className="w-5 h-5" />
                         <span>Process Refund</span>
                       </>
                     )}

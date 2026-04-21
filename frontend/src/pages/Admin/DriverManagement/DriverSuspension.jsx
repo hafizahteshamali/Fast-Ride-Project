@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   FaUserSlash,
   FaUserCheck,
@@ -136,6 +136,31 @@ const DriverSuspension = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterRating, setFilterRating] = useState('all');
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showSuspendModal || showReinstateModal || showDetailModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showSuspendModal, showReinstateModal, showDetailModal]);
+
+  // Handle ESC key to close modals
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        if (showSuspendModal) setShowSuspendModal(false);
+        if (showReinstateModal) setShowReinstateModal(false);
+        if (showDetailModal) setShowDetailModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [showSuspendModal, showReinstateModal, showDetailModal]);
+
   const getStatusBadge = (status) => {
     if (status === 'active') {
       return (
@@ -205,7 +230,6 @@ const DriverSuspension = () => {
       setSelectedDriver(null);
       showNotification(`${selectedDriver.name} has been suspended successfully. Driver removed from GEO pool.`, 'success');
       
-      // In real implementation, this would call an API to remove from Redis GEO pool
       console.log(`Driver ${selectedDriver.id} removed from Redis GEO pool`);
     }, 1000);
   };
@@ -237,7 +261,6 @@ const DriverSuspension = () => {
       setSelectedDriver(null);
       showNotification(`${selectedDriver.name} has been reinstated successfully. Driver added back to GEO pool.`, 'success');
       
-      // In real implementation, this would call an API to add back to Redis GEO pool
       console.log(`Driver ${selectedDriver.id} added back to Redis GEO pool`);
     }, 1000);
   };
@@ -437,249 +460,268 @@ const DriverSuspension = () => {
         )}
       </div>
 
-      {/* Suspend Modal */}
+      {/* Suspend Modal - Improved */}
       {showSuspendModal && selectedDriver && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full">
-            <div className="p-6">
-              <div className="text-center">
-                <div className="mx-auto h-12 w-12 rounded-full bg-red-100 flex items-center justify-center mb-4">
-                  <FaBan className="h-6 w-6 text-red-600" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Suspend Driver</h3>
-                <p className="text-sm text-gray-500 mb-4">
-                  Are you sure you want to suspend <span className="font-semibold">{selectedDriver.name}</span>? 
-                  This will remove them from the GEO pool and they won't receive ride requests.
-                </p>
-                <textarea
-                  value={suspensionReason}
-                  onChange={(e) => setSuspensionReason(e.target.value)}
-                  placeholder="Enter reason for suspension (e.g., Safety violation, Customer complaint, Document expired)..."
-                  rows="4"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 mb-4"
-                />
-                <div className="flex space-x-3">
-                  <button
-                    onClick={() => {
-                      setShowSuspendModal(false);
-                      setSuspensionReason('');
-                    }}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleSuspendDriver}
-                    disabled={loading}
-                    className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 flex items-center justify-center space-x-2"
-                  >
-                    {loading ? <FaSpinner className="animate-spin" /> : <FaBan />}
-                    <span>Suspend Driver</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Reinstate Modal */}
-      {showReinstateModal && selectedDriver && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full">
-            <div className="p-6">
-              <div className="text-center">
-                <div className="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
-                  <FaUserCheck className="h-6 w-6 text-green-600" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Reinstate Driver</h3>
-                <p className="text-sm text-gray-500 mb-4">
-                  Are you sure you want to reinstate <span className="font-semibold">{selectedDriver.name}</span>? 
-                  This will add them back to the GEO pool and they will start receiving ride requests.
-                </p>
-                <div className="bg-yellow-50 p-3 rounded-lg mb-4">
-                  <p className="text-xs text-yellow-800">
-                    <strong>Suspension Reason:</strong> {selectedDriver.currentSuspensionReason}
-                  </p>
-                  <p className="text-xs text-yellow-800 mt-1">
-                    <strong>Suspended on:</strong> {selectedDriver.suspendedAt}
-                  </p>
-                </div>
-                <div className="flex space-x-3">
-                  <button
-                    onClick={() => setShowReinstateModal(false)}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleReinstateDriver}
-                    disabled={loading}
-                    className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 flex items-center justify-center space-x-2"
-                  >
-                    {loading ? <FaSpinner className="animate-spin" /> : <FaUserCheck />}
-                    <span>Reinstate Driver</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Driver Details Modal */}
-      {showDetailModal && selectedDriver && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-semibold text-gray-800">Driver Details</h3>
-                <button
-                  onClick={() => setShowDetailModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <FaTimesCircle size={24} />
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                {/* Driver Info */}
-                <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                  <div className="h-16 w-16 rounded-full bg-gradient-to-r from-[#FF991C] to-[#FF5C00] flex items-center justify-center">
-                    <span className="text-white font-bold text-2xl">{selectedDriver.name.charAt(0)}</span>
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" onClick={() => setShowSuspendModal(false)}></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-100 opacity-100">
+              <div className="p-8">
+                <div className="text-center">
+                  <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center mb-6 shadow-lg">
+                    <FaBan className="h-8 w-8 text-red-600" />
                   </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-800">{selectedDriver.name}</h4>
-                    <div className="flex items-center space-x-2 mt-1">
-                      {getStatusBadge(selectedDriver.status)}
-                      <div className="flex items-center">
-                        {getRatingStars(selectedDriver.rating)}
-                        <span className="ml-1 text-sm text-gray-600">({selectedDriver.rating})</span>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Suspend Driver</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Are you sure you want to suspend <span className="font-bold text-red-700">{selectedDriver.name}</span>?
+                    This will remove them from the GEO pool and they won't receive ride requests.
+                  </p>
+                  <textarea
+                    value={suspensionReason}
+                    onChange={(e) => setSuspensionReason(e.target.value)}
+                    placeholder="Enter detailed reason for suspension (e.g., Safety violation, Customer complaint, Document expired)..."
+                    rows="4"
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 mb-6 resize-none transition-all duration-200"
+                  />
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={() => {
+                        setShowSuspendModal(false);
+                        setSuspensionReason('');
+                      }}
+                      className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleSuspendDriver}
+                      disabled={loading || !suspensionReason.trim()}
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                    >
+                      {loading ? <FaSpinner className="w-5 h-5 animate-spin" /> : <FaBan />}
+                      <span>Suspend Driver</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Reinstate Modal - Improved */}
+      {showReinstateModal && selectedDriver && (
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" onClick={() => setShowReinstateModal(false)}></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-100 opacity-100">
+              <div className="p-8">
+                <div className="text-center">
+                  <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center mb-6 shadow-lg">
+                    <FaUserCheck className="h-8 w-8 text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Reinstate Driver</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Are you sure you want to reinstate <span className="font-bold text-green-700">{selectedDriver.name}</span>?
+                    This will add them back to the GEO pool and they will start receiving ride requests.
+                  </p>
+                  <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 p-4 rounded-xl border border-yellow-200 mb-6">
+                    <p className="text-sm text-yellow-800 font-medium">
+                      <strong>Suspension Reason:</strong> {selectedDriver.currentSuspensionReason}
+                    </p>
+                    <p className="text-sm text-yellow-800 mt-2 font-medium">
+                      <strong>Suspended on:</strong> {selectedDriver.suspendedAt}
+                    </p>
+                  </div>
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={() => setShowReinstateModal(false)}
+                      className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleReinstateDriver}
+                      disabled={loading}
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                    >
+                      {loading ? <FaSpinner className="w-5 h-5 animate-spin" /> : <FaUserCheck />}
+                      <span>Reinstate Driver</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Driver Details Modal - Improved with hidden scrollbar */}
+      {showDetailModal && selectedDriver && (
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" onClick={() => setShowDetailModal(false)}></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col border border-gray-200 transform transition-all duration-300 scale-100 opacity-100">
+              {/* Fixed Header */}
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex-shrink-0">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-2xl font-bold text-gray-900">Driver Details</h3>
+                  <button
+                    onClick={() => setShowDetailModal(false)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <FaTimesCircle size={24} />
+                  </button>
+                </div>
+              </div>
+              
+              {/* Scrollable Content - Hide scrollbar */}
+              <div className="flex-1 overflow-y-auto p-8" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style jsx>{`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                
+                <div className="space-y-6">
+                  {/* Driver Info */}
+                  <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+                    <div className="h-16 w-16 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center shadow-lg">
+                      <span className="text-white font-bold text-2xl">{selectedDriver.name.charAt(0)}</span>
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-gray-800">{selectedDriver.name}</h4>
+                      <div className="flex items-center space-x-2 mt-1">
+                        {getStatusBadge(selectedDriver.status)}
+                        <div className="flex items-center">
+                          {getRatingStars(selectedDriver.rating)}
+                          <span className="ml-1 text-sm text-gray-600">({selectedDriver.rating})</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Contact Info */}
-                <div className="border-t border-gray-200 pt-4">
-                  <h5 className="font-semibold text-gray-700 mb-3">Contact Information</h5>
-                  <div className="flex flex-wrap space-y-2">
-                    <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600">
-                      <FaEnvelope />
-                      <span>{selectedDriver.email}</span>
-                    </div>
-                    <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600">
-                      <FaPhone />
-                      <span>{selectedDriver.phone}</span>
-                    </div>
-                    <div className="w-full flex items-center space-x-2 text-gray-600">
-                      <FaMapMarkerAlt />
-                      <span>{selectedDriver.address}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Vehicle Info */}
-                <div className="border-t border-gray-200 pt-4">
-                  <h5 className="font-semibold text-gray-700 mb-3">Vehicle Information</h5>
-                  <div className="flex flex-wrap space-y-2">
-                    <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600">
-                      <FaCar />
-                      <span>{selectedDriver.vehicle.model}</span>
-                    </div>
-                    <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600">
-                      <FaCar />
-                      <span>Plate: {selectedDriver.vehicle.plateNumber}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Statistics */}
-                <div className="border-t border-gray-200 pt-4">
-                  <h5 className="font-semibold text-gray-700 mb-3">Statistics</h5>
-                  <div className="flex flex-wrap space-y-2">
-                    <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600">
-                      <FaStar className="text-yellow-500" />
-                      <span>Rating: {selectedDriver.rating} / 5.0</span>
-                    </div>
-                    <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600">
-                      <FaCar />
-                      <span>Total Rides: {selectedDriver.totalRides}</span>
-                    </div>
-                    <div className="w-full flex items-center space-x-2 text-gray-600">
-                      <FaCalendarAlt />
-                      <span>Joined: {selectedDriver.joinDate}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Suspension History */}
-                {selectedDriver.suspensionHistory.length > 0 && (
+                  {/* Contact Info */}
                   <div className="border-t border-gray-200 pt-4">
-                    <h5 className="font-semibold text-gray-700 mb-3 flex items-center space-x-2">
-                      <FaHistory />
-                      <span>Suspension History</span>
-                    </h5>
-                    <div className="space-y-2">
-                      {selectedDriver.suspensionHistory.map((history, index) => (
-                        <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center justify-between">
-                            <p className="text-sm font-medium text-gray-800">
-                              {history.reason}
-                            </p>
-                            {history.reinstated && (
-                              <span className="text-xs text-green-600 flex items-center space-x-1">
-                                <FaCheckCircle size={12} />
-                                <span>Reinstated</span>
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex flex-wrap justify-between mt-1">
-                            <p className="text-xs text-gray-500">Suspended: {history.date}</p>
-                            {history.reinstatedDate && (
-                              <p className="text-xs text-green-600">Reinstated: {history.reinstatedDate}</p>
-                            )}
-                          </div>
-                        </div>
-                      ))}
+                    <h5 className="font-semibold text-gray-700 mb-3">Contact Information</h5>
+                    <div className="flex flex-wrap">
+                      <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600 mb-2">
+                        <FaEnvelope />
+                        <span>{selectedDriver.email}</span>
+                      </div>
+                      <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600 mb-2">
+                        <FaPhone />
+                        <span>{selectedDriver.phone}</span>
+                      </div>
+                      <div className="w-full flex items-center space-x-2 text-gray-600">
+                        <FaMapMarkerAlt />
+                        <span>{selectedDriver.address}</span>
+                      </div>
                     </div>
                   </div>
-                )}
-              </div>
 
-              <div className="flex space-x-3 mt-6">
-                <button
-                  onClick={() => setShowDetailModal(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                >
-                  Close
-                </button>
-                {selectedDriver.status === 'active' && (
+                  {/* Vehicle Info */}
+                  <div className="border-t border-gray-200 pt-4">
+                    <h5 className="font-semibold text-gray-700 mb-3">Vehicle Information</h5>
+                    <div className="flex flex-wrap">
+                      <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600 mb-2">
+                        <FaCar />
+                        <span>{selectedDriver.vehicle.model}</span>
+                      </div>
+                      <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600">
+                        <FaCar />
+                        <span>Plate: {selectedDriver.vehicle.plateNumber}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Statistics */}
+                  <div className="border-t border-gray-200 pt-4">
+                    <h5 className="font-semibold text-gray-700 mb-3">Statistics</h5>
+                    <div className="flex flex-wrap">
+                      <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600 mb-2">
+                        <FaStar className="text-yellow-500" />
+                        <span>Rating: {selectedDriver.rating} / 5.0</span>
+                      </div>
+                      <div className="w-full md:w-1/2 flex items-center space-x-2 text-gray-600 mb-2">
+                        <FaCar />
+                        <span>Total Rides: {selectedDriver.totalRides}</span>
+                      </div>
+                      <div className="w-full flex items-center space-x-2 text-gray-600">
+                        <FaCalendarAlt />
+                        <span>Joined: {selectedDriver.joinDate}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Suspension History */}
+                  {selectedDriver.suspensionHistory.length > 0 && (
+                    <div className="border-t border-gray-200 pt-4">
+                      <h5 className="font-semibold text-gray-700 mb-3 flex items-center space-x-2">
+                        <FaHistory />
+                        <span>Suspension History</span>
+                      </h5>
+                      <div className="space-y-2">
+                        {selectedDriver.suspensionHistory.map((history, index) => (
+                          <div key={index} className="p-3 bg-gray-50 rounded-lg">
+                            <div className="flex items-center justify-between">
+                              <p className="text-sm font-medium text-gray-800">
+                                {history.reason}
+                              </p>
+                              {history.reinstated && (
+                                <span className="text-xs text-green-600 flex items-center space-x-1">
+                                  <FaCheckCircle size={12} />
+                                  <span>Reinstated</span>
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex flex-wrap justify-between mt-1">
+                              <p className="text-xs text-gray-500">Suspended: {history.date}</p>
+                              {history.reinstatedDate && (
+                                <p className="text-xs text-green-600">Reinstated: {history.reinstatedDate}</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex space-x-3 mt-6">
                   <button
-                    onClick={() => {
-                      setShowDetailModal(false);
-                      setShowSuspendModal(true);
-                    }}
-                    className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                    onClick={() => setShowDetailModal(false)}
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
                   >
-                    Suspend Driver
+                    Close
                   </button>
-                )}
-                {selectedDriver.status === 'suspended' && (
-                  <button
-                    onClick={() => {
-                      setShowDetailModal(false);
-                      setShowReinstateModal(true);
-                    }}
-                    className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                  >
-                    Reinstate Driver
-                  </button>
-                )}
+                  {selectedDriver.status === 'active' && (
+                    <button
+                      onClick={() => {
+                        setShowDetailModal(false);
+                        setShowSuspendModal(true);
+                      }}
+                      className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                    >
+                      Suspend Driver
+                    </button>
+                  )}
+                  {selectedDriver.status === 'suspended' && (
+                    <button
+                      onClick={() => {
+                        setShowDetailModal(false);
+                        setShowReinstateModal(true);
+                      }}
+                      className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                    >
+                      Reinstate Driver
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

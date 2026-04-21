@@ -424,103 +424,111 @@ const DriverRating = () => {
 
       {/* Rating Details Modal */}
       {showDetailsModal && selectedDriver && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-gray-800">Rating Details - {selectedDriver.name}</h3>
-              <button
-                onClick={() => setShowDetailsModal(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <FaTimes size={24} />
-              </button>
-            </div>
-
-            <div className="p-6">
-              {/* Current Rating */}
-              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg p-6 mb-6">
-                <div className="flex flex-wrap items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1">Current Rating</p>
-                    <p className="text-4xl font-bold text-gray-800">{selectedDriver.rating.toFixed(1)}</p>
-                    <div className="flex mt-2">{getRatingStars(selectedDriver.rating)}</div>
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-scroll border border-gray-200">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+                    <FaStar className="w-5 h-5 text-orange-600" />
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-gray-600 mb-1">Rating Trend</p>
-                    <div className="flex items-center space-x-2">
-                      {getRatingTrend(selectedDriver.rating, selectedDriver.previousRating).icon}
-                      <span className="text-lg font-semibold">
-                        {selectedDriver.rating > selectedDriver.previousRating ? '+' : ''}
-                        {(selectedDriver.rating - selectedDriver.previousRating).toFixed(1)}
-                      </span>
+                  <h3 className="text-xl font-bold text-gray-900">Rating Details - {selectedDriver.name}</h3>
+                </div>
+                <button
+                  onClick={() => setShowDetailsModal(false)}
+                  className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
+                >
+                  <FaTimes className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+
+              <div className="p-6">
+                {/* Current Rating */}
+                <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-xl p-6 mb-8 border border-orange-200">
+                  <div className="flex flex-wrap items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600 font-medium mb-2">Current Rating</p>
+                      <p className="text-4xl font-bold text-gray-900">{selectedDriver.rating.toFixed(1)}</p>
+                      <div className="flex mt-3">{getRatingStars(selectedDriver.rating)}</div>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Previous: {selectedDriver.previousRating.toFixed(1)}</p>
+                    <div className="text-right">
+                      <p className="text-sm text-gray-600 font-medium mb-2">Rating Trend</p>
+                      <div className="flex items-center space-x-2">
+                        {getRatingTrend(selectedDriver.rating, selectedDriver.previousRating).icon}
+                        <span className="text-lg font-semibold">
+                          {selectedDriver.rating > selectedDriver.previousRating ? '+' : ''}
+                          {(selectedDriver.rating - selectedDriver.previousRating).toFixed(1)}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2">Previous: {selectedDriver.previousRating.toFixed(1)}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Statistics */}
-              <div className="flex flex-wrap mb-6">
-                <div className="w-full md:w-1/2 p-2">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <p className="text-xs text-gray-500">Total Trips</p>
-                    <p className="text-xl font-bold text-gray-800">{selectedDriver.totalTrips}</p>
+                {/* Statistics */}
+                <div className="flex flex-wrap mb-8">
+                  <div className="w-full md:w-1/2 p-2">
+                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-5 border border-gray-200">
+                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Trips</p>
+                      <p className="text-2xl font-bold text-gray-900">{selectedDriver.totalTrips}</p>
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/2 p-2">
+                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-5 border border-gray-200">
+                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Recent Trips (30 days)</p>
+                      <p className="text-2xl font-bold text-gray-900">{selectedDriver.recentTrips}</p>
+                    </div>
                   </div>
                 </div>
-                <div className="w-full md:w-1/2 p-2">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <p className="text-xs text-gray-500">Recent Trips (30 days)</p>
-                    <p className="text-xl font-bold text-gray-800">{selectedDriver.recentTrips}</p>
-                  </div>
-                </div>
-              </div>
 
-              {/* Rating Trend Chart */}
-              <div className="border border-gray-200 rounded-lg p-4 mb-6">
-                <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2">
-                  <FaChartLine className="text-[#FF991C]" />
-                  <span>Rating Trend (Last 7 Days)</span>
-                </h4>
-                <div className="space-y-2">
-                  {selectedDriver.ratingHistory.map((history, index) => {
-                    const barHeight = (history.rating / 5) * 100;
-                    const barColor = getRatingColor(history.rating);
-                    return (
-                      <div key={index} className="flex items-center space-x-2">
-                        <div className="w-24 text-xs text-gray-500">{history.date}</div>
-                        <div className="flex-1">
-                          <div className="h-8 bg-gray-200 rounded-lg overflow-hidden">
-                            <div 
-                              className={`h-full ${barColor === 'text-green-600' ? 'bg-green-500' : barColor === 'text-yellow-600' ? 'bg-yellow-500' : barColor === 'text-orange-600' ? 'bg-orange-500' : 'bg-red-500'} transition-all duration-300`}
-                              style={{ width: `${barHeight}%` }}
-                            />
+                {/* Rating Trend Chart */}
+                <div className="border-2 border-gray-200 rounded-xl p-6 mb-8">
+                  <h4 className="text-xl font-bold text-gray-900 mb-6 flex items-center space-x-3">
+                    <FaChartLine className="w-5 h-5 text-orange-600" />
+                    <span>Rating Trend (Last 7 Days)</span>
+                  </h4>
+                  <div className="space-y-4">
+                    {selectedDriver.ratingHistory.map((history, index) => {
+                      const barHeight = (history.rating / 5) * 100;
+                      const barColor = getRatingColor(history.rating);
+                      return (
+                        <div key={index} className="flex items-center space-x-3">
+                          <div className="w-24 text-sm text-gray-600 font-medium">{history.date}</div>
+                          <div className="flex-1">
+                            <div className="h-10 bg-gray-200 rounded-xl overflow-hidden">
+                              <div
+                                className={`h-full ${barColor === 'text-green-600' ? 'bg-green-500' : barColor === 'text-yellow-600' ? 'bg-yellow-500' : barColor === 'text-orange-600' ? 'bg-orange-500' : 'bg-red-500'} transition-all duration-300 rounded-xl`}
+                                style={{ width: `${barHeight}%` }}
+                              />
+                            </div>
+                          </div>
+                          <div className="w-12 text-right text-sm font-bold text-gray-800">
+                            {history.rating.toFixed(1)}
                           </div>
                         </div>
-                        <div className="w-12 text-right text-sm font-medium text-gray-700">
-                          {history.rating.toFixed(1)}
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
 
-              {/* Rating Info */}
-              <div className="bg-blue-50 rounded-lg p-4">
-                <div className="flex items-start space-x-2">
-                  <FaInfoCircle className="text-blue-500 mt-0.5" />
-                  <div>
-                    <p className="text-sm text-blue-800 font-medium">How rating is calculated:</p>
-                    <p className="text-xs text-blue-600 mt-1">
-                      Driver rating is automatically updated after each completed trip based on customer feedback. 
-                      The rating is an average of all trip ratings received. Ratings range from 0.0 to 5.0 stars.
-                    </p>
+                {/* Rating Info */}
+                <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-5 border border-blue-200">
+                  <div className="flex items-start space-x-3">
+                    <FaInfoCircle className="w-5 h-5 text-blue-600 mt-0.5" />
+                    <div>
+                      <p className="text-sm text-blue-800 font-bold">How rating is calculated:</p>
+                      <p className="text-xs text-blue-700 mt-2 leading-relaxed">
+                        Driver rating is automatically updated after each completed trip based on customer feedback.
+                        The rating is an average of all trip ratings received. Ratings range from 0.0 to 5.0 stars.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

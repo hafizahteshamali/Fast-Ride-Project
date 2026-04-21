@@ -619,42 +619,45 @@ const RideCancellation = () => {
       {/* Cancellation Modal */}
       {showCancelModal && selectedRide && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowCancelModal(false)}></div>
-          <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <FaExclamationTriangle className="w-5 h-5 text-orange-500" />
-                  <h3 className="text-lg font-semibold text-gray-900">Confirm Cancellation</h3>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] modal-scroll border border-gray-200">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+                    <FaExclamationTriangle className="w-5 h-5 text-orange-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">Confirm Cancellation</h3>
                 </div>
                 <button
                   onClick={() => setShowCancelModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
+                  className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
                 >
                   <FaTimes className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
-              
+
               <div className="p-6">
-                <div className="mb-4">
-                  <p className="text-sm text-gray-600">You are about to cancel the following ride:</p>
-                  <div className="mt-2 p-3 bg-gray-50 rounded-lg">
-                    <p className="font-medium text-gray-900">{selectedRide.rideId}</p>
-                    <p className="text-sm text-gray-600">Customer: {selectedRide.customer.name}</p>
-                    <p className="text-sm text-gray-600">Driver: {selectedRide.driver.name}</p>
-                    <p className="text-sm text-gray-600">Stage: {getStageInfo(selectedRide.stage).label}</p>
+                <div className="mb-6">
+                  <p className="text-gray-600 mb-4 leading-relaxed">You are about to cancel the following ride:</p>
+                  <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+                    <p className="font-bold text-gray-900 text-lg mb-2">{selectedRide.rideId}</p>
+                    <div className="space-y-1 text-sm text-gray-600">
+                      <p><span className="font-medium">Customer:</span> {selectedRide.customer.name}</p>
+                      <p><span className="font-medium">Driver:</span> {selectedRide.driver.name}</p>
+                      <p><span className="font-medium">Stage:</span> <span className="text-orange-600 font-semibold">{getStageInfo(selectedRide.stage).label}</span></p>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+
+                <div className="mb-6">
+                  <label className="block text-sm font-bold text-gray-800 mb-3">
                     Cancellation Reason <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={cancellationReason}
                     onChange={(e) => setCancellationReason(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 text-sm"
-                    style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                   >
                     <option value="">Select a reason...</option>
                     <option value="customer_request">Customer Request</option>
@@ -666,58 +669,58 @@ const RideCancellation = () => {
                     <option value="other">Other</option>
                   </select>
                 </div>
-                
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+
+                <div className="mb-6">
+                  <label className="block text-sm font-bold text-gray-800 mb-3">
                     Cancellation Type
                   </label>
                   <select
                     value={cancellationType}
                     onChange={(e) => setCancellationType(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 text-sm"
-                    style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-orange-500 transition-all duration-200"
                   >
                     <option value="admin_force">Admin Force Cancel</option>
                     <option value="customer_initiated">Customer Initiated</option>
                     <option value="system_auto">System Auto-cancel</option>
                   </select>
                 </div>
-                
-                <div className="mb-4 p-3 bg-orange-50 rounded-lg">
+
+                <div className="mb-6 p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl border border-orange-200">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700">Refund Amount:</span>
-                    <span className="text-lg font-bold text-orange-600">{formatCurrency(refundAmount)}</span>
+                    <span className="text-sm font-bold text-gray-800">Refund Amount:</span>
+                    <span className="text-xl font-bold text-orange-600">{formatCurrency(refundAmount)}</span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-gray-600 mt-2">
                     {selectedRide.stage === 'pending' && 'Full refund applicable for pending rides'}
                     {selectedRide.stage === 'accepted' && '50% refund applicable for accepted rides'}
                     {selectedRide.stage === 'started' && 'No refund for started rides'}
                   </p>
                 </div>
-                
-                <div className="flex space-x-3">
+
+                <div className="flex space-x-4">
                   <button
                     onClick={() => setShowCancelModal(false)}
-                    className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleCancelRide}
                     disabled={!cancellationReason || cancelling}
-                    className={`flex-1 px-4 py-2 rounded-lg text-white font-semibold flex items-center justify-center space-x-2 ${
-                      !cancellationReason || cancelling ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'
+                    className={`flex-1 px-6 py-3 rounded-xl text-white font-bold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2 transition-all duration-300 ${
+                      !cancellationReason || cancelling
+                        ? 'bg-gray-400 cursor-not-allowed transform-none'
+                        : 'bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700'
                     }`}
-                    style={{ backgroundColor: 'var(--primary-orange)' }}
                   >
                     {cancelling ? (
                       <>
-                        <FaSpinner className="w-4 h-4 animate-spin" />
+                        <FaSpinner className="w-5 h-5 animate-spin" />
                         <span>Cancelling...</span>
                       </>
                     ) : (
                       <>
-                        <FaBan className="w-4 h-4" />
+                        <FaBan className="w-5 h-5" />
                         <span>Confirm Cancellation</span>
                       </>
                     )}

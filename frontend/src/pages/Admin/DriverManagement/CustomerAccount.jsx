@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FaUserCircle,
   FaEnvelope,
@@ -132,6 +132,30 @@ const CustomerAccount = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showDetailsModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showDetailsModal]);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape' && showDetailsModal) {
+        setShowDetailsModal(false);
+        setSelectedCustomer(null);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [showDetailsModal]);
 
   const formatCurrency = (amount) => {
     const pkrAmount = amount * 28;
@@ -396,176 +420,193 @@ const CustomerAccount = () => {
         )}
       </div>
 
-      {/* Customer Details Modal */}
+      {/* Customer Details Modal - Fixed */}
       {showDetailsModal && selectedCustomer && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-gray-800">Customer Profile</h3>
-              <button
-                onClick={() => setShowDetailsModal(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <FaTimes size={24} />
-              </button>
-            </div>
-
-            <div className="p-6">
-              {/* Profile Header */}
-              <div className="flex flex-wrap items-center mb-6 pb-6 border-b border-gray-200">
-                <div className={`h-20 w-20 rounded-full ${
-                  selectedCustomer.accountStatus === 'active' ? 'bg-gradient-to-r from-green-500 to-green-600' :
-                  selectedCustomer.accountStatus === 'banned' ? 'bg-gradient-to-r from-red-500 to-red-600' :
-                  'bg-gradient-to-r from-yellow-500 to-yellow-600'
-                } flex items-center justify-center`}>
-                  <span className="text-white font-bold text-2xl">{selectedCustomer.avatar}</span>
-                </div>
-                <div className="ml-6 flex-1">
-                  <div className="flex items-center space-x-3">
-                    <h2 className="text-2xl font-bold text-gray-800">{selectedCustomer.name}</h2>
-                    {getStatusBadge(selectedCustomer.accountStatus)}
-                  </div>
-                  <div className="flex flex-wrap items-center space-x-4 mt-2">
-                    <div className="flex items-center space-x-2 text-gray-600">
-                      <FaEnvelope />
-                      <span className="text-sm">{selectedCustomer.email}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-600">
-                      <FaPhone />
-                      <span className="text-sm">{selectedCustomer.phone}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2 mt-2 text-gray-600">
-                    <FaMapMarkerAlt />
-                    <span className="text-sm">{selectedCustomer.address}</span>
-                  </div>
-                </div>
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" onClick={() => {
+            setShowDetailsModal(false);
+            setSelectedCustomer(null);
+          }}></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+              {/* Fixed Header */}
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between rounded-t-xl flex-shrink-0">
+                <h3 className="text-xl font-semibold text-gray-800">Customer Profile</h3>
+                <button
+                  onClick={() => {
+                    setShowDetailsModal(false);
+                    setSelectedCustomer(null);
+                  }}
+                  className="text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <FaTimes size={20} />
+                </button>
               </div>
 
-              {/* Account Information */}
-              <div className="flex flex-wrap mb-6">
-                <div className="w-full md:w-1/3 p-2">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <p className="text-xs text-gray-500">Account Status</p>
-                    <div className="flex items-center space-x-2 mt-1">
-                      {getStatusIcon(selectedCustomer.accountStatus)}
-                      <span className="text-sm font-semibold capitalize">{selectedCustomer.accountStatus}</span>
+              {/* Scrollable Content - Hide scrollbar */}
+              <div className="flex-1 overflow-y-auto p-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style jsx>{`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                
+                {/* Profile Header */}
+                <div className="flex flex-wrap items-center mb-6 pb-6 border-b border-gray-200">
+                  <div className={`h-20 w-20 rounded-full ${
+                    selectedCustomer.accountStatus === 'active' ? 'bg-gradient-to-r from-green-500 to-green-600' :
+                    selectedCustomer.accountStatus === 'banned' ? 'bg-gradient-to-r from-red-500 to-red-600' :
+                    'bg-gradient-to-r from-yellow-500 to-yellow-600'
+                  } flex items-center justify-center`}>
+                    <span className="text-white font-bold text-2xl">{selectedCustomer.avatar}</span>
+                  </div>
+                  <div className="ml-6 flex-1">
+                    <div className="flex items-center space-x-3">
+                      <h2 className="text-2xl font-bold text-gray-800">{selectedCustomer.name}</h2>
+                      {getStatusBadge(selectedCustomer.accountStatus)}
                     </div>
-                    {selectedCustomer.accountStatus === 'banned' && (
-                      <p className="text-xs text-red-600 mt-2">Reason: {selectedCustomer.banReason}</p>
-                    )}
-                  </div>
-                </div>
-                <div className="w-full md:w-1/3 p-2">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <p className="text-xs text-gray-500">Join Date</p>
-                    <p className="text-sm font-semibold mt-1">{selectedCustomer.joinDate}</p>
-                  </div>
-                </div>
-                <div className="w-full md:w-1/3 p-2">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <p className="text-xs text-gray-500">Last Active</p>
-                    <p className="text-sm font-semibold mt-1">{selectedCustomer.lastActive}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Statistics Cards */}
-              <div className="flex flex-wrap mb-6">
-                <div className="w-full md:w-1/3 p-2">
-                  <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4">
-                    <div className="flex items-center justify-between">
-                      <FaHistory className="text-blue-500 text-xl" />
-                      <span className="text-xs text-gray-500">Total Rides</span>
-                    </div>
-                    <p className="text-2xl font-bold text-gray-800 mt-2">{selectedCustomer.rideHistoryCount}</p>
-                    <p className="text-xs text-gray-500 mt-1">completed trips</p>
-                  </div>
-                </div>
-                <div className="w-full md:w-1/3 p-2">
-                  <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4">
-                    <div className="flex items-center justify-between">
-                      <FaWallet className="text-green-500 text-xl" />
-                      <span className="text-xs text-gray-500">Wallet Balance</span>
-                    </div>
-                    <p className="text-2xl font-bold text-green-600 mt-2">{formatCurrency(selectedCustomer.walletBalance)}</p>
-                    <p className="text-xs text-gray-500 mt-1">available balance</p>
-                  </div>
-                </div>
-                <div className="w-full md:w-1/3 p-2">
-                  <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg p-4">
-                    <div className="flex items-center justify-between">
-                      <FaDollarSign className="text-purple-500 text-xl" />
-                      <span className="text-xs text-gray-500">Total Spent</span>
-                    </div>
-                    <p className="text-2xl font-bold text-purple-600 mt-2">{formatCurrency(selectedCustomer.totalSpent)}</p>
-                    <p className="text-xs text-gray-500 mt-1">lifetime spending</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Rating Section */}
-              {selectedCustomer.rating > 0 && (
-                <div className="mb-6 p-4 bg-yellow-50 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600">Customer Rating</p>
-                      <div className="flex items-center mt-1">
-                        {getRatingStars(selectedCustomer.rating)}
-                        <span className="ml-2 text-sm font-semibold text-gray-700">{selectedCustomer.rating}</span>
+                    <div className="flex flex-wrap items-center space-x-4 mt-2">
+                      <div className="flex items-center space-x-2 text-gray-600">
+                        <FaEnvelope />
+                        <span className="text-sm">{selectedCustomer.email}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-gray-600">
+                        <FaPhone />
+                        <span className="text-sm">{selectedCustomer.phone}</span>
                       </div>
                     </div>
-                    <FaStar className="text-yellow-500 text-2xl" />
+                    <div className="flex items-center space-x-2 mt-2 text-gray-600">
+                      <FaMapMarkerAlt />
+                      <span className="text-sm">{selectedCustomer.address}</span>
+                    </div>
                   </div>
                 </div>
-              )}
 
-              {/* Ride History */}
-              <div className="border border-gray-200 rounded-lg p-4">
-                <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2">
-                  <FaHistory className="text-[#FF991C]" />
-                  <span>Ride History</span>
-                </h4>
-                {selectedCustomer.rides.length > 0 ? (
-                  <div className="space-y-3">
-                    {selectedCustomer.rides.map((ride) => (
-                      <div key={ride.id} className="flex flex-wrap items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-1">
-                            <FaCalendarAlt className="text-gray-400 text-xs" />
-                            <span className="text-xs text-gray-500">{ride.date}</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-sm font-medium">{ride.from}</span>
-                            <FaArrowRight className="text-gray-400 text-xs" />
-                            <span className="text-sm font-medium">{ride.to}</span>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm font-bold text-gray-800">{formatCurrency(ride.fare)}</p>
-                          <span className="text-xs text-green-600">{ride.status}</span>
+                {/* Account Information */}
+                <div className="flex flex-wrap mb-6">
+                  <div className="w-full md:w-1/3 p-2">
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-500">Account Status</p>
+                      <div className="flex items-center space-x-2 mt-1">
+                        {getStatusIcon(selectedCustomer.accountStatus)}
+                        <span className="text-sm font-semibold capitalize">{selectedCustomer.accountStatus}</span>
+                      </div>
+                      {selectedCustomer.accountStatus === 'banned' && (
+                        <p className="text-xs text-red-600 mt-2">Reason: {selectedCustomer.banReason}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/3 p-2">
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-500">Join Date</p>
+                      <p className="text-sm font-semibold mt-1">{selectedCustomer.joinDate}</p>
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/3 p-2">
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-500">Last Active</p>
+                      <p className="text-sm font-semibold mt-1">{selectedCustomer.lastActive}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Statistics Cards */}
+                <div className="flex flex-wrap mb-6">
+                  <div className="w-full md:w-1/3 p-2">
+                    <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4">
+                      <div className="flex items-center justify-between">
+                        <FaHistory className="text-blue-500 text-xl" />
+                        <span className="text-xs text-gray-500">Total Rides</span>
+                      </div>
+                      <p className="text-2xl font-bold text-gray-800 mt-2">{selectedCustomer.rideHistoryCount}</p>
+                      <p className="text-xs text-gray-500 mt-1">completed trips</p>
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/3 p-2">
+                    <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4">
+                      <div className="flex items-center justify-between">
+                        <FaWallet className="text-green-500 text-xl" />
+                        <span className="text-xs text-gray-500">Wallet Balance</span>
+                      </div>
+                      <p className="text-2xl font-bold text-green-600 mt-2">{formatCurrency(selectedCustomer.walletBalance)}</p>
+                      <p className="text-xs text-gray-500 mt-1">available balance</p>
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/3 p-2">
+                    <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg p-4">
+                      <div className="flex items-center justify-between">
+                        <FaDollarSign className="text-purple-500 text-xl" />
+                        <span className="text-xs text-gray-500">Total Spent</span>
+                      </div>
+                      <p className="text-2xl font-bold text-purple-600 mt-2">{formatCurrency(selectedCustomer.totalSpent)}</p>
+                      <p className="text-xs text-gray-500 mt-1">lifetime spending</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Rating Section */}
+                {selectedCustomer.rating > 0 && (
+                  <div className="mb-6 p-4 bg-yellow-50 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600">Customer Rating</p>
+                        <div className="flex items-center mt-1">
+                          {getRatingStars(selectedCustomer.rating)}
+                          <span className="ml-2 text-sm font-semibold text-gray-700">{selectedCustomer.rating}</span>
                         </div>
                       </div>
-                    ))}
+                      <FaStar className="text-yellow-500 text-2xl" />
+                    </div>
                   </div>
-                ) : (
-                  <p className="text-sm text-gray-500 text-center py-4">No ride history available</p>
                 )}
-              </div>
 
-              {/* Info Note */}
-              <div className="mt-4 bg-blue-50 rounded-lg p-3">
-                <div className="flex items-start space-x-2">
-                  <FaInfoCircle className="text-blue-500 mt-0.5" />
-                  <p className="text-xs text-blue-700">
-                    Customer account status determines their ability to book rides. 
-                    Active customers can book rides, banned customers cannot, and pending accounts require verification.
-                  </p>
+                {/* Ride History */}
+                <div className="border border-gray-200 rounded-lg p-4">
+                  <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2">
+                    <FaHistory className="text-[#FF991C]" />
+                    <span>Ride History</span>
+                  </h4>
+                  {selectedCustomer.rides.length > 0 ? (
+                    <div className="space-y-3">
+                      {selectedCustomer.rides.map((ride) => (
+                        <div key={ride.id} className="flex flex-wrap items-center justify-between p-3 bg-gray-50 rounded-lg">
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2 mb-1">
+                              <FaCalendarAlt className="text-gray-400 text-xs" />
+                              <span className="text-xs text-gray-500">{ride.date}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-sm font-medium">{ride.from}</span>
+                              <FaArrowRight className="text-gray-400 text-xs" />
+                              <span className="text-sm font-medium">{ride.to}</span>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-bold text-gray-800">{formatCurrency(ride.fare)}</p>
+                            <span className="text-xs text-green-600">{ride.status}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500 text-center py-4">No ride history available</p>
+                  )}
+                </div>
+
+                {/* Info Note */}
+                <div className="mt-4 bg-blue-50 rounded-lg p-3">
+                  <div className="flex items-start space-x-2">
+                    <FaInfoCircle className="text-blue-500 mt-0.5" />
+                    <p className="text-xs text-blue-700">
+                      Customer account status determines their ability to book rides. 
+                      Active customers can book rides, banned customers cannot, and pending accounts require verification.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

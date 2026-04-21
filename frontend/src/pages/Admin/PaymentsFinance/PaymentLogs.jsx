@@ -780,135 +780,140 @@ const PaymentLogs = () => {
       {/* Payment Details Modal */}
       {showDetailsModal && selectedPayment && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowDetailsModal(false)}></div>
-          <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">Payment Details</h3>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-scroll border border-gray-200">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center">
+                    <FaMoneyBillWave className="w-5 h-5 text-orange-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">Payment Details</h3>
+                </div>
                 <button
                   onClick={() => setShowDetailsModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
+                  className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
                 >
                   <FaTimes className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
-              
+
               <div className="p-6">
                 {/* Header */}
-                <div className="mb-6">
+                <div className="mb-8">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-500">Transaction ID</p>
-                      <p className="text-xl font-bold text-gray-900">{selectedPayment.transactionId}</p>
+                      <p className="text-sm text-gray-500 font-medium">Transaction ID</p>
+                      <p className="text-2xl font-bold text-gray-900">{selectedPayment.transactionId}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-gray-500">Payment ID</p>
-                      <p className="text-xl font-bold text-gray-900">{selectedPayment.id}</p>
+                      <p className="text-sm text-gray-500 font-medium">Payment ID</p>
+                      <p className="text-2xl font-bold text-gray-900">{selectedPayment.id}</p>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Ride & Customer Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                      <FaCar className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-5 border border-gray-200">
+                    <h4 className="font-bold text-gray-900 mb-4 flex items-center space-x-2">
+                      <FaCar className="w-5 h-5 text-orange-600" />
                       <span>Ride Information</span>
                     </h4>
-                    <div className="space-y-2 text-sm">
-                      <p><span className="font-medium">Ride ID:</span> {selectedPayment.rideId}</p>
-                      <p><span className="font-medium">Date:</span> {formatDateTime(selectedPayment.date).full}</p>
-                      <p><span className="font-medium">Description:</span> {selectedPayment.description}</p>
+                    <div className="space-y-3 text-sm">
+                      <p><span className="font-semibold">Ride ID:</span> {selectedPayment.rideId}</p>
+                      <p><span className="font-semibold">Date:</span> {formatDateTime(selectedPayment.date).full}</p>
+                      <p><span className="font-semibold">Description:</span> {selectedPayment.description}</p>
                     </div>
                   </div>
-                  
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                      <FaUser className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
+
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-5 border border-gray-200">
+                    <h4 className="font-bold text-gray-900 mb-4 flex items-center space-x-2">
+                      <FaUser className="w-5 h-5 text-orange-600" />
                       <span>Customer Information</span>
                     </h4>
-                    <div className="space-y-2 text-sm">
-                      <p><span className="font-medium">Name:</span> {selectedPayment.customer.name}</p>
-                      <p><span className="font-medium">Email:</span> {selectedPayment.customer.email}</p>
-                      <p><span className="font-medium">Phone:</span> {selectedPayment.customer.phone}</p>
+                    <div className="space-y-3 text-sm">
+                      <p><span className="font-semibold">Name:</span> {selectedPayment.customer.name}</p>
+                      <p><span className="font-semibold">Email:</span> {selectedPayment.customer.email}</p>
+                      <p><span className="font-semibold">Phone:</span> {selectedPayment.customer.phone}</p>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Payment Details */}
-                <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                    <FaMoneyBillWave className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 mb-8 border border-gray-200">
+                  <h4 className="font-bold text-gray-900 mb-5 flex items-center space-x-2 text-lg">
+                    <FaMoneyBillWave className="w-5 h-5 text-orange-600" />
                     <span>Payment Details</span>
                   </h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="font-medium">Amount:</span>
-                      <span className="text-lg font-bold" style={{ color: 'var(--primary-orange)' }}>
+                  <div className="space-y-4 text-sm">
+                    <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+                      <span className="font-semibold">Amount:</span>
+                      <span className="text-2xl font-bold text-orange-600">
                         {formatCurrency(selectedPayment.amount)}
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Payment Method:</span>
-                      <span>{selectedPayment.paymentMethod}</span>
+                    <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+                      <span className="font-semibold">Payment Method:</span>
+                      <span className="font-medium">{selectedPayment.paymentMethod}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Status:</span>
-                      <span className={`font-medium ${getStatusBadge(selectedPayment.status).color}`}>
+                    <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+                      <span className="font-semibold">Status:</span>
+                      <span className={`font-bold text-lg ${getStatusBadge(selectedPayment.status).color}`}>
                         {getStatusBadge(selectedPayment.status).label}
                       </span>
                     </div>
                     {selectedPayment.metadata.cardLast4 && (
-                      <div className="flex justify-between">
-                        <span className="font-medium">Card Last 4:</span>
-                        <span>**** {selectedPayment.metadata.cardLast4}</span>
+                      <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+                        <span className="font-semibold">Card Last 4:</span>
+                        <span className="font-mono">**** {selectedPayment.metadata.cardLast4}</span>
                       </div>
                     )}
                     {selectedPayment.metadata.walletId && (
-                      <div className="flex justify-between">
-                        <span className="font-medium">Wallet ID:</span>
-                        <span>{selectedPayment.metadata.walletId}</span>
+                      <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+                        <span className="font-semibold">Wallet ID:</span>
+                        <span className="font-mono">{selectedPayment.metadata.walletId}</span>
                       </div>
                     )}
-                    <div className="flex justify-between">
-                      <span className="font-medium">Reference:</span>
-                      <span>{selectedPayment.metadata.transactionReference}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold">Reference:</span>
+                      <span className="font-mono">{selectedPayment.metadata.transactionReference}</span>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Refund Details (if applicable) */}
                 {selectedPayment.status === 'refunded' && (
-                  <div className="bg-red-50 rounded-lg p-4 mb-6">
-                    <h4 className="font-semibold text-red-900 mb-3 flex items-center space-x-2">
-                      <FaTimesCircle className="w-4 h-4" />
+                  <div className="bg-gradient-to-r from-red-50 to-red-100 rounded-xl p-6 mb-8 border border-red-200">
+                    <h4 className="font-bold text-red-900 mb-5 flex items-center space-x-2 text-lg">
+                      <FaTimesCircle className="w-5 h-5" />
                       <span>Refund Details</span>
                     </h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="font-medium">Refund Amount:</span>
-                        <span className="font-semibold text-red-600">{formatCurrency(selectedPayment.refundAmount)}</span>
+                    <div className="space-y-4 text-sm">
+                      <div className="flex justify-between items-center pb-3 border-b border-red-300">
+                        <span className="font-semibold">Refund Amount:</span>
+                        <span className="font-bold text-red-600 text-xl">{formatCurrency(selectedPayment.refundAmount)}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="font-medium">Refund Date:</span>
-                        <span>{formatDateTime(selectedPayment.refundDate).full}</span>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold">Refund Date:</span>
+                        <span className="font-medium">{formatDateTime(selectedPayment.refundDate).full}</span>
                       </div>
                     </div>
                   </div>
                 )}
-                
+
                 {/* Action Buttons */}
-                <div className="flex space-x-3">
-                  <button className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors">
-                    <FaDownload className="w-4 h-4" />
+                <div className="flex space-x-4">
+                  <button className="flex-1 flex items-center justify-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105">
+                    <FaDownload className="w-5 h-5" />
                     <span>Receipt</span>
                   </button>
-                  <button className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors">
-                    <FaPrintIcon className="w-4 h-4" />
+                  <button className="flex-1 flex items-center justify-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105">
+                    <FaPrintIcon className="w-5 h-5" />
                     <span>Print</span>
                   </button>
-                  <button className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors">
-                    <FaEnvelope className="w-4 h-4" />
+                  <button className="flex-1 flex items-center justify-center space-x-2 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105">
+                    <FaEnvelope className="w-5 h-5" />
                     <span>Email</span>
                   </button>
                 </div>

@@ -84,6 +84,30 @@ const DriverAssignmentLog = () => {
     avgResponseTime: 0
   });
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showDetailsModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showDetailsModal]);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape' && showDetailsModal) {
+        setShowDetailsModal(false);
+        setSelectedAssignment(null);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [showDetailsModal]);
+
   // Handle responsive behavior
   useEffect(() => {
     const handleResize = () => {
@@ -183,7 +207,6 @@ const DriverAssignmentLog = () => {
       });
     }
     
-    // Sort by assignment time
     return assignments.sort((a, b) => new Date(b.assignmentTime) - new Date(a.assignmentTime));
   };
 
@@ -367,7 +390,7 @@ const DriverAssignmentLog = () => {
     <div className={`min-h-screen bg-gray-50 ${fullscreenMode ? 'fixed inset-0 z-50 overflow-auto' : ''}`}>
       {/* Header */}
       <div className="bg-white shadow-sm sticky top-0 z-20">
-        <div className="px-2 sm:py-4">
+        <div className="px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div>
@@ -411,55 +434,67 @@ const DriverAssignmentLog = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="sm:py-6">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-4 sm:mb-6">
-          <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
-            <div className="flex items-center justify-between mb-2">
-              <FaUserCheck className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
-              <span className="text-xs text-gray-500">Total</span>
+      <div className="py-4">
+        <div className="flex flex-wrap -mx-2">
+          <div className="w-1/2 sm:w-1/3 lg:w-1/6 px-2 mb-4">
+            <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
+              <div className="flex items-center justify-between mb-2">
+                <FaUserCheck className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
+                <span className="text-xs text-gray-500">Total</span>
+              </div>
+              <div className="text-xl sm:text-2xl font-bold text-gray-900">{stats.totalAttempts}</div>
+              <div className="text-xs text-gray-600">Total Attempts</div>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-gray-900">{stats.totalAttempts}</div>
-            <div className="text-xs text-gray-600">Total Attempts</div>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
-            <div className="flex items-center justify-between mb-2">
-              <FaCheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
-              <span className="text-xs text-gray-500">Accepted</span>
+          <div className="w-1/2 sm:w-1/3 lg:w-1/6 px-2 mb-4">
+            <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
+              <div className="flex items-center justify-between mb-2">
+                <FaCheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
+                <span className="text-xs text-gray-500">Accepted</span>
+              </div>
+              <div className="text-xl sm:text-2xl font-bold text-green-600">{stats.acceptedCount}</div>
+              <div className="text-xs text-gray-600">Accepted</div>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-green-600">{stats.acceptedCount}</div>
-            <div className="text-xs text-gray-600">Accepted</div>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
-            <div className="flex items-center justify-between mb-2">
-              <FaTimesCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
-              <span className="text-xs text-gray-500">Rejected</span>
+          <div className="w-1/2 sm:w-1/3 lg:w-1/6 px-2 mb-4">
+            <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
+              <div className="flex items-center justify-between mb-2">
+                <FaTimesCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
+                <span className="text-xs text-gray-500">Rejected</span>
+              </div>
+              <div className="text-xl sm:text-2xl font-bold text-red-600">{stats.rejectedCount}</div>
+              <div className="text-xs text-gray-600">Rejected</div>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-red-600">{stats.rejectedCount}</div>
-            <div className="text-xs text-gray-600">Rejected</div>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
-            <div className="flex items-center justify-between mb-2">
-              <FaUserClock className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
-              <span className="text-xs text-gray-500">Pending</span>
+          <div className="w-1/2 sm:w-1/3 lg:w-1/6 px-2 mb-4">
+            <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
+              <div className="flex items-center justify-between mb-2">
+                <FaUserClock className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
+                <span className="text-xs text-gray-500">Pending</span>
+              </div>
+              <div className="text-xl sm:text-2xl font-bold text-yellow-600">{stats.pendingCount}</div>
+              <div className="text-xs text-gray-600">Pending</div>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-yellow-600">{stats.pendingCount}</div>
-            <div className="text-xs text-gray-600">Pending</div>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
-            <div className="flex items-center justify-between mb-2">
-              <FaChartLine className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
-              <span className="text-xs text-gray-500">Rate</span>
+          <div className="w-1/2 sm:w-1/3 lg:w-1/6 px-2 mb-4">
+            <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
+              <div className="flex items-center justify-between mb-2">
+                <FaChartLine className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
+                <span className="text-xs text-gray-500">Rate</span>
+              </div>
+              <div className="text-xl sm:text-2xl font-bold text-purple-600">{stats.acceptanceRate}%</div>
+              <div className="text-xs text-gray-600">Acceptance</div>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-purple-600">{stats.acceptanceRate}%</div>
-            <div className="text-xs text-gray-600">Acceptance</div>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
-            <div className="flex items-center justify-between mb-2">
-              <FaClock className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
-              <span className="text-xs text-gray-500">Response</span>
+          <div className="w-1/2 sm:w-1/3 lg:w-1/6 px-2 mb-4">
+            <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
+              <div className="flex items-center justify-between mb-2">
+                <FaClock className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
+                <span className="text-xs text-gray-500">Response</span>
+              </div>
+              <div className="text-xl sm:text-2xl font-bold text-orange-600">{stats.avgResponseTime}s</div>
+              <div className="text-xs text-gray-600">Avg Response</div>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-orange-600">{stats.avgResponseTime}s</div>
-            <div className="text-xs text-gray-600">Avg Response</div>
           </div>
         </div>
 
@@ -485,9 +520,8 @@ const DriverAssignmentLog = () => {
               </button>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {/* Search */}
-              <div>
+            <div className="flex flex-wrap -mx-2">
+              <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
                 <div className="relative">
                   <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -502,8 +536,7 @@ const DriverAssignmentLog = () => {
                 </div>
               </div>
               
-              {/* Date Range */}
-              <div>
+              <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
                 <div className="flex space-x-2">
                   <input
@@ -523,8 +556,7 @@ const DriverAssignmentLog = () => {
                 </div>
               </div>
               
-              {/* Ride Filter */}
-              <div>
+              <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Ride</label>
                 <select
                   value={selectedRide}
@@ -539,8 +571,7 @@ const DriverAssignmentLog = () => {
                 </select>
               </div>
               
-              {/* Driver Filter */}
-              <div>
+              <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Driver</label>
                 <select
                   value={selectedDriver}
@@ -555,8 +586,7 @@ const DriverAssignmentLog = () => {
                 </select>
               </div>
               
-              {/* Status Filter */}
-              <div>
+              <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
                 <select
                   value={selectedStatus}
@@ -585,7 +615,10 @@ const DriverAssignmentLog = () => {
             <label className="text-sm text-gray-600">Show:</label>
             <select
               value={itemsPerPage}
-              onChange={(e) => setItemsPerPage(Number(e.target.value))}
+              onChange={(e) => {
+                setItemsPerPage(Number(e.target.value));
+                setCurrentPage(1);
+              }}
               className="px-2 py-1 border rounded-lg focus:outline-none focus:ring-2 text-sm"
               style={{ borderColor: 'var(--gray-300)', focusRingColor: 'var(--primary-orange)' }}
             >
@@ -701,68 +734,70 @@ const DriverAssignmentLog = () => {
           </div>
         ) : (
           // Cards View
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-wrap -mx-2">
             {currentItems.map((assignment) => {
               const statusBadge = getStatusBadge(assignment.status);
               const assignmentTime = formatDateTime(assignment.assignmentTime);
               const StatusIcon = statusBadge.Icon;
               
               return (
-                <div key={assignment.id} className="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="font-semibold text-gray-900">{assignment.rideNumber}</p>
-                      <p className="text-xs text-gray-500">Attempt #{assignment.attemptNumber}</p>
-                    </div>
-                    <span className={`px-2 py-1 text-xs rounded-full ${statusBadge.bg} ${statusBadge.color} flex items-center space-x-1`}>
-                      <StatusIcon className="w-3 h-3" />
-                      <span>{statusBadge.label}</span>
-                    </span>
-                  </div>
-                  
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-500">Time:</span>
-                      <span className="text-gray-900">{assignmentTime.date} {assignmentTime.time}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-500">Driver:</span>
-                      <span className="text-gray-900">{assignment.driver.name}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-500">Vehicle:</span>
-                      <span className="text-gray-900">{assignment.driver.vehicle}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-500">Distance:</span>
-                      <span className="text-gray-900">{assignment.metadata.driverDistance} km</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-500">ETA:</span>
-                      <span className="text-gray-900">{assignment.metadata.driverETA} min</span>
-                    </div>
-                    {assignment.responseDelay && (
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-500">Response:</span>
-                        <span className="text-orange-600 font-medium">{formatDuration(assignment.responseDelay)}</span>
+                <div key={assignment.id} className="w-full md:w-1/2 lg:w-1/3 px-2 mb-4">
+                  <div className="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <p className="font-semibold text-gray-900">{assignment.rideNumber}</p>
+                        <p className="text-xs text-gray-500">Attempt #{assignment.attemptNumber}</p>
                       </div>
-                    )}
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-500">Method:</span>
-                      <span className="text-purple-600">{assignment.dispatchMethod}</span>
+                      <span className={`px-2 py-1 text-xs rounded-full ${statusBadge.bg} ${statusBadge.color} flex items-center space-x-1`}>
+                        <StatusIcon className="w-3 h-3" />
+                        <span>{statusBadge.label}</span>
+                      </span>
                     </div>
+                    
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-500">Time:</span>
+                        <span className="text-gray-900">{assignmentTime.date} {assignmentTime.time}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-500">Driver:</span>
+                        <span className="text-gray-900">{assignment.driver.name}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-500">Vehicle:</span>
+                        <span className="text-gray-900">{assignment.driver.vehicle}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-500">Distance:</span>
+                        <span className="text-gray-900">{assignment.metadata.driverDistance} km</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-500">ETA:</span>
+                        <span className="text-gray-900">{assignment.metadata.driverETA} min</span>
+                      </div>
+                      {assignment.responseDelay && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-gray-500">Response:</span>
+                          <span className="text-orange-600 font-medium">{formatDuration(assignment.responseDelay)}</span>
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-500">Method:</span>
+                        <span className="text-purple-600">{assignment.dispatchMethod}</span>
+                      </div>
+                    </div>
+                    
+                    <button
+                      onClick={() => {
+                        setSelectedAssignment(assignment);
+                        setShowDetailsModal(true);
+                      }}
+                      className="w-full mt-3 py-2 rounded-lg text-white text-sm font-medium transition-opacity hover:opacity-90"
+                      style={{ backgroundColor: 'var(--primary-orange)' }}
+                    >
+                      View Details
+                    </button>
                   </div>
-                  
-                  <button
-                    onClick={() => {
-                      setSelectedAssignment(assignment);
-                      setShowDetailsModal(true);
-                    }}
-                    className="w-full mt-3 py-2 rounded-lg text-white text-sm font-medium transition-opacity hover:opacity-90"
-                    style={{ backgroundColor: 'var(--primary-orange)' }}
-                  >
-                    View Details
-                  </button>
                 </div>
               );
             })}
@@ -807,23 +842,31 @@ const DriverAssignmentLog = () => {
         )}
       </div>
 
-      {/* Assignment Details Modal */}
+      {/* Assignment Details Modal - Fixed */}
       {showDetailsModal && selectedAssignment && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowDetailsModal(false)}></div>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40" onClick={() => setShowDetailsModal(false)}></div>
           <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+            <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col">
+              {/* Fixed Header */}
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between rounded-t-lg flex-shrink-0">
                 <h3 className="text-lg font-semibold text-gray-900">Assignment Details</h3>
                 <button
                   onClick={() => setShowDetailsModal(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
                 >
                   <FaTimes className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
               
-              <div className="p-6">
+              {/* Scrollable Content - Hide scrollbar */}
+              <div className="flex-1 overflow-y-auto p-6" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style jsx>{`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                
                 {/* Header */}
                 <div className="mb-6">
                   <div className="flex items-center justify-between">
@@ -839,40 +882,44 @@ const DriverAssignmentLog = () => {
                 </div>
                 
                 {/* Ride & Driver Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                      <FaRoute className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
-                      <span>Ride Information</span>
-                    </h4>
-                    <div className="space-y-2 text-sm">
-                      <p><span className="font-medium">Ride Number:</span> {selectedAssignment.rideNumber}</p>
-                      <div className="flex items-start space-x-2">
-                        <FaMapMarkerAlt className="w-3 h-3 text-green-500 mt-0.5" />
-                        <span className="text-gray-600">{selectedAssignment.pickup}</span>
-                      </div>
-                      <div className="flex items-start space-x-2">
-                        <FaLocationArrow className="w-3 h-3 text-red-500 mt-0.5" />
-                        <span className="text-gray-600">{selectedAssignment.dropoff}</span>
+                <div className="flex flex-wrap -mx-2 mb-6">
+                  <div className="w-full md:w-1/2 px-2 mb-4">
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
+                        <FaRoute className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
+                        <span>Ride Information</span>
+                      </h4>
+                      <div className="space-y-2 text-sm">
+                        <p><span className="font-medium">Ride Number:</span> {selectedAssignment.rideNumber}</p>
+                        <div className="flex items-start space-x-2">
+                          <FaMapMarkerAlt className="w-3 h-3 text-green-500 mt-0.5" />
+                          <span className="text-gray-600">{selectedAssignment.pickup}</span>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <FaLocationArrow className="w-3 h-3 text-red-500 mt-0.5" />
+                          <span className="text-gray-600">{selectedAssignment.dropoff}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                      <FaCar className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
-                      <span>Driver Information</span>
-                    </h4>
-                    <div className="space-y-2 text-sm">
-                      <p><span className="font-medium">Name:</span> {selectedAssignment.driver.name}</p>
-                      <p><span className="font-medium">Vehicle:</span> {selectedAssignment.driver.vehicle}</p>
-                      <p><span className="font-medium">License Plate:</span> {selectedAssignment.driver.plate}</p>
-                      <p><span className="font-medium">Phone:</span> {selectedAssignment.driver.phone}</p>
-                      <div className="flex items-center space-x-1">
-                        <span className="font-medium">Rating:</span>
-                        <div className="flex items-center">
-                          <FaStar className="w-3 h-3 text-yellow-400" />
-                          <span className="ml-1">{selectedAssignment.driver.rating}</span>
+                  <div className="w-full md:w-1/2 px-2 mb-4">
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
+                        <FaCar className="w-4 h-4" style={{ color: 'var(--primary-orange)' }} />
+                        <span>Driver Information</span>
+                      </h4>
+                      <div className="space-y-2 text-sm">
+                        <p><span className="font-medium">Name:</span> {selectedAssignment.driver.name}</p>
+                        <p><span className="font-medium">Vehicle:</span> {selectedAssignment.driver.vehicle}</p>
+                        <p><span className="font-medium">License Plate:</span> {selectedAssignment.driver.plate}</p>
+                        <p><span className="font-medium">Phone:</span> {selectedAssignment.driver.phone}</p>
+                        <div className="flex items-center space-x-1">
+                          <span className="font-medium">Rating:</span>
+                          <div className="flex items-center">
+                            <FaStar className="w-3 h-3 text-yellow-400" />
+                            <span className="ml-1">{selectedAssignment.driver.rating}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -918,43 +965,47 @@ const DriverAssignmentLog = () => {
                 </div>
                 
                 {/* Status & Metadata */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3">Status Details</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Status:</span>
-                        <span className={`font-medium ${getStatusBadge(selectedAssignment.status).color}`}>
-                          {getStatusBadge(selectedAssignment.status).label}
-                        </span>
-                      </div>
-                      {selectedAssignment.rejectionReason && (
+                <div className="flex flex-wrap -mx-2 mb-6">
+                  <div className="w-full md:w-1/2 px-2 mb-4">
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-900 mb-3">Status Details</h4>
+                      <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Reason:</span>
-                          <span className="text-red-600">{selectedAssignment.rejectionReason}</span>
+                          <span className="text-gray-600">Status:</span>
+                          <span className={`font-medium ${getStatusBadge(selectedAssignment.status).color}`}>
+                            {getStatusBadge(selectedAssignment.status).label}
+                          </span>
                         </div>
-                      )}
+                        {selectedAssignment.rejectionReason && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Reason:</span>
+                            <span className="text-red-600">{selectedAssignment.rejectionReason}</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                   
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3">Trip Metadata</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Driver Distance:</span>
-                        <span>{selectedAssignment.metadata.driverDistance} km</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Driver ETA:</span>
-                        <span>{selectedAssignment.metadata.driverETA} min</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Surge Multiplier:</span>
-                        <span>{selectedAssignment.metadata.surgeMultiplier}x</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Estimated Fare:</span>
-                        <span className="font-medium">${selectedAssignment.metadata.estimatedFare}</span>
+                  <div className="w-full md:w-1/2 px-2 mb-4">
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-900 mb-3">Trip Metadata</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Driver Distance:</span>
+                          <span>{selectedAssignment.metadata.driverDistance} km</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Driver ETA:</span>
+                          <span>{selectedAssignment.metadata.driverETA} min</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Surge Multiplier:</span>
+                          <span>{selectedAssignment.metadata.surgeMultiplier}x</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Estimated Fare:</span>
+                          <span className="font-medium">${selectedAssignment.metadata.estimatedFare}</span>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -144,67 +144,67 @@ export const sidebarLinks = [
             { id: 506, title: "Profit & Loss Reports", url: "/admin/payments/profit-loss", icon: FaChartPie }
         ]
     },
-    { 
-        id: 6, 
-        title: "Promotions Management", 
-        url: "/admin/promotions", 
-        icon: FaTag,
-        hasDropdown: true,
-        dropdownItems: [
-            { id: 601, title: "Active Promotions", url: "/admin/promotions/active", icon: FaTag },
-            { id: 602, title: "Create Campaign", url: "/admin/promotions/create", icon: FaPercentage },
-            { id: 603, title: "Coupon Management", url: "/admin/promotions/coupons", icon: FaTicketAlt }
-        ]
-    },
-    { 
-        id: 7, 
-        title: "Safety & Compliance", 
-        url: "/admin/safety", 
-        icon: FaShieldAlt,
-        hasDropdown: true,
-        dropdownItems: [
-            { id: 701, title: "Emergency Alerts", url: "/admin/safety/alerts", icon: FaBell },
-            { id: 702, title: "Compliance Reports", url: "/admin/safety/compliance", icon: FaFileAlt },
-            { id: 703, title: "Incident Management", url: "/admin/safety/incidents", icon: FaExclamationTriangle }
-        ]
-    },
-    { 
-        id: 8, 
-        title: "Analytics & Reporting", 
-        url: "/admin/analytics", 
-        icon: FaChartLine,
-        hasDropdown: true,
-        dropdownItems: [
-            { id: 801, title: "Revenue Analytics", url: "/admin/analytics/revenue", icon: FaChartBar },
-            { id: 802, title: "User Analytics", url: "/admin/analytics/users", icon: FaUsers },
-            { id: 803, title: "Ride Analytics", url: "/admin/analytics/rides", icon: FaCar },
-            { id: 804, title: "Custom Reports", url: "/admin/analytics/reports", icon: FaFileAlt }
-        ]
-    },
-    { 
-        id: 9, 
-        title: "Logistics Management", 
-        url: "/admin/logistics", 
-        icon: FaTruck,
-        hasDropdown: true,
-        dropdownItems: [
-            { id: 901, title: "Fleet Management", url: "/admin/logistics/fleet", icon: FaTruck },
-            { id: 902, title: "Route Optimization", url: "/admin/logistics/routes", icon: FaMapMarkerAlt },
-            { id: 903, title: "Delivery Tracking", url: "/admin/logistics/tracking", icon: FaEye }
-        ]
-    },
-    { 
-        id: 10, 
-        title: "Audit & Security", 
-        url: "/admin/audit", 
-        icon: FaLock,
-        hasDropdown: true,
-        dropdownItems: [
-            { id: 1001, title: "Driver Document File View", url: "/admin/audit/driver-documents", icon: FaFileAlt },
-            { id: 1002, title: "Audit Logs", url: "/admin/audit/logs", icon: FaHistory },
-            { id: 1003, title: "Security Settings", url: "/admin/audit/security", icon: FaShieldAlt }
-        ]
-    },
+    // { 
+    //     id: 6, 
+    //     title: "Promotions Management", 
+    //     url: "/admin/promotions", 
+    //     icon: FaTag,
+    //     hasDropdown: true,
+    //     dropdownItems: [
+    //         { id: 601, title: "Active Promotions", url: "/admin/promotions/active", icon: FaTag },
+    //         { id: 602, title: "Create Campaign", url: "/admin/promotions/create", icon: FaPercentage },
+    //         { id: 603, title: "Coupon Management", url: "/admin/promotions/coupons", icon: FaTicketAlt }
+    //     ]
+    // },
+    // { 
+    //     id: 7, 
+    //     title: "Safety & Compliance", 
+    //     url: "/admin/safety", 
+    //     icon: FaShieldAlt,
+    //     hasDropdown: true,
+    //     dropdownItems: [
+    //         { id: 701, title: "Emergency Alerts", url: "/admin/safety/alerts", icon: FaBell },
+    //         { id: 702, title: "Compliance Reports", url: "/admin/safety/compliance", icon: FaFileAlt },
+    //         { id: 703, title: "Incident Management", url: "/admin/safety/incidents", icon: FaExclamationTriangle }
+    //     ]
+    // },
+    // { 
+    //     id: 8, 
+    //     title: "Analytics & Reporting", 
+    //     url: "/admin/analytics", 
+    //     icon: FaChartLine,
+    //     hasDropdown: true,
+    //     dropdownItems: [
+    //         { id: 801, title: "Revenue Analytics", url: "/admin/analytics/revenue", icon: FaChartBar },
+    //         { id: 802, title: "User Analytics", url: "/admin/analytics/users", icon: FaUsers },
+    //         { id: 803, title: "Ride Analytics", url: "/admin/analytics/rides", icon: FaCar },
+    //         { id: 804, title: "Custom Reports", url: "/admin/analytics/reports", icon: FaFileAlt }
+    //     ]
+    // },
+    // { 
+    //     id: 9, 
+    //     title: "Logistics Management", 
+    //     url: "/admin/logistics", 
+    //     icon: FaTruck,
+    //     hasDropdown: true,
+    //     dropdownItems: [
+    //         { id: 901, title: "Fleet Management", url: "/admin/logistics/fleet", icon: FaTruck },
+    //         { id: 902, title: "Route Optimization", url: "/admin/logistics/routes", icon: FaMapMarkerAlt },
+    //         { id: 903, title: "Delivery Tracking", url: "/admin/logistics/tracking", icon: FaEye }
+    //     ]
+    // },
+    // { 
+    //     id: 10, 
+    //     title: "Audit & Security", 
+    //     url: "/admin/audit", 
+    //     icon: FaLock,
+    //     hasDropdown: true,
+    //     dropdownItems: [
+    //         { id: 1001, title: "Driver Document File View", url: "/admin/audit/driver-documents", icon: FaFileAlt },
+    //         { id: 1002, title: "Audit Logs", url: "/admin/audit/logs", icon: FaHistory },
+    //         { id: 1003, title: "Security Settings", url: "/admin/audit/security", icon: FaShieldAlt }
+    //     ]
+    // },
     { 
         id: 11, 
         title: "Media & Verification", 
@@ -212,9 +212,9 @@ export const sidebarLinks = [
         icon: FaIdCard,
         hasDropdown: true,
         dropdownItems: [
-            { id: 1101, title: "Vehicle Image View", url: "/admin/media/vehicle-images", icon: FaImage },
-            { id: 1102, title: "Verification File Management", url: "/admin/media/verification-files", icon: FaFileUpload },
-            { id: 1103, title: "Document Scanner", url: "/admin/media/scanner", icon: FaCamera }
+            { id: 1101, title: "Driver Document File View", url: "/admin/media/driver-documents", icon: FaFileAlt },
+            { id: 1102, title: "Vehicle Image View", url: "/admin/media/vehicle-images", icon: FaImage },
+            { id: 1103, title: "Verification File Management", url: "/admin/media/verification-files", icon: FaFileUpload }
         ]
     }
 ];

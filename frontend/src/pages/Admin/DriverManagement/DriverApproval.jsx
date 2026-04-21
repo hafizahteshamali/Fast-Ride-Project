@@ -306,77 +306,97 @@ const DriverApproval = () => {
 
       {/* Approve Modal */}
       {showApproveModal && selectedDriver && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-            <div className="text-center">
-              <div className="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
-                <FaUserCheck className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Approve Driver</h3>
-              <p className="text-sm text-gray-500 mb-4">
-                Are you sure you want to approve <span className="font-semibold">{selectedDriver.name}</span>? 
-                This will activate their account and allow them to start taking rides.
-              </p>
-              <div className="flex space-x-3">
-                <button
-                  onClick={() => setShowApproveModal(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleApprove}
-                  disabled={loading}
-                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
-                >
-                  {loading ? 'Processing...' : 'Yes, Approve'}
-                </button>
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-gray-200">
+              <div className="text-center p-8">
+                <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center mb-6 shadow-lg">
+                  <FaUserCheck className="h-8 w-8 text-green-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Approve Driver</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Are you sure you want to approve <span className="font-bold text-green-700">{selectedDriver.name}</span>? 
+                  This will activate their account and allow them to start taking rides.
+                </p>
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => setShowApproveModal(false)}
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleApprove}
+                    disabled={loading}
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
+                  >
+                    {loading ? (
+                      <span className="flex items-center space-x-2">
+                        <FaSpinner className="w-4 h-4 animate-spin" />
+                        <span>Processing...</span>
+                      </span>
+                    ) : (
+                      'Yes, Approve'
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Reject Modal */}
       {showRejectModal && selectedDriver && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-            <div className="text-center">
-              <div className="mx-auto h-12 w-12 rounded-full bg-red-100 flex items-center justify-center mb-4">
-                <FaUserTimes className="h-6 w-6 text-red-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Reject Driver Application</h3>
-              <p className="text-sm text-gray-500 mb-4">
-                Please provide a reason for rejecting <span className="font-semibold">{selectedDriver.name}</span>
-              </p>
-              <textarea
-                value={rejectionReason}
-                onChange={(e) => setRejectionReason(e.target.value)}
-                placeholder="Enter rejection reason..."
-                rows="4"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 mb-4"
-              />
-              <div className="flex space-x-3">
-                <button
-                  onClick={() => {
-                    setShowRejectModal(false);
-                    setRejectionReason('');
-                  }}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleReject}
-                  disabled={loading}
-                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
-                >
-                  {loading ? 'Processing...' : 'Yes, Reject'}
-                </button>
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-gray-200">
+              <div className="text-center p-8">
+                <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center mb-6 shadow-lg">
+                  <FaUserTimes className="h-8 w-8 text-red-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Reject Driver Application</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Please provide a reason for rejecting <span className="font-bold text-red-700">{selectedDriver.name}</span>'s application.
+                </p>
+                <textarea
+                  value={rejectionReason}
+                  onChange={(e) => setRejectionReason(e.target.value)}
+                  placeholder="Enter detailed rejection reason..."
+                  rows="4"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-red-500 mb-6 resize-none transition-all duration-200"
+                />
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => {
+                      setShowRejectModal(false);
+                      setRejectionReason('');
+                    }}
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleReject}
+                    disabled={loading || !rejectionReason.trim()}
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
+                  >
+                    {loading ? (
+                      <span className="flex items-center space-x-2">
+                        <FaSpinner className="w-4 h-4 animate-spin" />
+                        <span>Processing...</span>
+                      </span>
+                    ) : (
+                      'Yes, Reject'
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

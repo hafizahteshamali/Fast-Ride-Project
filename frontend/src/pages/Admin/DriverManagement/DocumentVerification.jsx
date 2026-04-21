@@ -471,104 +471,110 @@ const DocumentVerification = () => {
 
       {/* Document View Modal */}
       {showDocumentModal && selectedDriver && selectedDocument && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {getDocumentTitle(selectedDocument.type, selectedDocument.subType)}
-                </h3>
-                <button
-                  onClick={() => setShowDocumentModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <FaTimesCircle size={24} />
-                </button>
-              </div>
-              
-              <div className="bg-gray-100 rounded-lg p-8 mb-4 flex items-center justify-center">
-                <div className="text-center">
-                  <FaFileAlt className="text-6xl text-gray-400 mx-auto mb-2" />
-                  <p className="text-sm text-gray-500">Document Preview</p>
-                  <button className="mt-2 px-4 py-2 bg-[#FF991C] text-white rounded-lg hover:bg-[#FF5C00] transition-colors inline-flex items-center space-x-2">
-                    <FaDownload size={14} />
-                    <span>Download Document</span>
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full border border-gray-200 modal-scroll">
+              <div className="p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    {getDocumentTitle(selectedDocument.type, selectedDocument.subType)}
+                  </h3>
+                  <button
+                    onClick={() => setShowDocumentModal(false)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <FaTimesCircle size={24} />
+                  </button>
+                </div>
+
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-8 mb-6 flex items-center justify-center border border-gray-200">
+                  <div className="text-center">
+                    <FaFileAlt className="text-6xl text-gray-400 mx-auto mb-4" />
+                    <p className="text-lg text-gray-600 mb-4">Document Preview</p>
+                    <button className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all duration-300 inline-flex items-center space-x-2 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105">
+                      <FaDownload size={16} />
+                      <span>Download Document</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => {
+                      setShowDocumentModal(false);
+                      setShowRejectModal(true);
+                    }}
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2"
+                  >
+                    <FaTimesCircle />
+                    <span>Reject</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (selectedDocument.subType) {
+                        handleApproveDocument(selectedDriver.id, selectedDocument.type, selectedDocument.subType);
+                      } else {
+                        handleApproveDocument(selectedDriver.id, selectedDocument.type);
+                      }
+                    }}
+                    disabled={loading}
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:transform-none"
+                  >
+                    {loading ? <FaSpinner className="w-5 h-5 animate-spin" /> : <FaCheckCircle />}
+                    <span>Approve</span>
                   </button>
                 </div>
               </div>
-
-              <div className="flex space-x-3">
-                <button
-                  onClick={() => {
-                    setShowDocumentModal(false);
-                    setShowRejectModal(true);
-                  }}
-                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center space-x-2"
-                >
-                  <FaTimesCircle />
-                  <span>Reject</span>
-                </button>
-                <button
-                  onClick={() => {
-                    if (selectedDocument.subType) {
-                      handleApproveDocument(selectedDriver.id, selectedDocument.type, selectedDocument.subType);
-                    } else {
-                      handleApproveDocument(selectedDriver.id, selectedDocument.type);
-                    }
-                  }}
-                  disabled={loading}
-                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50"
-                >
-                  {loading ? <FaSpinner className="animate-spin" /> : <FaCheckCircle />}
-                  <span>Approve</span>
-                </button>
-              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Reject Modal with Reason */}
       {showRejectModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-            <div className="text-center">
-              <div className="mx-auto h-12 w-12 rounded-full bg-red-100 flex items-center justify-center mb-4">
-                <FaTimesCircle className="h-6 w-6 text-red-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Reject Document</h3>
-              <p className="text-sm text-gray-500 mb-4">
-                Please provide a reason for rejecting this document. The driver will be notified to re-upload.
-              </p>
-              <textarea
-                value={rejectionReason}
-                onChange={(e) => setRejectionReason(e.target.value)}
-                placeholder="Enter rejection reason (e.g., Document blurry, expired, incorrect format)..."
-                rows="4"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 mb-4"
-              />
-              <div className="flex space-x-3">
-                <button
-                  onClick={() => {
-                    setShowRejectModal(false);
-                    setRejectionReason('');
-                  }}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleRejectDocument}
-                  disabled={loading}
-                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 flex items-center justify-center space-x-2"
-                >
-                  {loading ? <FaSpinner className="animate-spin" /> : <FaTimesCircle />}
-                  <span>Reject Document</span>
-                </button>
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-40 modal-enter"></div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4 modal-content-enter">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full border border-gray-200">
+              <div className="text-center p-8">
+                <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center mb-6 shadow-lg">
+                  <FaTimesCircle className="h-8 w-8 text-red-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Reject Document</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Please provide a reason for rejecting this document. The driver will be notified to re-upload.
+                </p>
+                <textarea
+                  value={rejectionReason}
+                  onChange={(e) => setRejectionReason(e.target.value)}
+                  placeholder="Enter detailed rejection reason (e.g., Document blurry, expired, incorrect format)..."
+                  rows="4"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:border-red-500 mb-6 resize-none transition-all duration-200"
+                />
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => {
+                      setShowRejectModal(false);
+                      setRejectionReason('');
+                    }}
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 font-semibold transform hover:scale-105"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleRejectDocument}
+                    disabled={loading || !rejectionReason.trim()}
+                    className="flex-1 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:transform-none flex items-center justify-center space-x-2"
+                  >
+                    {loading ? <FaSpinner className="w-5 h-5 animate-spin" /> : <FaTimesCircle />}
+                    <span>Reject Document</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
